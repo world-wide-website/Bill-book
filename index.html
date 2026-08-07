@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframes</title>
+<style>
+/* ================= RESET ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,sans-serif;
+}
+
+body{
+  height:100vh;
+  background:#202228;
+  color:#d5d8e0;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:-60%;
+  z-index:-1;
+  opacity:.9;
+  transform:rotate(135deg);
+  background-repeat:repeat;
+  background-size:.75vh .75vh;
+  background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGElEQVQImWNkYGD4z8DAwMDAgAEABiwCBdZk90QAAAAASUVORK5CYII=");
+}
+
+/* ================= PAGE ================= */
+
+.page{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 10px 20px;
+  background:#000;
+  border: 1px solid #a87c29;
+  border-radius:10px;
+  margin: 10px;
+  width: 98%;
+}
+
+.title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:orange;
+  font-size:20px;
+}
+
+.selectList{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.count{
+  background:#333;
+  padding:5px 10px;
+  border-radius:5px;
+  color:lawngreen;
+}
+
+.tools{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.tools input{
+  width:220px;
+}
+
+/* ================= INPUTS ================= */
+
+input, textarea, select{
+  width:100%;
+  padding:10px;
+  background:#1b1d22;
+  border:1px solid #333;
+  border-radius:6px;
+  color:#fff;
+  outline:none;
+}
+
+input:focus,textarea:focus,select:focus{
+  border-color:seagreen;
+}
+
+textarea{
+  resize:vertical;
+  min-height:90px;
+}
+
+/* ================= BUTTON ================= */
+
+button{
+  border:none;
+  cursor:pointer;
+  background:seagreen;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:6px;
+  transition:.2s;
+}
+
+button:hover{
+  filter:brightness(1.15);
+}
+
+/* ================= PREVIEW ================= */
+
+.previewes{
+  display:none;
+  gap:15px;
+  padding:15px;
+  background:#000;
+  border:2px solid #333;
+  border-radius:12px;
+  position: absolute;
+  width: 95vw;
+  height: 100vh;
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewes.show{
+  display:flex;
+}
+
+.preview{
+  width:65%;
+  min-height:450px;
+  border:none;
+  border-radius:10px;
+  background:#111;
+}
+
+.asider{
+  width:35%;
+}
+
+/* ================= FORM ================= */
+
+.form{
+  width:100%;
+}
+
+.fieldset{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border:1px solid #333;
+  border-radius:10px;
+  padding:15px;
+}
+
+.legend{
+  color:orange;
+  font-weight:700;
+  padding:0 10px;
+}
+
+/* ================= THUMB OPTIONS ================= */
+
+.thumbBox{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+}
+
+.thumbBox input[type="radio"]{
+  width:18px;
+  height:18px;
+  cursor:pointer;
+}
+
+/* ================= SAVE ================= */
+
+.saveBtns{
+  display:flex;
+  gap:10px;
+}
+
+.saveBtns button{
+  flex:1;
+}
+
+/* ================= PLAYER ================= */
+
+.playerWrap{
+  position:sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.main-iframe{
+  width:100vw;
+  border:none;
+  border-radius:12px;
+  background:#000;
+}
+
+.closeBtn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:10;
+  padding: 8px 10px;
+  border-radius:5px;
+  background:#d33;
+}
+
+/* ================= LIST ================= */
+
+.main{
+  width:100%;
+  padding:15px;
+}
+
+.list{
+  display:grid;
+  gap:15px;
+  grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+}
+
+/* ================= CARD ================= */
+
+.card{
+  position:relative;
+  background:#111;
+  border:1px solid #333;
+  border-radius:10px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.25s;
+  padding-bottom: 10px;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:seagreen;
+}
+
+.thumb{
+  width:100%;
+  /* height:240px; */
+  aspect-ratio: 16/9;
+  object-fit:cover;
+  background:#000;
+}
+
+.card h4{
+  padding: 5px 10px 0;
+  color:#fff;
+  font-size:14px;
+}
+
+.card small{
+  display:block;
+  padding: 0px 10px;
+  color:#aaa;
+}
+
+.fav{
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(0,0,0,.7);
+  font-size:18px;
+  cursor:pointer;
+}
+
+.edit{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#444;
+  font-size:12px;
+  padding:6px 12px;
+}
+
+/* ================= TABLET ================= */
+
+@media (max-width:1024px){
+
+  .previewes{
+    flex-direction:column;
+  }
+
+  .preview, .asider{
+    width:100%;
+  }
+
+  .preview{
+    min-height:350px;
+  }
+
+  .main-iframe{
+    height:60vh;
+  }
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:768px){
+
+  .header{
+    /* flex-direction:column; */
+    gap:10px;
+  }
+
+  .title{
+    /* width:100%; */
+    justify-content:space-between;
+    text-wrap: nowrap;
+    font-size: large;
+  }
+
+  .count,select , option, .tools{
+    font-size: 10px;
+    /* height: 25px; */
+
+  }
+
+  .tools input{
+    width:100%;
+    height: 25px;
+  }
+  
+  .upload{
+    width: 30%;
+    height: 30px;
+    padding: 5px 8px;
+  }
+
+  .selectList{
+        font-size: 10px;
+    /* flex-wrap:wrap; */
+  }
+
+  .thumb{
+    height:260px;
+  }
+
+  .main-iframe{
+    height:35vh;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width:480px){
+
+  .page{
+    padding:10px;
+  }
+
+  .saveBtns{
+    flex-direction:column;
+  }
+
+  .card h4{
+    font-size:14px;
+  }
+
+  .main-iframe{
+    height:40vh;
+  }
+}
+</style>
+</head>
+<body></body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+
+  /* ================= FASTTAG ================= */
+  const fastTag=(t,p,c,id,txt)=>{
+    const e=document.createElement(t);
+    if(c) e.className=c;
+    if(id) e.id=id;
+    if(txt) e.textContent=txt;
+    p&&p.appendChild(e);
+    return e;
+  };
+function createURL(ids,type){
+
+    type=(type||"").toUpperCase();
+
+    switch(type){
+        case "YT": return `https://www.youtube.com/watch?v=${ids}`;
+        case "YT-SHORT": case "YT-SHORTS": return `https://www.youtube.com/shorts/${ids}`;
+        case "TIKTOK": return `https://www.tiktok.com/@user/video/${ids}`;
+        case "INSTAGRAM": return `https://www.instagram.com/reel/${ids}/`;
+        case "FACEBOOK": return `https://www.facebook.com/watch/?v=${ids}`;
+        case "TWITTER": case "X": return `https://x.com/i/status/${ids}`;
+        case "TELEGRAM": return `https://t.me/${ids}`;
+        case "WHATSAPP": return `https://wa.me/${ids}`;
+        default: return ids;
+    }
+}
+  /* ================= LAYOUT ================= */
+  const page=fastTag("div",document.body,"page");
+
+  /* ---------- HEADER ---------- */
+  const header=fastTag("header",page,"header");
+  const title = fastTag("h2",header,"title",null,"Iframe Store :");
+        const bar=fastTag("div",title,"selectList");
+  const tools=fastTag("div",header,"tools");
+  const addBtn=fastTag("button",tools, "upload",null,"Upload");
+  const search=fastTag("input",tools);
+        search.placeholder="Search…";
+        
+const dataBtn = fastTag("button", tools, null, null, "Data");
+dataBtn.onclick = exportDataStore;
+  /* ---------- PREVIEW + FORM ---------- */
+  const previewes=fastTag("div",page,"previewes");
+  const preview=fastTag("iframe",previewes,"preview");
+
+  const asider=fastTag("aside",previewes,"asider");
+  const form=fastTag("form",asider,"form");
+
+  const fieldset=fastTag("fieldset",form,"fieldset");
+  fastTag("legend",fieldset,"legend",null,"Add / Edit");
+
+  const Link=fastTag("textarea",fieldset);
+  Link.placeholder="Paste link / iframe";
+
+  const Title=fastTag("input",fieldset);
+  Title.placeholder="Title";
+
+  const Formate=fastTag("select",fieldset);
+  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" ].forEach(v=>{
+    const o=fastTag("option",Formate,null,null,v.toUpperCase());
+    o.value=v;
+  });
+
+  /* ---------- THUMBNAIL INPUTS ---------- */
+  const thumbBox=fastTag("div",fieldset,"thumbBox");
+
+  const rYT=fastTag("input",thumbBox);
+  rYT.type="radio"; rYT.name="thumb"; rYT.value="youtube"; rYT.checked=true;
+
+  const rURL=fastTag("input",thumbBox);
+  rURL.type="radio"; rURL.name="thumb"; rURL.value="url";
+
+  const rFile=fastTag("input",thumbBox);
+  rFile.type="radio"; rFile.name="thumb"; rFile.value="file";
+
+  const thumbURL=fastTag("input",fieldset);
+  thumbURL.placeholder="Thumbnail URL";
+  thumbURL.style.display="none";
+
+  const thumbFile=fastTag("input",fieldset);
+  thumbFile.type="file";
+  thumbFile.accept="image/*";
+  thumbFile.style.display="none";
+
+  /* ---------- DATE ---------- */
+  const dateInput=fastTag("input",fieldset);
+  dateInput.type="datetime-local";
+
+  const saveBtns=fastTag("div",fieldset,"saveBtns");
+
+  const deleteBtn=fastTag("button",saveBtns,null,null,"Delete");
+  deleteBtn.type="button";
+
+  const saveBtn=fastTag("button",saveBtns,null,null,"Save");
+  saveBtn.type="submit";
+
+  /* ---------- MAIN PLAYER ---------- */
+  const playerWrap=fastTag("div",page,"playerWrap");
+  playerWrap.style.display="none";
+
+  const closeBtn=fastTag("button",playerWrap,"closeBtn",null,"✕");
+  const mainIframe=fastTag("iframe",playerWrap,"main-iframe");
+
+  closeBtn.onclick=()=>{
+    mainIframe.src="about:blank";
+    playerWrap.style.display="none";
+};
+
+  /* ---------- LIST + FILTER ---------- */
+  const main =fastTag("div",page,"main");
+
+  const countBox=fastTag("span",bar,"count",null,"0");
+  const filter=fastTag("select",bar);
+  const list = fastTag("div", main,"list");
+  ["ALL","FAVORITES","A → Z","Z → A","NEW → OLD","OLD → NEW","URL","YOUTUBE","TIKTOK","INSTAGRAM","OTHER"].forEach(v=>{const o=fastTag("option",filter,null,null,v);o.value=v.toLowerCase();});
+
+  /* ================= STATE ================= */
+  let items=JSON.parse(localStorage.getItem("iframes")||"null");
+  let lastVideoID = "";
+
+if(!items){
+    items=[];
+    DataBase.forEach(d=>{
+        items.push({
+            title:d.title||"",
+            url:createURL(d.ids,d.type),
+            type:(d.type||"url").toLowerCase(),
+            date:new Date().toISOString(),
+            thumb:d.type &&
+                  d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
+        });
+    });
+    localStorage.setItem( "iframes", JSON.stringify(items));
+}
+  let editIndex=-1;
+  let fileThumb="";
+
+  
+/* ================= LINK HELPERS ================= */
+
+// YouTube Video & Shorts
+const ytId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+    );
+
+    return match ? match[1] : null;
+
+};
+
+function exportDataStore(){
+
+    const items = JSON.parse(localStorage.getItem("iframes") || "[]");
+
+    const DataStore = items.map(item=>{
+
+        let type = item.type || "URL";
+
+        switch(type.toLowerCase()){
+
+            case "youtube":
+                type = "YouTube";
+            break;
+
+            case "yt-short":
+                type = "YouTube-shorts";
+            break;
+
+            case "instagram":
+                type = "Instagram";
+            break;
+
+            case "tiktok":
+                type = "TikTok";
+            break;
+
+            case "facebook":
+                type = "Facebook";
+            break;
+
+            case "twitter":
+                type = "Twitter";
+            break;
+
+            default:
+                type = type.charAt(0).toUpperCase() + type.slice(1);
+
+        }
+
+        return {
+            ids   : item.url,
+            time  : item.time || "00:00",
+            title : item.title || "",
+            type  : type
+        };
+
+    });
+
+    const text =
+`const DataStore = ${JSON.stringify(DataStore, null, 4)};`;
+
+    console.log(text);
+
+    navigator.clipboard.writeText(text);
+
+    alert("DataStore copied to clipboard.");
+
+}
+
+async function fetchYouTubeTitle(url){
+
+    const id = ytId(url);
+    if(!id) return "";
+
+    try{
+
+        const res = await fetch(
+            `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`
+        );
+
+        if(!res.ok) return "";
+
+        const data = await res.json();
+
+        return data.title || "";
+
+    }catch(err){
+
+        console.log(err);
+
+        return "";
+
+    }
+
+}
+
+// TikTok
+const tkId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/video\/(\d+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Instagram Reel
+const igId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/reel\/([^/?]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Facebook
+const fbId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/[?&]v=([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Twitter / X
+const xId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/status\/([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+
+/* ================= DETECT FORMAT ================= */
+
+function detectFormat(url){
+
+    if(!url) return "url";
+
+    url = url.toLowerCase();
+
+    if(url.includes("<iframe"))
+        return "iframe";
+
+    if(url.includes("/shorts/"))
+        return "yt-short";
+
+    if(url.includes("youtube.com") || url.includes("youtu.be"))
+        return "youtube";
+
+    if(url.includes("tiktok.com"))
+        return "tiktok";
+
+    if(url.includes("instagram.com"))
+        return "instagram";
+
+    if(url.includes("facebook.com"))
+        return "facebook";
+
+    if(url.includes("twitter.com") || url.includes("x.com"))
+        return "twitter";
+
+    if(url.includes("t.me"))
+        return "telegram";
+
+    if(url.includes("wa.me") || url.includes("whatsapp"))
+        return "whatsapp";
+
+    return "url";
+
+}
+
+
+/* ================= BUILD EMBED ================= */
+
+function buildEmbed(url){
+
+    if(!url) return "";
+
+    // YouTube
+    const yid = ytId(url);
+
+    if(yid){
+        return `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`;
+    }
+
+    // TikTok
+    const tid = tkId(url);
+
+    if(tid){
+        return `https://www.tiktok.com/embed/v2/${tid}`;
+    }
+
+    // Instagram
+    const iid = igId(url);
+
+    if(iid){
+        return `https://www.instagram.com/reel/${iid}/embed`;
+    }
+
+    // iframe code
+    if(url.includes("<iframe")){
+
+        const src = url.match(/src=["']([^"']+)["']/);
+
+        return src ? src[1] : "";
+
+    }
+
+    // All other links
+    return url;
+
+}
+
+
+/* ================= YOUTUBE THUMBNAIL ================= */
+
+function getYouTubeThumbnail(url){
+
+    const id = ytId(url);
+
+    if(!id) return "";
+
+    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
+}
+
+
+  /* ================= EVENTS ================= */
+  addBtn.onclick=()=>{
+
+    editIndex=-1;
+
+    form.reset();
+
+    preview.src="about:blank";
+
+    fileThumb="";
+
+    rYT.checked=true;
+
+    updateThumbUI();
+
+    previewes.classList.toggle("show");
+
+};
+
+  Link.oninput = async ()=>{
+
+    const url = Link.value.trim();
+
+    if(!url){
+        preview.src = "about:blank";
+        lastVideoID = "";
+        return;
+    }
+
+    Formate.value = detectFormat(url);
+
+    preview.src = buildEmbed(url) || "about:blank";
+
+    const id = ytId(url);
+
+    if(id && id !== lastVideoID){
+
+        lastVideoID = id;
+
+        const ytTitle = await fetchYouTubeTitle(url);
+
+        // Always update while editing the URL
+        if(ytTitle){
+            Title.value = ytTitle;
+        }
+
+    }
+
+    updateThumbUI();
+
+};
+
+  rYT.onchange=rURL.onchange=rFile.onchange=updateThumbUI;
+
+  thumbFile.onchange=()=>{
+    const f=thumbFile.files[0];
+    if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>fileThumb=r.result;
+    r.readAsDataURL(f);
+  };
+
+  /* ================= SAVE ================= */
+  form.onsubmit = e=>{
+
+    e.preventDefault();
+
+    if(!Link.value.trim())
+        return;
+
+    const type = Formate.value || detectFormat(Link.value);
+
+    let thumb="";
+
+    if(rFile.checked && fileThumb){
+
+        thumb=fileThumb;
+
+    }
+
+    else if(rURL.checked){
+
+        thumb=thumbURL.value;
+
+    }
+
+    else if(type==="youtube" || type==="yt-short"){
+function ytThumb(id){
+    if(!id) return "";
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+    }
+
+    const id=ytId(Link.value);
+        if(id) thumb=ytThumb(id);
+    const obj={
+        title:Title.value.trim() || "Untitled",
+        url:Link.value.trim(),
+        type:type,
+        date:dateInput.value || new Date().toISOString(),
+        thumb:thumb,
+        fav: editIndex>-1 ? items[editIndex].fav : false,
+        views: editIndex>-1 ? items[editIndex].views : 0
+    };
+    if(editIndex>-1){
+        obj.views=items[editIndex].views;
+        obj.fav=items[editIndex].fav;
+        items[editIndex]=obj;
+    }
+    else{
+        items.push(obj);
+    }
+    localStorage.setItem("iframes",JSON.stringify(items));
+    previewes.classList.remove("show");
+    render();
+
+    };
+
+  deleteBtn.onclick=()=>{
+    if(editIndex<0)
+        return;
+    if(!confirm("Delete this item?"))
+        return;
+    items.splice(editIndex,1);
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
+    previewes.classList.remove("show");
+    render();
+
+    };
+
+  search.oninput=render;
+  filter.onchange=render;
+
+  /* ================= LOAD / EDIT ================= */
+  function loadMain(item,index){
+
+    items[index].views++;
+
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
+
+    mainIframe.src = buildEmbed(item.url);
+
+    playerWrap.style.display = "block";
+
+    render();
+
+}
+
+  function editItem(item,index){
+
+    previewes.classList.add("show");
+
+    editIndex=index;
+
+    Title.value=item.title;
+
+    Link.value=item.url;
+
+    Formate.value=item.type;
+
+    dateInput.value = new Date(item.date).toLocaleString("sv-SE").replace(" ","T").slice(0,16);
+
+    preview.src=buildEmbed(item.url);
+
+    thumbURL.value=item.thumb||"";
+
+    fileThumb="";
+
+    if(item.thumb && item.thumb.startsWith("data:")){
+        rFile.checked=true;
+    }
+
+    else if(item.type==="youtube" || item.type==="yt-short"){
+
+        rYT.checked=true;
+
+    }
+
+    else{
+
+        rURL.checked=true;
+
+    }
+    updateThumbUI();
+
+}
+
+function updateThumbUI(){
+
+    thumbURL.style.display =
+        rURL.checked ? "block" : "none";
+
+    thumbFile.style.display =
+        rFile.checked ? "block" : "none";
+
+}
+  /* ================= RENDER ================= */
+function render(){
+
+    list.innerHTML="";
+
+    const searchText=search.value.trim().toLowerCase();
+    const filterValue=filter.value;
+
+    let data=items.map((item,index)=>({
+        ...item,
+        index
+    }));
+
+
+    /* ---------- FILTER ---------- */
+
+    data=data.filter(item=>{
+
+        if(searchText){
+
+            const text=(
+                item.title+" "+
+                item.type+" "+
+                item.url
+            ).toLowerCase();
+
+            if(!text.includes(searchText))
+                return false;
+
+        }
+
+        if(filterValue==="favorites")
+            return item.fav;
+
+        if(
+            ![
+                "all",
+                "favorites",
+                "a → z",
+                "z → a",
+                "new → old",
+                "old → new"
+            ].includes(filterValue)
+        ){
+
+            return item.type===filterValue;
+
+        }
+
+        return true;
+
+    });
+
+
+    /* ---------- SORT ---------- */
+
+    switch(filterValue){
+
+        case "a → z":
+            data.sort((a,b)=>
+                a.title.localeCompare(b.title)
+            );
+        break;
+
+        case "z → a":
+            data.sort((a,b)=>
+                b.title.localeCompare(a.title)
+            );
+        break;
+
+        case "new → old":
+            data.sort((a,b)=>
+                new Date(b.date)-new Date(a.date)
+            );
+        break;
+
+        case "old → new":
+            data.sort((a,b)=>
+                new Date(a.date)-new Date(b.date)
+            );
+        break;
+
+    }
+
+
+    countBox.textContent=data.length;
+
+
+    /* ---------- CARDS ---------- */
+
+    data.forEach(item=>{
+
+        const card=fastTag("div",list,"card");
+
+        const img=fastTag("img",card,"thumb");
+
+        img.src=item.thumb || "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+
+        img.onerror=()=>{
+            img.src="https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+            };
+
+        fastTag(
+            "h4",
+            card,
+            null,
+            null,
+            item.title
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            item.type.toUpperCase()
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            "Views : "+item.views
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            new Date(item.date)
+            .toLocaleString()
+        );
+
+
+        /* ---------- FAVORITE ---------- */
+
+        const fav=fastTag(
+            "button",
+            card,
+            "fav",
+            null,
+            item.fav ? "❤️" : "🤍"
+        );
+
+        fav.onclick=e=>{
+
+            e.stopPropagation();
+
+            items[item.index].fav=
+                !items[item.index].fav;
+
+            localStorage.setItem(
+                "iframes",
+                JSON.stringify(items)
+            );
+
+            render();
+
+        };
+
+
+        /* ---------- EDIT ---------- */
+
+        const edit=fastTag(
+            "button",
+            card,
+            "edit",
+            null,
+            "Edit"
+        );
+
+        edit.onclick=e=>{
+
+            e.stopPropagation();
+
+            editItem(
+                items[item.index],
+                item.index
+            );
+
+        };
+
+
+        /* ---------- OPEN ---------- */
+
+        card.onclick=()=>{
+
+            loadMain(
+                items[item.index],
+                item.index
+            );
+
+        };
+
+    });
+
+}
+
+  render();
+  countBox.textContent=items.length;
+});
+</script>
+</html>
