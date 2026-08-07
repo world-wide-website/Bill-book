@@ -46,9 +46,9 @@ body::before{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px 15px;
+  padding: 10px 20px;
   background:#000;
-  border:2px solid #a87c29;
+  border: 1px solid #a87c29;
   border-radius:10px;
   margin: 10px;
   width: 98%;
@@ -87,9 +87,7 @@ body::before{
 
 /* ================= INPUTS ================= */
 
-input,
-textarea,
-select{
+input, textarea, select{
   width:100%;
   padding:10px;
   background:#1b1d22;
@@ -99,9 +97,7 @@ select{
   outline:none;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
+input:focus,textarea:focus,select:focus{
   border-color:seagreen;
 }
 
@@ -216,7 +212,6 @@ button:hover{
 
 .main-iframe{
   width:100vw;
-  aspect-ratio: 16/9;
   border:none;
   border-radius:12px;
   background:#000;
@@ -255,6 +250,7 @@ button:hover{
   overflow:hidden;
   cursor:pointer;
   transition:.25s;
+  padding-bottom: 10px;
 }
 
 .card:hover{
@@ -271,14 +267,14 @@ button:hover{
 }
 
 .card h4{
-  padding:10px 10px 0;
+  padding: 5px 10px 0;
   color:#fff;
-  font-size:15px;
+  font-size:14px;
 }
 
 .card small{
   display:block;
-  padding:5px 10px 10px;
+  padding: 0px 10px;
   color:#aaa;
 }
 
@@ -348,10 +344,6 @@ button:hover{
     /* height: 25px; */
 
   }
-  .tools{
-    /* width:100%; */
-    /* flex-direction:column; */
-  }
 
   .tools input{
     width:100%;
@@ -390,9 +382,6 @@ button:hover{
     flex-direction:column;
   }
 
-  .thumb{
-  }
-
   .card h4{
     font-size:14px;
   }
@@ -407,14 +396,6 @@ button:hover{
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-const DataBase = [
-  { ids:"r2WSzUc4mK0", time:"09:48", title:"Arijit Singh Mashup 2025", type:"YT" },
-  { ids:"J4KIe4Cf1eQ", time:"00:48", title:"Arijit Singh Mashup 2026", type:"YT-Short" },
-  { ids:"KUN5Uf9mObQ", time:"04:41", title:"Arabic Kuthu - Video Song | Beast", type:"YT-Short" },
-  { ids:"kPcE5GLLQAg", time:"04:49", title:"Kannulato Choosedi | Jeans Telugu Song", type:"YT"  },
-  { ids:"zK1BQk0L-5U", time:"05:10", title:"Chitti Nadumume" },
-  { ids:"qaU03QRrcPs", time:"04:05", title:"Telusa Telusa" }, 
-];
 
   /* ================= FASTTAG ================= */
   const fastTag=(t,p,c,id,txt)=>{
@@ -425,7 +406,22 @@ const DataBase = [
     p&&p.appendChild(e);
     return e;
   };
+function createURL(ids,type){
 
+    type=(type||"").toUpperCase();
+
+    switch(type){
+        case "YT": return `https://www.youtube.com/watch?v=${ids}`;
+        case "YT-SHORT": case "YT-SHORTS": return `https://www.youtube.com/shorts/${ids}`;
+        case "TIKTOK": return `https://www.tiktok.com/@user/video/${ids}`;
+        case "INSTAGRAM": return `https://www.instagram.com/reel/${ids}/`;
+        case "FACEBOOK": return `https://www.facebook.com/watch/?v=${ids}`;
+        case "TWITTER": case "X": return `https://x.com/i/status/${ids}`;
+        case "TELEGRAM": return `https://t.me/${ids}`;
+        case "WHATSAPP": return `https://wa.me/${ids}`;
+        default: return ids;
+    }
+}
   /* ================= LAYOUT ================= */
   const page=fastTag("div",document.body,"page");
 
@@ -437,7 +433,9 @@ const DataBase = [
   const addBtn=fastTag("button",tools, "upload",null,"Upload");
   const search=fastTag("input",tools);
         search.placeholder="Search…";
-
+        
+const dataBtn = fastTag("button", tools, null, null, "Data");
+dataBtn.onclick = exportDataStore;
   /* ---------- PREVIEW + FORM ---------- */
   const previewes=fastTag("div",page,"previewes");
   const preview=fastTag("iframe",previewes,"preview");
@@ -455,7 +453,7 @@ const DataBase = [
   Title.placeholder="Title";
 
   const Formate=fastTag("select",fieldset);
-  ["url","youtube","tiktok","instagram","other"].forEach(v=>{
+  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" ].forEach(v=>{
     const o=fastTag("option",Formate,null,null,v.toUpperCase());
     o.value=v;
   });
@@ -501,105 +499,332 @@ const DataBase = [
   const mainIframe=fastTag("iframe",playerWrap,"main-iframe");
 
   closeBtn.onclick=()=>{
-    mainIframe.src="";
+    mainIframe.src="about:blank";
     playerWrap.style.display="none";
-  };
+};
 
   /* ---------- LIST + FILTER ---------- */
   const main =fastTag("div",page,"main");
 
   const countBox=fastTag("span",bar,"count",null,"0");
   const filter=fastTag("select",bar);
-  ["ALL","FAVORITES","URL","YOUTUBE","TIKTOK","INSTAGRAM","OTHER","A → Z","Z → A","NEW → OLD","OLD → NEW"].forEach(
-    v=>{const o=fastTag("option",filter,null,null,v);o.value=v.toLowerCase();});
-  
-
-    const list = fastTag("div", main,"list");
+  const list = fastTag("div", main,"list");
+  ["ALL","FAVORITES","A → Z","Z → A","NEW → OLD","OLD → NEW","URL","YOUTUBE","TIKTOK","INSTAGRAM","OTHER"].forEach(v=>{const o=fastTag("option",filter,null,null,v);o.value=v.toLowerCase();});
 
   /* ================= STATE ================= */
-  let items=JSON.parse(localStorage.getItem("iframes")||"[]");
+  let items=JSON.parse(localStorage.getItem("iframes")||"null");
+  let lastVideoID = "";
+
+if(!items){
+    items=[];
+    DataBase.forEach(d=>{
+        items.push({
+            title:d.title||"",
+            url:createURL(d.ids,d.type),
+            type:(d.type||"url").toLowerCase(),
+            date:new Date().toISOString(),
+            thumb:d.type &&
+                  d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
+        });
+    });
+    localStorage.setItem( "iframes", JSON.stringify(items));
+}
   let editIndex=-1;
   let fileThumb="";
 
-  // ✅ FIXED YOUTUBE ID (supports iframe + embed)
-  const ytId = v => {
-    const m = v.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/);
-    return m ? m[1] : null;
-  };
+  
+/* ================= LINK HELPERS ================= */
 
-  const tkId=v=>v.match(/video\/(\d+)/)?.[1];
-  const igId=v=>v.match(/\/reel\/([^\/]+)/)?.[1];
+// YouTube Video & Shorts
+const ytId = url => {
 
-  function detectFormat(v){
-    if(v.includes("<iframe")) return "other";
-    if(/youtube\.com|youtu\.be/.test(v)) return "youtube";
-    if(/tiktok\.com/.test(v)) return "tiktok";
-    if(/instagram\.com\/reel/.test(v)) return "instagram";
-    return "url";
-  }
+    if (!url) return null;
 
-  function buildEmbed(v){
-    if(ytId(v)) return `https://www.youtube-nocookie.com/embed/${ytId(v)}?autoplay=1`;
-    if(tkId(v)) return `https://www.tiktok.com/embed/v2/${tkId(v)}`;
-    if(igId(v)) return `https://www.instagram.com/reel/${igId(v)}`;
-    if(v.includes("<iframe")){
-      const m=v.match(/src="([^"]+)"/);
-      return m?m[1]:"";
-    }
-    return v;
-  }
+    const match = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+    );
 
-  const ytThumb=id=>`https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    return match ? match[1] : null;
 
-  /* ================= THUMB UI ================= */
-  function updateThumbUI(){
+};
 
-    thumbURL.style.display = "none";
-    thumbFile.style.display = "none";
+function exportDataStore(){
 
-    if(rYT.checked){
+    const items = JSON.parse(localStorage.getItem("iframes") || "[]");
 
-        thumbURL.style.display = "block";
+    const DataStore = items.map(item=>{
 
-        const id = ytId(Link.value);
+        let type = item.type || "URL";
 
-        if(id)
-            thumbURL.value = ytThumb(id);
+        switch(type.toLowerCase()){
 
-    }
+            case "youtube":
+                type = "YouTube";
+            break;
 
-    if(rURL.checked){
+            case "yt-short":
+                type = "YouTube-shorts";
+            break;
 
-        thumbURL.style.display = "block";
+            case "instagram":
+                type = "Instagram";
+            break;
 
-    }
+            case "tiktok":
+                type = "TikTok";
+            break;
 
-    if(rFile.checked){
+            case "facebook":
+                type = "Facebook";
+            break;
 
-        thumbFile.style.display = "block";
+            case "twitter":
+                type = "Twitter";
+            break;
+
+            default:
+                type = type.charAt(0).toUpperCase() + type.slice(1);
+
+        }
+
+        return {
+            ids   : item.url,
+            time  : item.time || "00:00",
+            title : item.title || "",
+            type  : type
+        };
+
+    });
+
+    const text =
+`const DataStore = ${JSON.stringify(DataStore, null, 4)};`;
+
+    console.log(text);
+
+    navigator.clipboard.writeText(text);
+
+    alert("DataStore copied to clipboard.");
+
+}
+
+async function fetchYouTubeTitle(url){
+
+    const id = ytId(url);
+    if(!id) return "";
+
+    try{
+
+        const res = await fetch(
+            `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`
+        );
+
+        if(!res.ok) return "";
+
+        const data = await res.json();
+
+        return data.title || "";
+
+    }catch(err){
+
+        console.log(err);
+
+        return "";
 
     }
 
 }
 
+// TikTok
+const tkId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/video\/(\d+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Instagram Reel
+const igId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/reel\/([^/?]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Facebook
+const fbId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/[?&]v=([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Twitter / X
+const xId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/status\/([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+
+/* ================= DETECT FORMAT ================= */
+
+function detectFormat(url){
+
+    if(!url) return "url";
+
+    url = url.toLowerCase();
+
+    if(url.includes("<iframe"))
+        return "iframe";
+
+    if(url.includes("/shorts/"))
+        return "yt-short";
+
+    if(url.includes("youtube.com") || url.includes("youtu.be"))
+        return "youtube";
+
+    if(url.includes("tiktok.com"))
+        return "tiktok";
+
+    if(url.includes("instagram.com"))
+        return "instagram";
+
+    if(url.includes("facebook.com"))
+        return "facebook";
+
+    if(url.includes("twitter.com") || url.includes("x.com"))
+        return "twitter";
+
+    if(url.includes("t.me"))
+        return "telegram";
+
+    if(url.includes("wa.me") || url.includes("whatsapp"))
+        return "whatsapp";
+
+    return "url";
+
+}
+
+
+/* ================= BUILD EMBED ================= */
+
+function buildEmbed(url){
+
+    if(!url) return "";
+
+    // YouTube
+    const yid = ytId(url);
+
+    if(yid){
+        return `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`;
+    }
+
+    // TikTok
+    const tid = tkId(url);
+
+    if(tid){
+        return `https://www.tiktok.com/embed/v2/${tid}`;
+    }
+
+    // Instagram
+    const iid = igId(url);
+
+    if(iid){
+        return `https://www.instagram.com/reel/${iid}/embed`;
+    }
+
+    // iframe code
+    if(url.includes("<iframe")){
+
+        const src = url.match(/src=["']([^"']+)["']/);
+
+        return src ? src[1] : "";
+
+    }
+
+    // All other links
+    return url;
+
+}
+
+
+/* ================= YOUTUBE THUMBNAIL ================= */
+
+function getYouTubeThumbnail(url){
+
+    const id = ytId(url);
+
+    if(!id) return "";
+
+    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
+}
+
+
   /* ================= EVENTS ================= */
   addBtn.onclick=()=>{
-    previewes.classList.toggle("show");
-    editIndex=-1;
-    form.reset();
-    preview.src="";
-    fileThumb="";
-    rYT.checked=true;
-    updateThumbUI();
-  };
 
-  Link.oninput=()=>{
-    if(!Link.value) return preview.src="";
-    const t=detectFormat(Link.value);
-    Formate.value=t;
-    preview.src=buildEmbed(Link.value);
+    editIndex=-1;
+
+    form.reset();
+
+    preview.src="about:blank";
+
+    fileThumb="";
+
+    rYT.checked=true;
+
     updateThumbUI();
-  };
+
+    previewes.classList.toggle("show");
+
+};
+
+  Link.oninput = async ()=>{
+
+    const url = Link.value.trim();
+
+    if(!url){
+        preview.src = "about:blank";
+        lastVideoID = "";
+        return;
+    }
+
+    Formate.value = detectFormat(url);
+
+    preview.src = buildEmbed(url) || "about:blank";
+
+    const id = ytId(url);
+
+    if(id && id !== lastVideoID){
+
+        lastVideoID = id;
+
+        const ytTitle = await fetchYouTubeTitle(url);
+
+        // Always update while editing the URL
+        if(ytTitle){
+            Title.value = ytTitle;
+        }
+
+    }
+
+    updateThumbUI();
+
+};
 
   rYT.onchange=rURL.onchange=rFile.onchange=updateThumbUI;
 
@@ -612,131 +837,350 @@ const DataBase = [
   };
 
   /* ================= SAVE ================= */
-  form.onsubmit=e=>{
-    e.preventDefault();
-    if(!Link.value) return;
+  form.onsubmit = e=>{
 
-    const type=detectFormat(Link.value);
+    e.preventDefault();
+
+    if(!Link.value.trim())
+        return;
+
+    const type = Formate.value || detectFormat(Link.value);
+
     let thumb="";
 
-    if(rFile.checked && fileThumb) thumb=fileThumb;
-    else if(rURL.checked && thumbURL.value) thumb=thumbURL.value;
-    else if(type==="youtube") thumb=ytThumb(ytId(Link.value));
+    if(rFile.checked && fileThumb){
 
+        thumb=fileThumb;
+
+    }
+
+    else if(rURL.checked){
+
+        thumb=thumbURL.value;
+
+    }
+
+    else if(type==="youtube" || type==="yt-short"){
+function ytThumb(id){
+    if(!id) return "";
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+    }
+
+    const id=ytId(Link.value);
+        if(id) thumb=ytThumb(id);
     const obj={
-      title:Title.value||"Untitled",
-      url:Link.value,
-      type,
-      date:dateInput.value||new Date().toISOString(),
-      thumb,
-      fav:false,
-      views:0
+        title:Title.value.trim() || "Untitled",
+        url:Link.value.trim(),
+        type:type,
+        date:dateInput.value || new Date().toISOString(),
+        thumb:thumb,
+        fav: editIndex>-1 ? items[editIndex].fav : false,
+        views: editIndex>-1 ? items[editIndex].views : 0
+    };
+    if(editIndex>-1){
+        obj.views=items[editIndex].views;
+        obj.fav=items[editIndex].fav;
+        items[editIndex]=obj;
+    }
+    else{
+        items.push(obj);
+    }
+    localStorage.setItem("iframes",JSON.stringify(items));
+    previewes.classList.remove("show");
+    render();
+
     };
 
-    if(editIndex>-1) items[editIndex]={...items[editIndex],...obj};
-    else items.push(obj);
-
-    localStorage.setItem("iframes",JSON.stringify(items));
-    previewes.classList.remove("show");
-    render();
-  };
-
   deleteBtn.onclick=()=>{
-    if(editIndex<0) return;
+    if(editIndex<0)
+        return;
+    if(!confirm("Delete this item?"))
+        return;
     items.splice(editIndex,1);
-    localStorage.setItem("iframes",JSON.stringify(items));
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
     previewes.classList.remove("show");
     render();
-  };
+
+    };
 
   search.oninput=render;
   filter.onchange=render;
 
   /* ================= LOAD / EDIT ================= */
-  function loadMain(o,i){
-    o.views++;
-    mainIframe.src=buildEmbed(o.url);
-    playerWrap.style.display="block";
-    items[i]=o;
-    localStorage.setItem("iframes",JSON.stringify(items));
+  function loadMain(item,index){
+
+    items[index].views++;
+
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
+
+    mainIframe.src = buildEmbed(item.url);
+
+    playerWrap.style.display = "block";
+
     render();
-  }
 
-  function editItem(o,i){
+}
+
+  function editItem(item,index){
+
     previewes.classList.add("show");
-    editIndex=i;
 
-    Title.value=o.title;
-    Link.value=o.url;
-    Formate.value=o.type;
-    dateInput.value=o.date.slice(0,16);
-    preview.src=buildEmbed(o.url);
+    editIndex=index;
 
-    thumbURL.value=o.thumb||"";
+    Title.value=item.title;
+
+    Link.value=item.url;
+
+    Formate.value=item.type;
+
+    dateInput.value = new Date(item.date).toLocaleString("sv-SE").replace(" ","T").slice(0,16);
+
+    preview.src=buildEmbed(item.url);
+
+    thumbURL.value=item.thumb||"";
+
     fileThumb="";
 
-    if(o.thumb?.startsWith("data:")){
-      rFile.checked=true;
-    }else if(o.type==="youtube"){
-      rYT.checked=true;
-      thumbURL.value=ytThumb(ytId(o.url));
-    }else{
-      rURL.checked=true;
+    if(item.thumb && item.thumb.startsWith("data:")){
+        rFile.checked=true;
     }
 
+    else if(item.type==="youtube" || item.type==="yt-short"){
+
+        rYT.checked=true;
+
+    }
+
+    else{
+
+        rURL.checked=true;
+
+    }
     updateThumbUI();
-  }
 
+}
+
+function updateThumbUI(){
+
+    thumbURL.style.display =
+        rURL.checked ? "block" : "none";
+
+    thumbFile.style.display =
+        rFile.checked ? "block" : "none";
+
+}
   /* ================= RENDER ================= */
-  function render(){
+function render(){
+
     list.innerHTML="";
-    let shown=0;
-    const q=search.value.toLowerCase();
-    const f=filter.value;
 
-    let data=[...items];
+    const searchText=search.value.trim().toLowerCase();
+    const filterValue=filter.value;
 
-    if(f==="a → z") data.sort((a,b)=>a.title.localeCompare(b.title));
-    if(f==="z → a") data.sort((a,b)=>b.title.localeCompare(a.title));
-    if(f==="new → old") data.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    if(f==="old → new") data.sort((a,b)=>new Date(a.date)-new Date(b.date));
+    let data=items.map((item,index)=>({
+        ...item,
+        index
+    }));
 
-    data.forEach((o,i)=>{
-      if(q && !o.title.toLowerCase().includes(q)) return;
-      if(f==="favorites" && !o.fav) return;
-      if(!["all","favorites","a → z","z → a","new → old","old → new"].includes(f) && o.type!==f) return;
 
-      shown++;
-      const card=fastTag("div",list,"card");
+    /* ---------- FILTER ---------- */
 
-      const img=fastTag("img",card,"thumb");
-      img.src=o.thumb||"";
+    data=data.filter(item=>{
 
-      fastTag("h4",card,null,null,o.title+" ("+o.type.toUpperCase()+")");
-      fastTag("small",card,null,null,`Views: ${o.views} • ${new Date(o.date).toLocaleString()}`);
+        if(searchText){
 
-      const fav=fastTag("div",card,"fav",null,o.fav?"❤️":"♡");
-      fav.onclick=e=>{
-        e.stopPropagation();
-        o.fav=!o.fav;
-        items[i]=o;
-        localStorage.setItem("iframes",JSON.stringify(items));
-        render();
-      };
+            const text=(
+                item.title+" "+
+                item.type+" "+
+                item.url
+            ).toLowerCase();
 
-      const edit=fastTag("button",card,"edit",null,"Edit");
-      edit.onclick=e=>{
-        e.stopPropagation();
-        editItem(o,i);
-      };
+            if(!text.includes(searchText))
+                return false;
 
-      card.onclick=()=>loadMain(o,i);
+        }
+
+        if(filterValue==="favorites")
+            return item.fav;
+
+        if(
+            ![
+                "all",
+                "favorites",
+                "a → z",
+                "z → a",
+                "new → old",
+                "old → new"
+            ].includes(filterValue)
+        ){
+
+            return item.type===filterValue;
+
+        }
+
+        return true;
+
     });
 
-    countBox.textContent=shown;
-  }
+
+    /* ---------- SORT ---------- */
+
+    switch(filterValue){
+
+        case "a → z":
+            data.sort((a,b)=>
+                a.title.localeCompare(b.title)
+            );
+        break;
+
+        case "z → a":
+            data.sort((a,b)=>
+                b.title.localeCompare(a.title)
+            );
+        break;
+
+        case "new → old":
+            data.sort((a,b)=>
+                new Date(b.date)-new Date(a.date)
+            );
+        break;
+
+        case "old → new":
+            data.sort((a,b)=>
+                new Date(a.date)-new Date(b.date)
+            );
+        break;
+
+    }
+
+
+    countBox.textContent=data.length;
+
+
+    /* ---------- CARDS ---------- */
+
+    data.forEach(item=>{
+
+        const card=fastTag("div",list,"card");
+
+        const img=fastTag("img",card,"thumb");
+
+        img.src=item.thumb || "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+
+        img.onerror=()=>{
+            img.src="https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+            };
+
+        fastTag(
+            "h4",
+            card,
+            null,
+            null,
+            item.title
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            item.type.toUpperCase()
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            "Views : "+item.views
+        );
+
+
+        fastTag(
+            "small",
+            card,
+            null,
+            null,
+            new Date(item.date)
+            .toLocaleString()
+        );
+
+
+        /* ---------- FAVORITE ---------- */
+
+        const fav=fastTag(
+            "button",
+            card,
+            "fav",
+            null,
+            item.fav ? "❤️" : "🤍"
+        );
+
+        fav.onclick=e=>{
+
+            e.stopPropagation();
+
+            items[item.index].fav=
+                !items[item.index].fav;
+
+            localStorage.setItem(
+                "iframes",
+                JSON.stringify(items)
+            );
+
+            render();
+
+        };
+
+
+        /* ---------- EDIT ---------- */
+
+        const edit=fastTag(
+            "button",
+            card,
+            "edit",
+            null,
+            "Edit"
+        );
+
+        edit.onclick=e=>{
+
+            e.stopPropagation();
+
+            editItem(
+                items[item.index],
+                item.index
+            );
+
+        };
+
+
+        /* ---------- OPEN ---------- */
+
+        card.onclick=()=>{
+
+            loadMain(
+                items[item.index],
+                item.index
+            );
+
+        };
+
+    });
+
+}
 
   render();
+  countBox.textContent=items.length;
 });
 </script>
 </html>
