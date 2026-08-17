@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe4</title>
+    <title>Iframe</title>
 <style>
 /* ================= RESET ================= */
 
@@ -125,21 +125,18 @@ button:hover{
 /* ================= PREVIEW ================= */
 
 .previewes{
-    display: none;
-    gap: 15px;
-    padding: 15px;
-    background: #000;
-    border: 2px solid #333;
-    border-radius: 12px;
-    position: fixed;
-    width: 95vw;
-    height: 85vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    align-items: center;
-    justify-content: center;
+  display:none;
+  gap:15px;
+  padding:15px;
+  background:#000;
+  border:2px solid #333;
+  border-radius:12px;
+  position: absolute;
+  width: 95vw;
+  height: 100vh;
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
 }
 
 .previewes.show{
@@ -489,6 +486,7 @@ button:hover{
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+
   /* ================= FASTTAG ================= */
   const fastTag=(t,p,c,id,txt)=>{
     const e=document.createElement(t);
@@ -498,8 +496,10 @@ document.addEventListener("DOMContentLoaded", () => {
     p&&p.appendChild(e);
     return e;
   };
+function createURL(ids,type){
 
-function createURL(ids,type){type=(type||"").toUpperCase();
+    type=(type||"").toUpperCase();
+
     switch(type){
         case "YT": return `https://www.youtube.com/watch?v=${ids}`;
         case "YT-SHORT": case "YT-SHORTS": return `https://www.youtube.com/shorts/${ids}`;
@@ -520,12 +520,23 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   const title = fastTag("h2",header,"title",null,"Iframe Store :");
         const bar=fastTag("div",title,"selectList");
   const tools=fastTag("div",header,"tools");
+  const addBtn=fastTag("button",tools, "upload",null,"Upload");
   const search=fastTag("input",tools);
         search.placeholder="Search…";
-  const addBtn=fastTag("button",tools, "upload",null,"Upload");
         
-  const dataBtn = fastTag("button", tools, null, null, "Data");
-        dataBtn.onclick = exportDataStore;
+const dataBtn = fastTag("button", tools, null, null, "Data");
+dataBtn.onclick = exportDataStore;
+
+const uploadArrayBtn = fastTag(
+    "button",
+    tools,
+    "upload-array",
+    null,
+    "Upload Array"
+);
+
+uploadArrayBtn.onclick = openArrayEditor;
+
 
   /* ---------- PREVIEW + FORM ---------- */
   const previewes=fastTag("div",page,"previewes");
@@ -544,8 +555,7 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   Title.placeholder="Title";
 
   const Formate=fastTag("select",fieldset);
-  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" 
-  ].forEach(v=>{
+  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" ].forEach(v=>{
     const o=fastTag("option",Formate,null,null,v.toUpperCase());
     o.value=v;
   });
@@ -597,6 +607,7 @@ function createURL(ids,type){type=(type||"").toUpperCase();
 
   /* ---------- LIST + FILTER ---------- */
   const main =fastTag("div",page,"main");
+
   const countBox=fastTag("span",bar,"count",null,"0");
   const filter=fastTag("select",bar);
   const list = fastTag("div", main,"list");
@@ -614,7 +625,8 @@ if(!items){
             url:createURL(d.ids,d.type),
             type:(d.type||"url").toLowerCase(),
             date:new Date().toISOString(),
-            thumb:d.type && d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
+            thumb:d.type &&
+                  d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
         });
     });
     localStorage.setItem( "iframes", JSON.stringify(items));
@@ -627,19 +639,54 @@ if(!items){
 
 // YouTube Video & Shorts
 const ytId = url => {
+
     if (!url) return null;
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+
+    const match = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+    );
+
     return match ? match[1] : null;
+
 };
 
 function exportDataStore(){
-    const editor = fastTag("div",document.body,"array-editor","dataStoreEditor");
-    const box = fastTag( "div", editor, "array-editor-box"    );
+
+    const editor = fastTag(
+        "div",
+        document.body,
+        "array-editor",
+        "dataStoreEditor"
+    );
+
+    const box = fastTag(
+        "div",
+        editor,
+        "array-editor-box"
+    );
+
     // Title
-    const titleBox = fastTag( "div", box, "array-editor-title"    );
-    fastTag( "span", titleBox, null, null, "Local Storage Data"    );
+    const titleBox = fastTag(
+        "div",
+        box,
+        "array-editor-title"
+    );
+
+    fastTag(
+        "span",
+        titleBox,
+        null,
+        null,
+        "Local Storage Data"
+    );
+
     // Textarea
-    const textarea = fastTag( "textarea", box, "array-editor-textarea"    );
+    const textarea = fastTag(
+        "textarea",
+        box,
+        "array-editor-textarea"
+    );
+
     textarea.spellcheck = false;
 
     // Load current localStorage data
@@ -648,12 +695,43 @@ function exportDataStore(){
     );
 
     // Show formatted JSON
-    textarea.value = JSON.stringify( localData, null, 2    );
+    textarea.value = JSON.stringify(
+        localData,
+        null,
+        2
+    );
+
     // Buttons
-    const buttons = fastTag( "div", box, "array-editor-buttons"    );
-    const saveBtn = fastTag( "button", buttons, "array-editor-save", null, "Save Changes"    );
-    const cancelBtn = fastTag( "button", buttons, "array-editor-cancel", null, "Cancel"    );
-    const copyBtn = fastTag( "button", buttons, null, null, "Copy"    );
+    const buttons = fastTag(
+        "div",
+        box,
+        "array-editor-buttons"
+    );
+
+    const saveBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-save",
+        null,
+        "Save Changes"
+    );
+
+    const cancelBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-cancel",
+        null,
+        "Cancel"
+    );
+
+    const copyBtn = fastTag(
+        "button",
+        buttons,
+        null,
+        null,
+        "Copy"
+    );
+
     // Show editor
     editor.classList.add("show");
 
@@ -666,59 +744,756 @@ function exportDataStore(){
     copyBtn.onclick = async () => {
 
         try {
+
             await navigator.clipboard.writeText(
                 textarea.value
             );
+
             alert("Data copied.");
+
         } catch(error) {
+
             alert("Unable to copy data.");
+
         }
+
     };
 
     // Save
     saveBtn.onclick = () => {
+
         try {
+
             const newData = JSON.parse(
                 textarea.value
             );
+
             if(!Array.isArray(newData)){
+
                 throw new Error(
                     "Data must be an array."
                 );
+
             }
 
             // Basic validation
             newData.forEach((item, index) => {
+
                 if(typeof item !== "object" || item === null){
+
                     throw new Error(
                         "Invalid item at index " + index
                     );
+
                 }
+
             });
+
             // Save to localStorage
             items = newData;
+
             localStorage.setItem(
                 "iframes",
                 JSON.stringify(items)
             );
+
             // Close editor
             editor.remove();
+
             // Refresh cards
             render();
+
             countBox.textContent = items.length;
+
             alert(
                 items.length +
                 " items saved successfully."
             );
+
         } catch(error) {
+
             alert(
                 "Invalid JSON data.\n\n" +
                 error.message
             );
+
         }
+
     };
+
 }
 
+/* ================= UPLOAD ARRAY EDITOR ================= */
+
+function openArrayEditor(){
+
+    /* ---------- EDITOR ---------- */
+
+    const editor = fastTag(
+        "div",
+        document.body,
+        "array-editor",
+        "arrayEditor"
+    );
+
+    const box = fastTag(
+        "div",
+        editor,
+        "array-editor-box"
+    );
+
+    /* ---------- TITLE ---------- */
+
+    const titleBox = fastTag(
+        "div",
+        box,
+        "array-editor-title"
+    );
+
+    fastTag(
+        "span",
+        titleBox,
+        null,
+        null,
+        "Upload Array"
+    );
+
+    /* ---------- TEXTAREA ---------- */
+
+    const textarea = fastTag(
+        "textarea",
+        box,
+        "array-editor-textarea"
+    );
+
+    textarea.spellcheck = false;
+
+    /* ---------- GET LOCAL STORAGE ---------- */
+
+    let localData = JSON.parse(
+        localStorage.getItem("iframes") || "[]"
+    );
+
+    /* ---------- CONVERT LOCAL DATA ---------- */
+
+    const lines = [];
+
+    localData.forEach(item => {
+
+        const id = ytId(item.url) || "";
+
+        const time = item.duration || "00:00";
+
+        const title = item.title || "";
+
+        lines.push(
+            `{ ids: ${JSON.stringify(id)}, time: ${JSON.stringify(time)}, title: ${JSON.stringify(title)}},`
+        );
+
+    });
+
+    textarea.value = lines.join("\n");
+
+    /* ---------- BUTTONS ---------- */
+
+    const buttons = fastTag(
+        "div",
+        box,
+        "array-editor-buttons"
+    );
+
+    const saveArrayBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-save",
+        null,
+        "Save Array"
+    );
+
+    const cancelArrayBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-cancel",
+        null,
+        "Cancel"
+    );
+
+    /* ---------- SHOW ---------- */
+
+    editor.classList.add("show");
+
+    /* ---------- CANCEL ---------- */
+
+    cancelArrayBtn.onclick = () => {
+        editor.remove();
+    };
+
+    /* ---------- SAVE ---------- */
+
+    saveArrayBtn.onclick = () => {
+
+        const text = textarea.value.trim();
+
+        if(!text){
+
+            if(!confirm("Array is empty. Clear local data?"))
+                return;
+
+            items = [];
+
+            localStorage.setItem(
+                "iframes",
+                JSON.stringify(items)
+            );
+
+            editor.remove();
+
+            render();
+
+            return;
+        }
+
+        try{
+
+            /* --------------------------------
+               CONVERT OBJECT LINES TO ARRAY
+            -------------------------------- */
+
+            const cleaned = text
+                .replace(/const\s+\w+\s*=\s*\[/i, "")
+                .replace(/^\s*\[/, "")
+                .replace(/\]\s*;?\s*$/, "")
+                .trim();
+
+            if(!cleaned){
+                throw new Error("No array data found.");
+            }
+
+            const objectText = "[" + cleaned + "]";
+
+            /*
+             * Parse JavaScript-style objects.
+             * This supports:
+             *
+             * { ids:"abc", time:"00:00", title:"Hello" }
+             *
+             * and emoji/unicode titles.
+             */
+
+            const parsed = Function(
+                `"use strict"; return (${objectText});`
+            )();
+
+            if(!Array.isArray(parsed)){
+                throw new Error("Array format is invalid.");
+            }
+
+            /* --------------------------------
+               CREATE LOCAL STORAGE DATA
+            -------------------------------- */
+
+            const newItems = [];
+
+            parsed.forEach((data, index) => {
+
+                const ids = String(data.ids || "").trim();
+
+                const time =
+                    String(data.time || "00:00").trim();
+
+                const title =
+                    String(data.title || "").trim();
+
+                if(!ids){
+                    return;
+                }
+
+                const url =
+                    `https://www.youtube.com/watch?v=${ids}`;
+
+                newItems.push({
+
+                    title: title || "Untitled",
+
+                    url: url,
+
+                    type: "youtube",
+
+                    date: new Date().toISOString(),
+
+                    thumb: ytThumb(ids),
+
+                    fav: false,
+
+                    views: 0,
+
+                    duration: time
+
+                });
+
+            });
+
+            /* --------------------------------
+               UPDATE LOCAL STORAGE
+            -------------------------------- */
+
+            items = newItems;
+
+            localStorage.setItem(
+                "iframes",
+                JSON.stringify(items)
+            );
+
+            /* --------------------------------
+               CLOSE + REFRESH
+            -------------------------------- */
+
+            editor.remove();
+
+            render();
+
+            countBox.textContent = items.length;
+
+            alert(
+                `${items.length} items uploaded successfully.`
+            );
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            alert(
+                "Invalid Array Format.\n\n" +
+                "Please use:\n\n" +
+                `{ ids: "VIDEO_ID", time: "00:00", title: "TITLE" },`
+            );
+
+        }
+
+    };
+
+}
+
+async function fetchYouTubeTitle(url){
+    const id = ytId(url);
+    if(!id) return "";
+    try{
+
+        const res = await fetch(
+            `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`
+        );
+
+        if(!res.ok) return "";
+
+        const data = await res.json();
+
+        return data.title || "";
+
+    }catch(err){
+
+        console.log(err);
+
+        return "";
+
+    }
+
+}
+
+// TikTok
+const tkId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/video\/(\d+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Instagram Reel
+const igId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/reel\/([^/?]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Facebook
+const fbId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/[?&]v=([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+// Twitter / X
+const xId = url => {
+
+    if (!url) return null;
+
+    const match = url.match(/status\/([0-9]+)/);
+
+    return match ? match[1] : null;
+
+};
+
+
+/* ================= DETECT FORMAT ================= */
+
+function detectFormat(url){
+
+    if(!url) return "url";
+
+    url = url.toLowerCase();
+
+    if(url.includes("<iframe"))
+        return "iframe";
+
+    if(url.includes("/shorts/"))
+        return "yt-short";
+
+    if(url.includes("youtube.com") || url.includes("youtu.be"))
+        return "youtube";
+
+    if(url.includes("tiktok.com"))
+        return "tiktok";
+
+    if(url.includes("instagram.com"))
+        return "instagram";
+
+    if(url.includes("facebook.com"))
+        return "facebook";
+
+    if(url.includes("twitter.com") || url.includes("x.com"))
+        return "twitter";
+
+    if(url.includes("t.me"))
+        return "telegram";
+
+    if(url.includes("wa.me") || url.includes("whatsapp"))
+        return "whatsapp";
+
+    return "url";
+
+}
+
+
+/* ================= BUILD EMBED ================= */
+
+function buildEmbed(url){
+
+    if(!url) return "";
+
+    // YouTube
+    const yid = ytId(url);
+
+    if(yid){
+        return `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`;
+    }
+
+    // TikTok
+    const tid = tkId(url);
+
+    if(tid){
+        return `https://www.tiktok.com/embed/v2/${tid}`;
+    }
+
+    // Instagram
+    const iid = igId(url);
+
+    if(iid){
+        return `https://www.instagram.com/reel/${iid}/embed`;
+    }
+
+    // iframe code
+    if(url.includes("<iframe")){
+
+        const src = url.match(/src=["']([^"']+)["']/);
+
+        return src ? src[1] : "";
+
+    }
+
+    // All other links
+    return url;
+
+}
+
+
+/* ================= YOUTUBE THUMBNAIL ================= */
+
+function getYouTubeThumbnail(url){
+
+    const id = ytId(url);
+
+    if(!id) return "";
+
+    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
+}
+
+
+  /* ================= EVENTS ================= */
+  addBtn.onclick=()=>{
+
+    editIndex=-1;
+
+    form.reset();
+
+    preview.src="about:blank";
+
+    fileThumb="";
+
+    rYT.checked=true;
+
+    updateThumbUI();
+
+    previewes.classList.toggle("show");
+
+};
+
+  Link.oninput = async ()=>{
+
+    const url = Link.value.trim();
+
+    if(!url){
+        preview.src = "about:blank";
+        lastVideoID = "";
+        return;
+    }
+
+    Formate.value = detectFormat(url);
+
+    preview.src = buildEmbed(url) || "about:blank";
+
+    const id = ytId(url);
+
+    if(id && id !== lastVideoID){
+
+        lastVideoID = id;
+
+        const ytTitle = await fetchYouTubeTitle(url);
+
+        // Always update while editing the URL
+        if(ytTitle){
+            Title.value = ytTitle;
+        }
+
+    }
+
+    updateThumbUI();
+
+};
+
+  rYT.onchange=rURL.onchange=rFile.onchange=updateThumbUI;
+
+  thumbFile.onchange=()=>{
+    const f=thumbFile.files[0];
+    if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>fileThumb=r.result;
+    r.readAsDataURL(f);
+  };
+
+  /* ================= SAVE ================= */
+  form.onsubmit = e=>{
+
+    e.preventDefault();
+
+    if(!Link.value.trim())
+        return;
+
+    const type = Formate.value || detectFormat(Link.value);
+
+    let thumb="";
+
+    if(rFile.checked && fileThumb){
+
+        thumb=fileThumb;
+
+    }
+
+    else if(rURL.checked){
+
+        thumb=thumbURL.value;
+
+    }
+
+    else if(type==="youtube" || type==="yt-short"){
+function ytThumb(id){
+    if(!id) return "";
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+    }
+
+    const id=ytId(Link.value);
+        if(id) thumb=ytThumb(id);
+    const obj={
+        title:Title.value.trim() || "Untitled",
+        url:Link.value.trim(),
+        type:type,
+        date:dateInput.value || new Date().toISOString(),
+        thumb:thumb,
+        fav: editIndex>-1 ? items[editIndex].fav : false,
+        views: editIndex>-1 ? items[editIndex].views : 0
+    };
+    if(editIndex>-1){
+        obj.views=items[editIndex].views;
+        obj.fav=items[editIndex].fav;
+        items[editIndex]=obj;
+    }
+    else{
+        items.push(obj);
+    }
+    localStorage.setItem("iframes",JSON.stringify(items));
+    previewes.classList.remove("show");
+    render();
+
+    };
+
+  deleteBtn.onclick=()=>{
+    if(editIndex<0)
+        return;
+    if(!confirm("Delete this item?"))
+        return;
+    items.splice(editIndex,1);
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
+    previewes.classList.remove("show");
+    render();
+
+    };
+
+  search.oninput=render;
+  filter.onchange=render;
+
+  /* ================= LOAD / EDIT ================= */
+  function loadMain(item,index){
+
+    items[index].views++;
+
+    localStorage.setItem(
+        "iframes",
+        JSON.stringify(items)
+    );
+
+    mainIframe.src = buildEmbed(item.url);
+
+    playerWrap.style.display = "block";
+
+    render();
+
+}
+
+  function editItem(item,index){
+
+    previewes.classList.add("show");
+
+    editIndex=index;
+
+    Title.value=item.title;
+
+    Link.value=item.url;
+
+    Formate.value=item.type;
+
+    dateInput.value = new Date(item.date).toLocaleString("sv-SE").replace(" ","T").slice(0,16);
+
+    preview.src=buildEmbed(item.url);
+
+    thumbURL.value=item.thumb||"";
+
+    fileThumb="";
+
+    if(item.thumb && item.thumb.startsWith("data:")){
+        rFile.checked=true;
+    }
+
+    else if(item.type==="youtube" || item.type==="yt-short"){
+
+        rYT.checked=true;
+
+    }
+
+    else{
+
+        rURL.checked=true;
+
+    }
+    updateThumbUI();
+
+}
+
+function updateThumbUI(){
+
+    thumbURL.style.display =
+        rURL.checked ? "block" : "none";
+
+    thumbFile.style.display =
+        rFile.checked ? "block" : "none";
+
+}
+  /* ================= RENDER ================= */
+function render(){
+
+    list.innerHTML="";
+
+    const searchText=search.value.trim().toLowerCase();
+    const filterValue=filter.value;
+
+    let data=items.map((item,index)=>({
+        ...item,
+        index
+    }));
+
+
+    /* ---------- FILTER ---------- */
+
+    data=data.filter(item=>{
+
+        if(searchText){
+
+            const text=(
+                item.title+" "+
+                item.type+" "+
+                item.url
+            ).toLowerCase();
+
+            if(!text.includes(searchText))
+                return false;
+
+        }
+
+        if(filterValue==="favorites")
+            return item.fav;
+
+        if(
+            ![
+                "all",
+                "favorites",
+                "a → z",
+                "z → a",
+                "new → old",
+                "old → new"
+            ].includes(filterValue)
+        ){
+
+            return item.type===filterValue;
+
+        }
+
+        return true;
+
+    });
 
 
     /* ---------- SORT ---------- */
