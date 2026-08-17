@@ -52,9 +52,6 @@ body::before{
   border-radius:10px;
   margin: 10px;
   width: 98%;
-  position:sticky;
-  top: 0;
-  z-index: 1;
 }
 
 .title{
@@ -211,16 +208,13 @@ button:hover{
 /* ================= PLAYER ================= */
 
 .playerWrap{
-  width: 98vw;
-  border-radius: 0;
   position:sticky;
   top: 0;
   z-index: 1;
 }
 
 .main-iframe{
-  min-height: 500px;
-  width:100%;
+  width:100vw;
   border:none;
   border-radius:12px;
   background:#000;
@@ -328,8 +322,8 @@ button:hover{
 }
 
 .array-editor-box{
-    width:min(90%,95vw);
-    height:min(80%,90vh);
+    width:min(1000px,95vw);
+    height:min(750px,90vh);
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -381,11 +375,7 @@ button:hover{
     background:seagreen;
 }
 
-.DataBtn{
-    background:rgb(58, 110, 208);
-}
-
-.array-editor-cancel, .deleteBtn{
+.array-editor-cancel{
     background:#a33;
 }
 
@@ -533,10 +523,14 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   const search=fastTag("input",tools);
         search.placeholder="Search…";
   const addBtn=fastTag("button",tools, "upload",null,"Upload");
+        
+  const dataBtn = fastTag("button", tools, null, null, "Data");
+        dataBtn.onclick = exportDataStore;
 
   /* ---------- PREVIEW + FORM ---------- */
   const previewes=fastTag("div",page,"previewes");
-  const preview = fastTag("iframe", previewes, "preview");
+  const preview=fastTag("iframe",previewes,"preview");
+
   const asider=fastTag("aside",previewes,"asider");
   const form=fastTag("form",asider,"form");
 
@@ -581,16 +575,13 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   const dateInput=fastTag("input",fieldset);
   dateInput.type="datetime-local";
 
-  const Btns=fastTag("div",fieldset,"saveBtns");
-  
-    const dataBtn = fastTag("button", Btns, "DataBtn", null, "Data");
-          dataBtn.onclick = exportDataStore;
+  const saveBtns=fastTag("div",fieldset,"saveBtns");
 
-  const deleteBtn=fastTag("button",Btns, "deleteBtn",null,"Delete");
-        deleteBtn.type="button";
+  const deleteBtn=fastTag("button",saveBtns,null,null,"Delete");
+  deleteBtn.type="button";
 
-  const saveBtn=fastTag("button",Btns, null,null,"Save");
-        saveBtn.type="submit";
+  const saveBtn=fastTag("button",saveBtns,null,null,"Save");
+  saveBtn.type="submit";
 
   /* ---------- MAIN PLAYER ---------- */
   const playerWrap=fastTag("div",page,"playerWrap");
@@ -598,9 +589,6 @@ function createURL(ids,type){type=(type||"").toUpperCase();
 
   const closeBtn=fastTag("button",playerWrap,"closeBtn",null,"✕");
   const mainIframe=fastTag("iframe",playerWrap,"main-iframe");
-        mainIframe.setAttribute( "allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-        mainIframe.setAttribute( "referrerpolicy", "strict-origin-when-cross-origin");
-        mainIframe.setAttribute("allowfullscreen", "");
 
   closeBtn.onclick=()=>{
     mainIframe.src="about:blank";
@@ -902,291 +890,7 @@ function exportDataStore(){
 //             items = newItems;
 //             localStorage.setItem(
 //                 "iframes",
-//                 JSON.stringify(items)
-//             );
-
-//             /* --------------------------------
-//                CLOSE + REFRESH
-//             -------------------------------- */
-//             editor.remove();
-//             render();
-//             countBox.textContent = items.length;
-//             alert(
-//                 `${items.length} items uploaded successfully.`
-//             );
-//         }
-//         catch(error){
-//             console.error(error);
-//             alert(
-//                 "Invalid Array Format.\n\n" +
-//                 "Please use:\n\n" +
-//                 `{ ids: "VIDEO_ID", time: "00:00", title: "TITLE" },`
-//             );
-//         }
-//     };
-// }
-
-async function fetchYouTubeTitle(url){
-    const id = ytId(url);
-    if(!id) return "";
-    try{
-        const res = await fetch( `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);if(!res.ok) return "";const data = await res.json();return data.title || "";}
-        catch(err){ console.log(err); return "";}
-}
-
-// TikTok
-const tkId = url => {
-    if (!url) return null;
-    const match = url.match(/video\/(\d+)/);
-    return match ? match[1] : null;
-};
-
-// Instagram Reel
-const igId = url => {
-    if (!url) return null;
-    const match = url.match(/reel\/([^/?]+)/);
-    return match ? match[1] : null;
-};
-
-// Facebook
-const fbId = url => {
-    if (!url) return null;
-    const match = url.match(/[?&]v=([0-9]+)/);
-    return match ? match[1] : null;
-};
-
-// Twitter / X
-const xId = url => {
-    if (!url) return null;
-    const match = url.match(/status\/([0-9]+)/);
-    return match ? match[1] : null;
-};
-
-
-/* ================= DETECT FORMAT ================= */
-
-function detectFormat(url){
-    if(!url) return "url"; url = url.toLowerCase();
-    if(url.includes("<iframe"))return "iframe";
-    if(url.includes("/shorts/"))return "yt-short";
-    if(url.includes("youtube.com") || url.includes("youtu.be"))return "youtube";
-    if(url.includes("tiktok.com"))return "tiktok";
-    if(url.includes("instagram.com"))return "instagram";
-    if(url.includes("facebook.com"))return "facebook";
-    if(url.includes("twitter.com") || url.includes("x.com"))return "twitter";
-    if(url.includes("t.me"))return "telegram";
-    if(url.includes("wa.me") || url.includes("whatsapp"))return "whatsapp";
-    return "url";
-}
-
-/* ================= BUILD EMBED ================= */
-
-function buildEmbed(url){
-
-    if(!url) return "";
-    const yid = ytId(url); if(yid) {return `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`; }    // YouTube
-    const tid = tkId(url); if(tid) {return `https://www.tiktok.com/embed/v2/${tid}`; }    // TikTok
-    const iid = igId(url); if(iid) {return `https://www.instagram.com/reel/${iid}/embed`; }    // Instagram
-    if(url.includes("<iframe")){ const src = url.match(/src=["']([^"']+)["']/); return src ? src[1] : ""; }  // iframe code
-    return url;    // All other links
-}
-
-
-/* ================= YOUTUBE THUMBNAIL ================= */
-function getYouTubeThumbnail(url){
-    const id = ytId(url);
-    if(!id) return "";
-    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-}
-
-  /* ================= EVENTS ================= */
-  addBtn.onclick=()=>{
-    editIndex=-1;
-    form.reset();
-    preview.src="about:blank";
-    fileThumb="";
-    rYT.checked=true;
-    updateThumbUI();
-    previewes.classList.toggle("show");
-};
-
-  Link.oninput = async ()=>{
-    const url = Link.value.trim();
-    if(!url){
-        preview.src = "about:blank";
-        lastVideoID = "";
-        return;
-    }
-
-    Formate.value = detectFormat(url);
-    preview.src = buildEmbed(url) || "about:blank";
-    const id = ytId(url);
-
-    if(id && id !== lastVideoID){
-        lastVideoID = id;
-        const ytTitle = await fetchYouTubeTitle(url);
-        if(ytTitle){ Title.value = ytTitle;}        // Always update while editing the URL
-    }
-    updateThumbUI();
-};
-
-  rYT.onchange=rURL.onchange=rFile.onchange=updateThumbUI;
-  thumbFile.onchange=()=>{
-    const f=thumbFile.files[0];
-    if(!f) return;
-    const r=new FileReader();
-    r.onload=()=>fileThumb=r.result;
-    r.readAsDataURL(f);
-  };
-
-  /* ================= SAVE ================= */
-  form.onsubmit = e=>{
-    e.preventDefault();
-    if(!Link.value.trim()) return;
-    const type = Formate.value || detectFormat(Link.value);
-    let thumb="";
-    if(rFile.checked && fileThumb){ thumb=fileThumb; }
-    else if(rURL.checked){ thumb=thumbURL.value; }
-    else if(type==="youtube" || type==="yt-short"){
-        function ytThumb(id){
-            if(!id) return "";
-            return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        }
-    }
-
-    const id=ytId(Link.value);
-        if(id) thumb=ytThumb(id);
-    const obj={
-        title:Title.value.trim() || "Untitled",
-        url:Link.value.trim(),
-        type:type,
-        date:dateInput.value || new Date().toISOString(),
-        thumb:thumb,
-        fav: editIndex>-1 ? items[editIndex].fav : false,
-        views: editIndex>-1 ? items[editIndex].views : 0
-    };
-    if(editIndex>-1){
-        obj.views=items[editIndex].views;
-        obj.fav=items[editIndex].fav;
-        items[editIndex]=obj;
-    }
-    else{
-        items.push(obj);
-    }
-    localStorage.setItem("iframes",JSON.stringify(items));
-    previewes.classList.remove("show");
-    render();
-
-    };
-
-  deleteBtn.onclick=()=>{
-    if(editIndex<0)
-        return;
-    if(!confirm("Delete this item?"))
-        return;
-    items.splice(editIndex,1);
-    localStorage.setItem(
-        "iframes",
-        JSON.stringify(items)
-    );
-    previewes.classList.remove("show");
-    render();
-
-    };
-
-  search.oninput=render;
-  filter.onchange=render;
-
-  /* ================= LOAD / EDIT ================= */
-  function loadMain(item,index){
-
-    items[index].views++;
-
-    localStorage.setItem(
-        "iframes",
-        JSON.stringify(items)
-    );
-
-    mainIframe.src = buildEmbed(item.url);
-
-    playerWrap.style.display = "block";
-
-    render();
-
-}
-
-  function editItem(item,index){
-    previewes.classList.add("show");
-    editIndex=index;
-    Title.value=item.title;
-    Link.value=item.url;
-    Formate.value=item.type;
-    dateInput.value = new Date(item.date).toLocaleString("sv-SE").replace(" ","T").slice(0,16);
-    preview.src=buildEmbed(item.url);
-    thumbURL.value=item.thumb||"";
-    fileThumb="";
-    if(item.thumb && item.thumb.startsWith("data:")){
-        rFile.checked=true;
-    }
-    else if(item.type==="youtube" || item.type==="yt-short"){
-        rYT.checked=true;
-    }
-    else{
-        rURL.checked=true;
-    }
-    updateThumbUI();
-}
-
-function updateThumbUI(){
-
-    thumbURL.style.display =
-        rURL.checked ? "block" : "none";
-
-    thumbFile.style.display =
-        rFile.checked ? "block" : "none";
-
-}
-  /* ================= RENDER ================= */
-function render(){
-
-    list.innerHTML="";
-    const searchText=search.value.trim().toLowerCase();
-    const filterValue=filter.value;
-    let data=items.map((item,index)=>({
-        ...item,
-        index
-    }));
-
-
-    /* ---------- FILTER ---------- */
-
-    data=data.filter(item=>{
-
-        if(searchText){
-            const text=(
-                item.title+" "+
-                item.type+" "+
-                item.url
-            ).toLowerCase();
-
-            if(!text.includes(searchText))
-                return false;
-
-        }
-
-        if(filterValue==="favorites")
-            return item.fav;
-
-        if(
-            ![
-                "all",
-                "favorites",
-                "a → z",
-                "z → a",
-                "new → old",
-                "old → new"
-            ].includes(filterValue)
-        ){
+//                 JSON.stringify(item        ){
 
             return item.type===filterValue;
 
