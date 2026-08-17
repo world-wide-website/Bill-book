@@ -125,21 +125,18 @@ button:hover{
 /* ================= PREVIEW ================= */
 
 .previewes{
-    display: none;
-    gap: 15px;
-    padding: 15px;
-    background: #000;
-    border: 2px solid #333;
-    border-radius: 12px;
-    position: fixed;
-    width: 95vw;
-    height: 85vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    align-items: center;
-    justify-content: center;
+  display:none;
+  gap:15px;
+  padding:15px;
+  background:#000;
+  border:2px solid #333;
+  border-radius:12px;
+  position: absolute;
+  width: 95vw;
+  height: 100vh;
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
 }
 
 .previewes.show{
@@ -489,6 +486,7 @@ button:hover{
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+
   /* ================= FASTTAG ================= */
   const fastTag=(t,p,c,id,txt)=>{
     const e=document.createElement(t);
@@ -498,8 +496,10 @@ document.addEventListener("DOMContentLoaded", () => {
     p&&p.appendChild(e);
     return e;
   };
+function createURL(ids,type){
 
-function createURL(ids,type){type=(type||"").toUpperCase();
+    type=(type||"").toUpperCase();
+
     switch(type){
         case "YT": return `https://www.youtube.com/watch?v=${ids}`;
         case "YT-SHORT": case "YT-SHORTS": return `https://www.youtube.com/shorts/${ids}`;
@@ -520,12 +520,23 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   const title = fastTag("h2",header,"title",null,"Iframe Store :");
         const bar=fastTag("div",title,"selectList");
   const tools=fastTag("div",header,"tools");
+  const addBtn=fastTag("button",tools, "upload",null,"Upload");
   const search=fastTag("input",tools);
         search.placeholder="Search…";
-  const addBtn=fastTag("button",tools, "upload",null,"Upload");
         
-  const dataBtn = fastTag("button", tools, null, null, "Data");
-        dataBtn.onclick = exportDataStore;
+const dataBtn = fastTag("button", tools, null, null, "Data");
+dataBtn.onclick = exportDataStore;
+
+const uploadArrayBtn = fastTag(
+    "button",
+    tools,
+    "upload-array",
+    null,
+    "Upload Array"
+);
+
+uploadArrayBtn.onclick = openArrayEditor;
+
 
   /* ---------- PREVIEW + FORM ---------- */
   const previewes=fastTag("div",page,"previewes");
@@ -544,8 +555,7 @@ function createURL(ids,type){type=(type||"").toUpperCase();
   Title.placeholder="Title";
 
   const Formate=fastTag("select",fieldset);
-  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" 
-  ].forEach(v=>{
+  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" ].forEach(v=>{
     const o=fastTag("option",Formate,null,null,v.toUpperCase());
     o.value=v;
   });
@@ -597,6 +607,7 @@ function createURL(ids,type){type=(type||"").toUpperCase();
 
   /* ---------- LIST + FILTER ---------- */
   const main =fastTag("div",page,"main");
+
   const countBox=fastTag("span",bar,"count",null,"0");
   const filter=fastTag("select",bar);
   const list = fastTag("div", main,"list");
@@ -614,7 +625,8 @@ if(!items){
             url:createURL(d.ids,d.type),
             type:(d.type||"url").toLowerCase(),
             date:new Date().toISOString(),
-            thumb:d.type && d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
+            thumb:d.type &&
+                  d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
         });
     });
     localStorage.setItem( "iframes", JSON.stringify(items));
@@ -627,19 +639,54 @@ if(!items){
 
 // YouTube Video & Shorts
 const ytId = url => {
+
     if (!url) return null;
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+
+    const match = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+    );
+
     return match ? match[1] : null;
+
 };
 
 function exportDataStore(){
-    const editor = fastTag("div",document.body,"array-editor","dataStoreEditor");
-    const box = fastTag( "div", editor, "array-editor-box"    );
+
+    const editor = fastTag(
+        "div",
+        document.body,
+        "array-editor",
+        "dataStoreEditor"
+    );
+
+    const box = fastTag(
+        "div",
+        editor,
+        "array-editor-box"
+    );
+
     // Title
-    const titleBox = fastTag( "div", box, "array-editor-title"    );
-    fastTag( "span", titleBox, null, null, "Local Storage Data"    );
+    const titleBox = fastTag(
+        "div",
+        box,
+        "array-editor-title"
+    );
+
+    fastTag(
+        "span",
+        titleBox,
+        null,
+        null,
+        "Local Storage Data"
+    );
+
     // Textarea
-    const textarea = fastTag( "textarea", box, "array-editor-textarea"    );
+    const textarea = fastTag(
+        "textarea",
+        box,
+        "array-editor-textarea"
+    );
+
     textarea.spellcheck = false;
 
     // Load current localStorage data
@@ -648,12 +695,43 @@ function exportDataStore(){
     );
 
     // Show formatted JSON
-    textarea.value = JSON.stringify( localData, null, 2    );
+    textarea.value = JSON.stringify(
+        localData,
+        null,
+        2
+    );
+
     // Buttons
-    const buttons = fastTag( "div", box, "array-editor-buttons"    );
-    const saveBtn = fastTag( "button", buttons, "array-editor-save", null, "Save Changes"    );
-    const cancelBtn = fastTag( "button", buttons, "array-editor-cancel", null, "Cancel"    );
-    const copyBtn = fastTag( "button", buttons, null, null, "Copy"    );
+    const buttons = fastTag(
+        "div",
+        box,
+        "array-editor-buttons"
+    );
+
+    const saveBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-save",
+        null,
+        "Save Changes"
+    );
+
+    const cancelBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-cancel",
+        null,
+        "Cancel"
+    );
+
+    const copyBtn = fastTag(
+        "button",
+        buttons,
+        null,
+        null,
+        "Copy"
+    );
+
     // Show editor
     editor.classList.add("show");
 
@@ -666,392 +744,305 @@ function exportDataStore(){
     copyBtn.onclick = async () => {
 
         try {
+
             await navigator.clipboard.writeText(
                 textarea.value
             );
+
             alert("Data copied.");
+
         } catch(error) {
+
             alert("Unable to copy data.");
+
         }
+
     };
 
     // Save
     saveBtn.onclick = () => {
+
         try {
+
             const newData = JSON.parse(
                 textarea.value
             );
+
             if(!Array.isArray(newData)){
+
                 throw new Error(
                     "Data must be an array."
                 );
+
             }
 
             // Basic validation
             newData.forEach((item, index) => {
+
                 if(typeof item !== "object" || item === null){
+
                     throw new Error(
                         "Invalid item at index " + index
                     );
+
                 }
+
             });
+
             // Save to localStorage
             items = newData;
+
             localStorage.setItem(
                 "iframes",
                 JSON.stringify(items)
             );
+
             // Close editor
             editor.remove();
+
             // Refresh cards
             render();
+
             countBox.textContent = items.length;
+
             alert(
                 items.length +
                 " items saved successfully."
             );
+
         } catch(error) {
+
             alert(
                 "Invalid JSON data.\n\n" +
                 error.message
             );
+
         }
+
     };
+
 }
 
 /* ================= UPLOAD ARRAY EDITOR ================= */
-// const uploadArrayBtn = fastTag( "button", tools, "upload-array", null, "Upload Array");
-//         uploadArrayBtn.onclick = openArrayEditor;        
-// function openArrayEditor(){
 
-//     /* ---------- EDITOR ---------- */
-//     const editor = fastTag(
-//         "div",
-//         document.body,
-//         "array-editor",
-//         "arrayEditor"
-//     );
-//     const box = fastTag(
-//         "div",
-//         editor,
-//         "array-editor-box"
-//     );
+function openArrayEditor(){
 
-//     /* ---------- TITLE ---------- */
-//     const titleBox = fastTag(
-//         "div",
-//         box,
-//         "array-editor-title"
-//     );
+    /* ---------- EDITOR ---------- */
 
-//     fastTag(
-//         "span",
-//         titleBox,
-//         null,
-//         null,
-//         "Upload Array"
-//     );
+    const editor = fastTag(
+        "div",
+        document.body,
+        "array-editor",
+        "arrayEditor"
+    );
 
-//     /* ---------- TEXTAREA ---------- */
-//     const textarea = fastTag(
-//         "textarea",
-//         box,
-//         "array-editor-textarea"
-//     );
+    const box = fastTag(
+        "div",
+        editor,
+        "array-editor-box"
+    );
 
-//     textarea.spellcheck = false;
+    /* ---------- TITLE ---------- */
 
-//     /* ---------- GET LOCAL STORAGE ---------- */
-//     let localData = JSON.parse(
-//         localStorage.getItem("iframes") || "[]"
-//     );
+    const titleBox = fastTag(
+        "div",
+        box,
+        "array-editor-title"
+    );
 
-//     /* ---------- CONVERT LOCAL DATA ---------- */
-//     const lines = [];
-//     localData.forEach(item => {
-//         const id = ytId(item.url) || "";
-//         const time = item.duration || "00:00";
-//         const title = item.title || "";
-//         lines.push(
-//             `{ ids: ${JSON.stringify(id)}, time: ${JSON.stringify(time)}, title: ${JSON.stringify(title)}},`
-//         );
-//     });
-//     textarea.value = lines.join("\n");
+    fastTag(
+        "span",
+        titleBox,
+        null,
+        null,
+        "Upload Array"
+    );
 
-//     /* ---------- BUTTONS ---------- */
-//     const buttons = fastTag(
-//         "div",
-//         box,
-//         "array-editor-buttons"
-//     );
-//     const saveArrayBtn = fastTag(
-//         "button",
-//         buttons,
-//         "array-editor-save",
-//         null,
-//         "Save Array"
-//     );
-//     const cancelArrayBtn = fastTag(
-//         "button",
-//         buttons,
-//         "array-editor-cancel",
-//         null,
-//         "Cancel"
-//     );
+    /* ---------- TEXTAREA ---------- */
 
-//     /* ---------- SHOW ---------- */
-//     editor.classList.add("show");
+    const textarea = fastTag(
+        "textarea",
+        box,
+        "array-editor-textarea"
+    );
 
-//     /* ---------- CANCEL ---------- */
-//     cancelArrayBtn.onclick = () => {
-//         editor.remove();
-//     };
+    textarea.spellcheck = false;
 
-//     /* ---------- SAVE ---------- */
+    /* ---------- GET LOCAL STORAGE ---------- */
 
-//     saveArrayBtn.onclick = () => {
-//         const text = textarea.value.trim();
-//         if(!text){
-//             if(!confirm("Array is empty. Clear local data?"))
-//                 return;
-//             items = [];
-//             localStorage.setItem(
-//                 "iframes",
-//                 JSON.stringify(items)
-//             );
-//             editor.remove();
-//             render();
-//             return;
-//         }
-//         try{
+    let localData = JSON.parse(
+        localStorage.getItem("iframes") || "[]"
+    );
 
-//             /* --------------------------------
-//                CONVERT OBJECT LINES TO ARRAY
-//             -------------------------------- */
+    /* ---------- CONVERT LOCAL DATA ---------- */
 
-//             const cleaned = text
-//                 .replace(/const\s+\w+\s*=\s*\[/i, "")
-//                 .replace(/^\s*\[/, "")
-//                 .replace(/\]\s*;?\s*$/, "")
-//                 .trim();
-//             if(!cleaned){
-//                 throw new Error("No array data found.");
-//             }
+    const lines = [];
 
-//             const objectText = "[" + cleaned + "]";
+    localData.forEach(item => {
 
-//             /*
-//              * Parse JavaScript-style objects.
-//              * This supports:
-//              *
-//              * { ids:"abc", time:"00:00", title:"Hello" }
-//              *
-//              * and emoji/unicode titles.
-//              */
-//             const parsed = Function(
-//                 `"use strict"; return (${objectText});`
-//             )();
-//             if(!Array.isArray(parsed)){
-//                 throw new Error("Array format is invalid.");
-//             }
+        const id = ytId(item.url) || "";
 
-//             /* --------------------------------
-//                CREATE LOCAL STORAGE DATA
-//             -------------------------------- */
-//             const newItems = [];
-//             parsed.forEach((data, index) => {
-//                 const ids = String(data.ids || "").trim();
-//                 const time =
-//                     String(data.time || "00:00").trim();
-//                 const title =
-//                     String(data.title || "").trim();
+        const time = item.duration || "00:00";
 
-//                 if(!ids){
-//                     return;
-//                 }
+        const title = item.title || "";
 
-//                 const url =
-//                     `https://www.youtube.com/watch?v=${ids}`;
-//                 newItems.push({
-//                     title: title || "Untitled",
-//                     url: url,
-//                     type: "youtube",
-//                     date: new Date().toISOString(),
-//                     thumb: ytThumb(ids),
-//                     fav: false,
-//                     views: 0,
-//                     duration: time
-//                 });
-//             });
-
-//             /* --------------------------------
-//                UPDATE LOCAL STORAGE
-//             -------------------------------- */
-//             items = newItems;
-//             localStorage.setItem(
-//                 "iframes",
-//                 JSON.stringify(item        ){
-
-            return item.type===filterValue;
-
-        }
-
-        return true;
+        lines.push(
+            `{ ids: ${JSON.stringify(id)}, time: ${JSON.stringify(time)}, title: ${JSON.stringify(title)}},`
+        );
 
     });
 
+    textarea.value = lines.join("\n");
 
-    /* ---------- SORT ---------- */
+    /* ---------- BUTTONS ---------- */
 
-    switch(filterValue){
+    const buttons = fastTag(
+        "div",
+        box,
+        "array-editor-buttons"
+    );
 
-        case "a → z":
-            data.sort((a,b)=>
-                a.title.localeCompare(b.title)
-            );
-        break;
+    const saveArrayBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-save",
+        null,
+        "Save Array"
+    );
 
-        case "z → a":
-            data.sort((a,b)=>
-                b.title.localeCompare(a.title)
-            );
-        break;
+    const cancelArrayBtn = fastTag(
+        "button",
+        buttons,
+        "array-editor-cancel",
+        null,
+        "Cancel"
+    );
 
-        case "new → old":
-            data.sort((a,b)=>
-                new Date(b.date)-new Date(a.date)
-            );
-        break;
+    /* ---------- SHOW ---------- */
 
-        case "old → new":
-            data.sort((a,b)=>
-                new Date(a.date)-new Date(b.date)
-            );
-        break;
+    editor.classList.add("show");
 
-    }
+    /* ---------- CANCEL ---------- */
 
+    cancelArrayBtn.onclick = () => {
+        editor.remove();
+    };
 
-    countBox.textContent=data.length;
+    /* ---------- SAVE ---------- */
 
+    saveArrayBtn.onclick = () => {
 
-    /* ---------- CARDS ---------- */
+        const text = textarea.value.trim();
 
-    data.forEach(item=>{
+        if(!text){
 
-        const card=fastTag("div",list,"card");
+            if(!confirm("Array is empty. Clear local data?"))
+                return;
 
-        const img=fastTag("img",card,"thumb");
-
-        img.src=item.thumb || "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
-
-        img.onerror=()=>{
-            img.src="https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
-            };
-
-        fastTag(
-            "h4",
-            card,
-            null,
-            null,
-            item.title
-        );
-
-
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            item.type.toUpperCase()
-        );
-
-
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            "Views : "+item.views
-        );
-
-
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            new Date(item.date)
-            .toLocaleString()
-        );
-
-
-        /* ---------- FAVORITE ---------- */
-
-        const fav=fastTag(
-            "button",
-            card,
-            "fav",
-            null,
-            item.fav ? "❤️" : "🤍"
-        );
-
-        fav.onclick=e=>{
-
-            e.stopPropagation();
-
-            items[item.index].fav=
-                !items[item.index].fav;
+            items = [];
 
             localStorage.setItem(
                 "iframes",
                 JSON.stringify(items)
             );
 
+            editor.remove();
+
             render();
 
-        };
+            return;
+        }
 
+        try{
 
-        /* ---------- EDIT ---------- */
+            /* --------------------------------
+               CONVERT OBJECT LINES TO ARRAY
+            -------------------------------- */
 
-        const edit=fastTag(
-            "button",
-            card,
-            "edit",
-            null,
-            "Edit"
-        );
+            const cleaned = text
+                .replace(/const\s+\w+\s*=\s*\[/i, "")
+                .replace(/^\s*\[/, "")
+                .replace(/\]\s*;?\s*$/, "")
+                .trim();
 
-        edit.onclick=e=>{
+            if(!cleaned){
+                throw new Error("No array data found.");
+            }
 
-            e.stopPropagation();
+            const objectText = "[" + cleaned + "]";
 
-            editItem(
-                items[item.index],
-                item.index
+            /*
+             * Parse JavaScript-style objects.
+             * This supports:
+             *
+             * { ids:"abc", time:"00:00", title:"Hello" }
+             *
+             * and emoji/unicode titles.
+             */
+
+            const parsed = Function(
+                `"use strict"; return (${objectText});`
+            )();
+
+            if(!Array.isArray(parsed)){
+                throw new Error("Array format is invalid.");
+            }
+
+            /* --------------------------------
+               CREATE LOCAL STORAGE DATA
+            -------------------------------- */
+
+            const newItems = [];
+
+            parsed.forEach((data, index) => {
+
+                const ids = String(data.ids || "").trim();
+
+                const time =
+                    String(data.time || "00:00").trim();
+
+                const title =
+                    String(data.title || "").trim();
+
+                if(!ids){
+                    return;
+                }
+
+                const url =
+                    `https://www.youtube.com/watch?v=${ids}`;
+
+                newItems.push({
+
+                    title: title || "Untitled",
+
+                    url: url,
+
+                    type: "youtube",
+
+                    date: new Date().toISOString(),
+
+                    thumb: ytThumb(ids),
+
+                    fav: false,
+
+                    views: 0,
+
+                    duration: time
+
+                });
+
+            });
+
+            /* --------------------------------
+               UPDATE LOCAL STORAGE
+            -------------------------------- */
+
+            items = newItems;
+
+            localStorage.setItem(
+                "iframes",
+                JSON.stringify(items)
             );
 
-        };
-
-
-        /* ---------- OPEN ---------- */
-
-        card.onclick=()=>{
-
-            loadMain(
-                items[item.index],
-                item.index
-            );
-
-        };
-
-    });
-
-}
-
-  render();
-  countBox.textContent=items.length;
-});
-</script>
-</html>
+            /* --------------------------------
+               CLOSE + R
