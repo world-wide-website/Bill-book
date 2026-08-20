@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe</title>
+    <title>Mini Player</title>
 <style>
 /* ================= RESET ================= */
 
@@ -52,6 +52,9 @@ body::before{
   border-radius:10px;
   margin: 10px;
   width: 98%;
+  position:sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .title{
@@ -125,18 +128,21 @@ button:hover{
 /* ================= PREVIEW ================= */
 
 .previewes{
-  display:none;
-  gap:15px;
-  padding:15px;
-  background:#000;
-  border:2px solid #333;
-  border-radius:12px;
-  position: absolute;
-  width: 95vw;
-  height: 100vh;
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
+    display: none;
+    gap: 15px;
+    padding: 15px;
+    background: #000;
+    border: 2px solid #333;
+    border-radius: 12px;
+    position: fixed;
+    width: 95vw;
+    height: 85vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
 }
 
 .previewes.show{
@@ -205,13 +211,16 @@ button:hover{
 /* ================= PLAYER ================= */
 
 .playerWrap{
+  width: 98vw;
+  border-radius: 0;
   position:sticky;
   top: 0;
   z-index: 1;
 }
 
 .main-iframe{
-  width:100vw;
+  min-height: 500px;
+  width:100%;
   border:none;
   border-radius:12px;
   background:#000;
@@ -319,8 +328,8 @@ button:hover{
 }
 
 .array-editor-box{
-    width:min(1000px,95vw);
-    height:min(750px,90vh);
+    width:min(90%,95vw);
+    height:min(80%,90vh);
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -372,7 +381,11 @@ button:hover{
     background:seagreen;
 }
 
-.array-editor-cancel{
+.DataBtn{
+    background:rgb(58, 110, 208);
+}
+
+.array-editor-cancel, .deleteBtn{
     background:#a33;
 }
 
@@ -484,1169 +497,2333 @@ button:hover{
 </head>
 <body></body>
 <script>
+/* =========================================================
+   IFRAME / MEDIA STORE
+   COMPLETE JAVASCRIPT
+   LocalStorage key: "LocalStore"
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
+    /* =====================================================
+       FASTTAG
+    ===================================================== */
 
-  /* ================= FASTTAG ================= */
-  const fastTag=(t,p,c,id,txt)=>{
-    const e=document.createElement(t);
-    if(c) e.className=c;
-    if(id) e.id=id;
-    if(txt) e.textContent=txt;
-    p&&p.appendChild(e);
-    return e;
-  };
-function createURL(ids,type){
+    window.fastTag = (tag, parent, className, id, text) => {
 
-    type=(type||"").toUpperCase();
+        const el = document.createElement(tag);
 
-    switch(type){
-        case "YT": return `https://www.youtube.com/watch?v=${ids}`;
-        case "YT-SHORT": case "YT-SHORTS": return `https://www.youtube.com/shorts/${ids}`;
-        case "TIKTOK": return `https://www.tiktok.com/@user/video/${ids}`;
-        case "INSTAGRAM": return `https://www.instagram.com/reel/${ids}/`;
-        case "FACEBOOK": return `https://www.facebook.com/reel/${ids}`;
-        case "TWITTER": case "X": return `https://x.com/i/status/${ids}`;
-        case "TELEGRAM": return `https://t.me/${ids}`;
-        case "WHATSAPP": return `https://wa.me/${ids}`;
-        default: return ids;
-    }
-}
-  /* ================= LAYOUT ================= */
-  const page=fastTag("div",document.body,"page");
-
-  /* ---------- HEADER ---------- */
-  const header=fastTag("header",page,"header");
-  const title = fastTag("h2",header,"title",null,"Iframe Store :");
-        const bar=fastTag("div",title,"selectList");
-  const tools=fastTag("div",header,"tools");
-  const addBtn=fastTag("button",tools, "upload",null,"Upload");
-  const search=fastTag("input",tools);
-        search.placeholder="Search…";
-        
-const dataBtn = fastTag("button", tools, null, null, "Data");
-dataBtn.onclick = exportDataStore;
-
-const uploadArrayBtn = fastTag(
-    "button",
-    tools,
-    "upload-array",
-    null,
-    "Upload Array"
-);
-
-uploadArrayBtn.onclick = openArrayEditor;
-
-
-  /* ---------- PREVIEW + FORM ---------- */
-  const previewes=fastTag("div",page,"previewes");
-  const preview=fastTag("iframe",previewes,"preview");
-
-  const asider=fastTag("aside",previewes,"asider");
-  const form=fastTag("form",asider,"form");
-
-  const fieldset=fastTag("fieldset",form,"fieldset");
-  fastTag("legend",fieldset,"legend",null,"Add / Edit");
-
-  const Link=fastTag("textarea",fieldset);
-  Link.placeholder="Paste link / iframe";
-
-  const Title=fastTag("input",fieldset);
-  Title.placeholder="Title";
-
-  const Formate=fastTag("select",fieldset);
-  [ "youtube", "yt-short", "tiktok", "instagram", "facebook", "twitter", "telegram", "whatsapp", "url", "iframe", "other" ].forEach(v=>{
-    const o=fastTag("option",Formate,null,null,v.toUpperCase());
-    o.value=v;
-  });
-
-  /* ---------- THUMBNAIL INPUTS ---------- */
-  const thumbBox=fastTag("div",fieldset,"thumbBox");
-
-  const rYT=fastTag("input",thumbBox);
-  rYT.type="radio"; rYT.name="thumb"; rYT.value="youtube"; rYT.checked=true;
-
-  const rURL=fastTag("input",thumbBox);
-  rURL.type="radio"; rURL.name="thumb"; rURL.value="url";
-
-  const rFile=fastTag("input",thumbBox);
-  rFile.type="radio"; rFile.name="thumb"; rFile.value="file";
-
-  const thumbURL=fastTag("input",fieldset);
-  thumbURL.placeholder="Thumbnail URL";
-  thumbURL.style.display="none";
-
-  const thumbFile=fastTag("input",fieldset);
-  thumbFile.type="file";
-  thumbFile.accept="image/*";
-  thumbFile.style.display="none";
-
-  /* ---------- DATE ---------- */
-  const dateInput=fastTag("input",fieldset);
-  dateInput.type="datetime-local";
-
-  const saveBtns=fastTag("div",fieldset,"saveBtns");
-
-  const deleteBtn=fastTag("button",saveBtns,null,null,"Delete");
-  deleteBtn.type="button";
-
-  const saveBtn=fastTag("button",saveBtns,null,null,"Save");
-  saveBtn.type="submit";
-
-  /* ---------- MAIN PLAYER ---------- */
-  const playerWrap=fastTag("div",page,"playerWrap");
-  playerWrap.style.display="none";
-
-  const closeBtn=fastTag("button",playerWrap,"closeBtn",null,"✕");
-  const mainIframe=fastTag("iframe",playerWrap,"main-iframe");
-
-  closeBtn.onclick=()=>{
-    mainIframe.src="about:blank";
-    playerWrap.style.display="none";
-};
-
-  /* ---------- LIST + FILTER ---------- */
-  const main =fastTag("div",page,"main");
-
-  const countBox=fastTag("span",bar,"count",null,"0");
-  const filter=fastTag("select",bar);
-  const list = fastTag("div", main,"list");
-  ["ALL","FAVORITES","A → Z","Z → A","NEW → OLD","OLD → NEW","URL","YOUTUBE","TIKTOK","INSTAGRAM","OTHER"].forEach(v=>{const o=fastTag("option",filter,null,null,v);o.value=v.toLowerCase();});
-
-  /* ================= STATE ================= */
-  let items=JSON.parse(localStorage.getItem("iframes")||"null");
-  let lastVideoID = "";
-
-if(!items){
-    items=[];
-    DataBase.forEach(d=>{
-        items.push({
-            title:d.title||"",
-            url:createURL(d.ids,d.type),
-            type:(d.type||"url").toLowerCase(),
-            date:new Date().toISOString(),
-            thumb:d.type &&
-                  d.type.toUpperCase().startsWith("YT") ? ytThumb(d.ids) : "", fav:false, views:0
-        });
-    });
-    localStorage.setItem( "iframes", JSON.stringify(items));
-}
-  let editIndex=-1;
-  let fileThumb="";
-
-  
-/* ================= LINK HELPERS ================= */
-
-// YouTube Video & Shorts
-const ytId = url => {
-
-    if (!url) return null;
-
-    const match = url.match(
-        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
-    );
-
-    return match ? match[1] : null;
-
-};
-
-function exportDataStore(){
-
-    const editor = fastTag(
-        "div",
-        document.body,
-        "array-editor",
-        "dataStoreEditor"
-    );
-
-    const box = fastTag(
-        "div",
-        editor,
-        "array-editor-box"
-    );
-
-    // Title
-    const titleBox = fastTag(
-        "div",
-        box,
-        "array-editor-title"
-    );
-
-    fastTag(
-        "span",
-        titleBox,
-        null,
-        null,
-        "Local Storage Data"
-    );
-
-    // Textarea
-    const textarea = fastTag(
-        "textarea",
-        box,
-        "array-editor-textarea"
-    );
-
-    textarea.spellcheck = false;
-
-    // Load current localStorage data
-    let localData = JSON.parse(
-        localStorage.getItem("iframes") || "[]"
-    );
-
-    // Show formatted JSON
-    textarea.value = JSON.stringify(
-        localData,
-        null,
-        2
-    );
-
-    // Buttons
-    const buttons = fastTag(
-        "div",
-        box,
-        "array-editor-buttons"
-    );
-
-    const saveBtn = fastTag(
-        "button",
-        buttons,
-        "array-editor-save",
-        null,
-        "Save Changes"
-    );
-
-    const cancelBtn = fastTag(
-        "button",
-        buttons,
-        "array-editor-cancel",
-        null,
-        "Cancel"
-    );
-
-    const copyBtn = fastTag(
-        "button",
-        buttons,
-        null,
-        null,
-        "Copy"
-    );
-
-    // Show editor
-    editor.classList.add("show");
-
-    // Cancel
-    cancelBtn.onclick = () => {
-        editor.remove();
-    };
-
-    // Copy
-    copyBtn.onclick = async () => {
-
-        try {
-
-            await navigator.clipboard.writeText(
-                textarea.value
-            );
-
-            alert("Data copied.");
-
-        } catch(error) {
-
-            alert("Unable to copy data.");
-
+        if (className) el.className = className;
+        if (id) el.id = id;
+        if (text !== undefined && text !== null) {
+            el.textContent = text;
         }
 
+        if (parent) {
+            parent.appendChild(el);
+        }
+
+        return el;
     };
 
-    // Save
-    saveBtn.onclick = () => {
+
+    /* =====================================================
+       DEFAULT LOCAL STORE DATA
+    ===================================================== */
+
+    const LocalStore = [
+        {
+            title: "Vaalu Kanuladaanaa | Premikula Roju (1999) | Rock Mix - Tribute to A.R. Rahman | Naveen Maremanda",
+            url: "https://youtu.be/qAlxr3wfKpA",
+            type: "youtube",
+            date: "2030-08-13T15:02",
+            thumb: "https://i.ytimg.com/vi/qAlxr3wfKpA/hqdefault.jpg",
+            fav: true,
+            views: 0
+        },
+
+        {
+            title: "Playlist make you feel like a gangster | Gentleman Songs (Vol.3)",
+            url: "https://youtu.be/ww6N-jyjsbw",
+            type: "youtube",
+            date: "2023-03-02T08:18",
+            thumb: "https://i.ytimg.com/vi/ww6N-jyjsbw/hqdefault.jpg",
+            fav: false,
+            views: 0
+        },
+
+        {
+            title: "Baarish | Half Girlfriend | Arjun Kapoor & Shraddha Kapoor| Ash King ,Sashaa | Tanishk| Baarish 2024",
+            url: "https://youtu.be/BNfAf4To73c",
+            type: "youtube",
+            date: "2023-09-12T19:10",
+            thumb: "https://i.ytimg.com/vi/BNfAf4To73c/hqdefault.jpg",
+            fav: false,
+            views: 0
+        }
+    ];
+
+
+    /* =====================================================
+       STORAGE CONFIG
+    ===================================================== */
+
+    const STORAGE_KEY = "LocalStore";
+    const OLD_STORAGE_KEY = "iframes";
+
+
+    /* =====================================================
+       YOUTUBE HELPERS
+    ===================================================== */
+
+    const ytId = url => {
+
+        if (!url) return null;
+
+        const match = String(url).match(
+            /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+        );
+
+        return match ? match[1] : null;
+    };
+
+
+    const getYouTubeThumbnail = url => {
+
+        const id = ytId(url);
+
+        if (!id) return "";
+
+        return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    };
+
+
+    const getYouTubeThumbnailFromId = id => {
+
+        if (!id) return "";
+
+        return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    };
+
+
+    /* =====================================================
+       URL CREATOR
+    ===================================================== */
+
+    function createURL(ids, type) {
+
+        type = String(type || "").toUpperCase();
+
+        switch (type) {
+
+            case "YT":
+            case "YOUTUBE":
+                return `https://www.youtube.com/watch?v=${ids}`;
+
+            case "YT-SHORT":
+            case "YT-SHORTS":
+                return `https://www.youtube.com/shorts/${ids}`;
+
+            case "TIKTOK":
+                return `https://www.tiktok.com/@user/video/${ids}`;
+
+            case "INSTAGRAM":
+                return `https://www.instagram.com/reel/${ids}/`;
+
+            case "FACEBOOK":
+                return `https://www.facebook.com/reel/${ids}`;
+
+            case "TWITTER":
+            case "X":
+                return `https://x.com/i/status/${ids}`;
+
+            case "TELEGRAM":
+                return `https://t.me/${ids}`;
+
+            case "WHATSAPP":
+                return `https://wa.me/${ids}`;
+
+            default:
+                return ids || "";
+        }
+    }
+
+
+    /* =====================================================
+       NORMALIZE ITEM
+    ===================================================== */
+
+    function normalizeItem(item) {
+
+        if (!item || typeof item !== "object") {
+            return null;
+        }
+
+        const url = String(item.url || "").trim();
+
+        let type = String(
+            item.type || detectFormat(url)
+        ).toLowerCase();
+
+        if (!type) {
+            type = "url";
+        }
+
+        let thumb = String(item.thumb || "");
+
+        if (!thumb && (type === "youtube" || type === "yt-short")) {
+            thumb = getYouTubeThumbnail(url);
+        }
+
+        return {
+
+            title: String(
+                item.title || "Untitled"
+            ),
+
+            url: url,
+
+            type: type,
+
+            date: item.date
+                ? String(item.date)
+                : new Date().toISOString(),
+
+            thumb: thumb,
+
+            fav: Boolean(item.fav),
+
+            views: Number.isFinite(Number(item.views))
+                ? Number(item.views)
+                : 0
+        };
+    }
+
+
+    /* =====================================================
+       LOAD LOCAL STORE
+    ===================================================== */
+
+    function loadStore() {
+
+        /*
+            1. First load LocalStore.
+            2. If unavailable, migrate old "iframes".
+            3. If neither exists, use default LocalStore.
+        */
 
         try {
 
-            const newData = JSON.parse(
-                textarea.value
-            );
+            const saved = localStorage.getItem(STORAGE_KEY);
 
-            if(!Array.isArray(newData)){
+            if (saved !== null) {
 
-                throw new Error(
-                    "Data must be an array."
-                );
+                const parsed = JSON.parse(saved);
 
+                if (Array.isArray(parsed)) {
+
+                    return parsed
+                        .map(normalizeItem)
+                        .filter(Boolean);
+                }
             }
 
-            // Basic validation
-            newData.forEach((item, index) => {
+        } catch (error) {
 
-                if(typeof item !== "object" || item === null){
+            console.error(
+                "LocalStore read error:",
+                error
+            );
+        }
 
-                    throw new Error(
-                        "Invalid item at index " + index
+
+        /* =================================================
+           OLD STORAGE MIGRATION
+        ================================================= */
+
+        try {
+
+            const oldSaved =
+                localStorage.getItem(OLD_STORAGE_KEY);
+
+            if (oldSaved !== null) {
+
+                const oldData = JSON.parse(oldSaved);
+
+                if (Array.isArray(oldData)) {
+
+                    const migrated = oldData
+                        .map(normalizeItem)
+                        .filter(Boolean);
+
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(migrated)
                     );
 
+                    return migrated;
                 }
+            }
 
-            });
+        } catch (error) {
 
-            // Save to localStorage
-            items = newData;
+            console.error(
+                "Old storage migration error:",
+                error
+            );
+        }
+
+
+        /* =================================================
+           DEFAULT DATA
+        ================================================= */
+
+        const defaults = LocalStore
+            .map(normalizeItem)
+            .filter(Boolean);
+
+        try {
 
             localStorage.setItem(
-                "iframes",
+                STORAGE_KEY,
+                JSON.stringify(defaults)
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Default LocalStore save error:",
+                error
+            );
+        }
+
+        return defaults;
+    }
+
+
+    /* =====================================================
+       SAVE LOCAL STORE
+    ===================================================== */
+
+    function saveStore() {
+
+        try {
+
+            const cleanData = items
+                .map(normalizeItem)
+                .filter(Boolean);
+
+            items = cleanData;
+
+            localStorage.setItem(
+                STORAGE_KEY,
                 JSON.stringify(items)
             );
 
-            // Close editor
-            editor.remove();
+            /*
+                Keep old key synchronized only if it already
+                existed. This prevents old applications from
+                unexpectedly losing their data.
+            */
 
-            // Refresh cards
-            render();
+            if (localStorage.getItem(OLD_STORAGE_KEY) !== null) {
 
-            countBox.textContent = items.length;
+                localStorage.setItem(
+                    OLD_STORAGE_KEY,
+                    JSON.stringify(items)
+                );
+            }
 
-            alert(
-                items.length +
-                " items saved successfully."
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "LocalStore save error:",
+                error
             );
 
-        } catch(error) {
-
             alert(
-                "Invalid JSON data.\n\n" +
+                "Unable to save data.\n\n" +
                 error.message
             );
 
+            return false;
         }
+    }
 
-    };
 
-}
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
 
-/* ================= UPLOAD ARRAY EDITOR ================= */
-
-function openArrayEditor(){
-
-    /* ---------- EDITOR ---------- */
-
-    const editor = fastTag(
+    const page = fastTag(
         "div",
         document.body,
-        "array-editor",
-        "arrayEditor"
+        "page"
     );
 
-    const box = fastTag(
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    const header = fastTag(
+        "header",
+        page,
+        "header"
+    );
+
+
+    const title = fastTag(
+        "h2",
+        header,
+        "title",
+        null,
+        "Iframe Store :"
+    );
+
+
+    const bar = fastTag(
         "div",
-        editor,
-        "array-editor-box"
+        title,
+        "selectList"
     );
 
-    /* ---------- TITLE ---------- */
 
-    const titleBox = fastTag(
+    const tools = fastTag(
         "div",
-        box,
-        "array-editor-title"
+        header,
+        "tools"
     );
+
+
+    const search = fastTag(
+        "input",
+        tools
+    );
+
+    search.type = "search";
+    search.placeholder = "Search…";
+    search.autocomplete = "off";
+
+
+    const addBtn = fastTag(
+        "button",
+        tools,
+        "upload",
+        null,
+        "Upload"
+    );
+
+    addBtn.type = "button";
+
+
+    /* =====================================================
+       PREVIEW + FORM
+    ===================================================== */
+
+    const previewes = fastTag(
+        "div",
+        page,
+        "previewes"
+    );
+
+
+    const preview = fastTag(
+        "iframe",
+        previewes,
+        "preview"
+    );
+
+    preview.src = "about:blank";
+
+
+    const asider = fastTag(
+        "aside",
+        previewes,
+        "asider"
+    );
+
+
+    const form = fastTag(
+        "form",
+        asider,
+        "form"
+    );
+
+
+    const fieldset = fastTag(
+        "fieldset",
+        form,
+        "fieldset"
+    );
+
 
     fastTag(
-        "span",
-        titleBox,
+        "legend",
+        fieldset,
+        "legend",
         null,
-        null,
-        "Upload Array"
+        "Add / Edit"
     );
 
-    /* ---------- TEXTAREA ---------- */
 
-    const textarea = fastTag(
+    /* =====================================================
+       LINK
+    ===================================================== */
+
+    const Link = fastTag(
         "textarea",
-        box,
-        "array-editor-textarea"
+        fieldset
     );
 
-    textarea.spellcheck = false;
+    Link.placeholder = "Paste link / iframe";
+    Link.autocomplete = "off";
 
-    /* ---------- GET LOCAL STORAGE ---------- */
 
-    let localData = JSON.parse(
-        localStorage.getItem("iframes") || "[]"
+    /* =====================================================
+       TITLE
+    ===================================================== */
+
+    const Title = fastTag(
+        "input",
+        fieldset
     );
 
-    /* ---------- CONVERT LOCAL DATA ---------- */
+    Title.type = "text";
+    Title.placeholder = "Title";
+    Title.autocomplete = "off";
 
-    const lines = [];
 
-    localData.forEach(item => {
+    /* =====================================================
+       FORMAT
+    ===================================================== */
 
-        const id = ytId(item.url) || "";
+    const Formate = fastTag(
+        "select",
+        fieldset
+    );
 
-        const time = item.duration || "00:00";
+    [
+        "youtube",
+        "yt-short",
+        "tiktok",
+        "instagram",
+        "facebook",
+        "twitter",
+        "telegram",
+        "whatsapp",
+        "url",
+        "iframe",
+        "other"
 
-        const title = item.title || "";
+    ].forEach(value => {
 
-        lines.push(
-            `{ ids: ${JSON.stringify(id)}, time: ${JSON.stringify(time)}, title: ${JSON.stringify(title)}},`
+        const option = fastTag(
+            "option",
+            Formate,
+            null,
+            null,
+            value.toUpperCase()
         );
 
+        option.value = value;
     });
 
-    textarea.value = lines.join("\n");
 
-    /* ---------- BUTTONS ---------- */
+    /* =====================================================
+       THUMBNAIL
+    ===================================================== */
 
-    const buttons = fastTag(
+    const thumbBox = fastTag(
         "div",
-        box,
-        "array-editor-buttons"
+        fieldset,
+        "thumbBox"
     );
 
-    const saveArrayBtn = fastTag(
+
+    const rYT = fastTag(
+        "input",
+        thumbBox
+    );
+
+    rYT.type = "radio";
+    rYT.name = "thumb";
+    rYT.value = "youtube";
+    rYT.checked = true;
+
+
+    const rURL = fastTag(
+        "input",
+        thumbBox
+    );
+
+    rURL.type = "radio";
+    rURL.name = "thumb";
+    rURL.value = "url";
+
+
+    const rFile = fastTag(
+        "input",
+        thumbBox
+    );
+
+    rFile.type = "radio";
+    rFile.name = "thumb";
+    rFile.value = "file";
+
+
+    const thumbURL = fastTag(
+        "input",
+        fieldset
+    );
+
+    thumbURL.type = "url";
+    thumbURL.placeholder = "Thumbnail URL";
+    thumbURL.style.display = "none";
+
+
+    const thumbFile = fastTag(
+        "input",
+        fieldset
+    );
+
+    thumbFile.type = "file";
+    thumbFile.accept = "image/*";
+    thumbFile.style.display = "none";
+
+
+    /* =====================================================
+       DATE
+    ===================================================== */
+
+    const dateInput = fastTag(
+        "input",
+        fieldset
+    );
+
+    dateInput.type = "datetime-local";
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    const Btns = fastTag(
+        "div",
+        fieldset,
+        "saveBtns"
+    );
+
+
+    const dataBtn = fastTag(
         "button",
-        buttons,
-        "array-editor-save",
+        Btns,
+        "DataBtn",
         null,
-        "Save Array"
+        "Data"
     );
 
-    const cancelArrayBtn = fastTag(
+    dataBtn.type = "button";
+
+
+    const deleteBtn = fastTag(
         "button",
-        buttons,
-        "array-editor-cancel",
+        Btns,
+        "deleteBtn",
         null,
-        "Cancel"
+        "Delete"
     );
 
-    /* ---------- SHOW ---------- */
+    deleteBtn.type = "button";
 
-    editor.classList.add("show");
 
-    /* ---------- CANCEL ---------- */
+    const saveBtn = fastTag(
+        "button",
+        Btns,
+        null,
+        null,
+        "Save"
+    );
 
-    cancelArrayBtn.onclick = () => {
-        editor.remove();
+    saveBtn.type = "submit";
+
+
+    /* =====================================================
+       MAIN PLAYER
+    ===================================================== */
+
+    const playerWrap = fastTag(
+        "div",
+        page,
+        "playerWrap"
+    );
+
+    playerWrap.style.display = "none";
+
+
+    const closeBtn = fastTag(
+        "button",
+        playerWrap,
+        "closeBtn",
+        null,
+        "✕"
+    );
+
+    closeBtn.type = "button";
+
+
+    const mainIframe = fastTag(
+        "iframe",
+        playerWrap,
+        "main-iframe"
+    );
+
+    mainIframe.setAttribute(
+        "allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    );
+
+    mainIframe.setAttribute(
+        "referrerpolicy",
+        "strict-origin-when-cross-origin"
+    );
+
+    mainIframe.setAttribute(
+        "allowfullscreen",
+        ""
+    );
+
+
+    closeBtn.onclick = () => {
+
+        mainIframe.src = "about:blank";
+
+        playerWrap.style.display = "none";
     };
 
-    /* ---------- SAVE ---------- */
 
-    saveArrayBtn.onclick = () => {
+    /* =====================================================
+       LIST + FILTER
+    ===================================================== */
 
-        const text = textarea.value.trim();
+    const main = fastTag(
+        "div",
+        page,
+        "main"
+    );
 
-        if(!text){
 
-            if(!confirm("Array is empty. Clear local data?"))
-                return;
+    const countBox = fastTag(
+        "span",
+        bar,
+        "count",
+        null,
+        "0"
+    );
 
-            items = [];
 
-            localStorage.setItem(
-                "iframes",
-                JSON.stringify(items)
+    const filter = fastTag(
+        "select",
+        bar
+    );
+
+
+    const list = fastTag(
+        "div",
+        main,
+        "list"
+    );
+
+
+    [
+        "ALL",
+        "FAVORITES",
+        "A → Z",
+        "Z → A",
+        "NEW → OLD",
+        "OLD → NEW",
+        "URL",
+        "YOUTUBE",
+        "TIKTOK",
+        "INSTAGRAM",
+        "OTHER"
+
+    ].forEach(value => {
+
+        const option = fastTag(
+            "option",
+            filter,
+            null,
+            null,
+            value
+        );
+
+        option.value = value.toLowerCase();
+    });
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let items = loadStore();
+
+    let editIndex = -1;
+
+    let fileThumb = "";
+
+    let lastVideoID = "";
+
+
+    /* =====================================================
+       FORMAT DETECTION
+    ===================================================== */
+
+    function detectFormat(url) {
+
+        if (!url) {
+            return "url";
+        }
+
+        const value = String(url).toLowerCase();
+
+        if (value.includes("<iframe")) {
+            return "iframe";
+        }
+
+        if (value.includes("/shorts/")) {
+            return "yt-short";
+        }
+
+        if (
+            value.includes("youtube.com") ||
+            value.includes("youtu.be")
+        ) {
+            return "youtube";
+        }
+
+        if (value.includes("tiktok.com")) {
+            return "tiktok";
+        }
+
+        if (value.includes("instagram.com")) {
+            return "instagram";
+        }
+
+        if (value.includes("facebook.com")) {
+            return "facebook";
+        }
+
+        if (
+            value.includes("twitter.com") ||
+            value.includes("x.com")
+        ) {
+            return "twitter";
+        }
+
+        if (value.includes("t.me")) {
+            return "telegram";
+        }
+
+        if (
+            value.includes("wa.me") ||
+            value.includes("whatsapp")
+        ) {
+            return "whatsapp";
+        }
+
+        return "url";
+    }
+
+
+    /* =====================================================
+       OTHER IDs
+    ===================================================== */
+
+    const tkId = url => {
+
+        if (!url) return null;
+
+        const match =
+            String(url).match(/video\/(\d+)/);
+
+        return match ? match[1] : null;
+    };
+
+
+    const igId = url => {
+
+        if (!url) return null;
+
+        const match =
+            String(url).match(/reel\/([^/?]+)/);
+
+        return match ? match[1] : null;
+    };
+
+
+    const fbId = url => {
+
+        if (!url) return null;
+
+        const match =
+            String(url).match(/[?&]v=([0-9]+)/);
+
+        return match ? match[1] : null;
+    };
+
+
+    const xId = url => {
+
+        if (!url) return null;
+
+        const match =
+            String(url).match(/status\/([0-9]+)/);
+
+        return match ? match[1] : null;
+    };
+
+
+    /* =====================================================
+       EMBED BUILDER
+    ===================================================== */
+
+    function buildEmbed(url) {
+
+        if (!url) {
+            return "";
+        }
+
+        url = String(url).trim();
+
+
+        /* YouTube */
+
+        const yid = ytId(url);
+
+        if (yid) {
+
+            return (
+                `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`
+            );
+        }
+
+
+        /* TikTok */
+
+        const tid = tkId(url);
+
+        if (tid) {
+
+            return (
+                `https://www.tiktok.com/embed/v2/${tid}`
+            );
+        }
+
+
+        /* Instagram */
+
+        const iid = igId(url);
+
+        if (iid) {
+
+            return (
+                `https://www.instagram.com/reel/${iid}/embed`
+            );
+        }
+
+
+        /* iframe HTML */
+
+        if (
+            url.toLowerCase().includes("<iframe")
+        ) {
+
+            const src =
+                url.match(/src=["']([^"']+)["']/i);
+
+            return src ? src[1] : "";
+        }
+
+
+        return url;
+    }
+
+
+    /* =====================================================
+       YOUTUBE TITLE
+    ===================================================== */
+
+    async function fetchYouTubeTitle(url) {
+
+        const id = ytId(url);
+
+        if (!id) {
+            return "";
+        }
+
+        try {
+
+            const response = await fetch(
+                `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`
             );
 
-            editor.remove();
+            if (!response.ok) {
+                return "";
+            }
 
-            render();
+            const data = await response.json();
+
+            return data.title || "";
+
+        } catch (error) {
+
+            console.warn(
+                "YouTube title fetch failed:",
+                error
+            );
+
+            return "";
+        }
+    }
+
+
+    /* =====================================================
+       THUMBNAIL UI
+    ===================================================== */
+
+    function updateThumbUI() {
+
+        thumbURL.style.display =
+            rURL.checked
+                ? "block"
+                : "none";
+
+
+        thumbFile.style.display =
+            rFile.checked
+                ? "block"
+                : "none";
+    }
+
+
+    /* =====================================================
+       UPLOAD / ADD BUTTON
+    ===================================================== */
+
+    addBtn.onclick = () => {
+
+        editIndex = -1;
+
+        fileThumb = "";
+
+        lastVideoID = "";
+
+        form.reset();
+
+        Link.value = "";
+
+        Title.value = "";
+
+        Formate.value = "url";
+
+        thumbURL.value = "";
+
+        thumbFile.value = "";
+
+        dateInput.value =
+            new Date()
+                .toISOString()
+                .slice(0, 16);
+
+        preview.src = "about:blank";
+
+        rYT.checked = true;
+
+        updateThumbUI();
+
+        deleteBtn.style.display = "none";
+
+        previewes.classList.add("show");
+    };
+
+
+    /* =====================================================
+       LINK INPUT
+    ===================================================== */
+
+    Link.oninput = async () => {
+
+        const url = Link.value.trim();
+
+
+        if (!url) {
+
+            preview.src = "about:blank";
+
+            lastVideoID = "";
 
             return;
         }
 
-        try{
 
-            /* --------------------------------
-               CONVERT OBJECT LINES TO ARRAY
-            -------------------------------- */
+        Formate.value =
+            detectFormat(url);
 
-            const cleaned = text
-                .replace(/const\s+\w+\s*=\s*\[/i, "")
-                .replace(/^\s*\[/, "")
-                .replace(/\]\s*;?\s*$/, "")
-                .trim();
 
-            if(!cleaned){
-                throw new Error("No array data found.");
-            }
+        const embed =
+            buildEmbed(url);
 
-            const objectText = "[" + cleaned + "]";
+
+        preview.src =
+            embed || "about:blank";
+
+
+        const id = ytId(url);
+
+
+        if (
+            id &&
+            id !== lastVideoID
+        ) {
+
+            lastVideoID = id;
+
+            const ytTitle =
+                await fetchYouTubeTitle(url);
+
 
             /*
-             * Parse JavaScript-style objects.
-             * This supports:
-             *
-             * { ids:"abc", time:"00:00", title:"Hello" }
-             *
-             * and emoji/unicode titles.
-             */
+                Only update title if the user is still
+                working with the same URL.
+            */
 
-            const parsed = Function(
-                `"use strict"; return (${objectText});`
-            )();
+            if (
+                ytTitle &&
+                ytId(Link.value.trim()) === id
+            ) {
 
-            if(!Array.isArray(parsed)){
-                throw new Error("Array format is invalid.");
+                Title.value = ytTitle;
             }
+        }
 
-            /* --------------------------------
-               CREATE LOCAL STORAGE DATA
-            -------------------------------- */
 
-            const newItems = [];
+        /*
+            Automatically select YouTube thumbnail.
+        */
 
-            parsed.forEach((data, index) => {
+        if (
+            id &&
+            (
+                Formate.value === "youtube" ||
+                Formate.value === "yt-short"
+            )
+        ) {
 
-                const ids = String(data.ids || "").trim();
+            rYT.checked = true;
 
-                const time =
-                    String(data.time || "00:00").trim();
+            updateThumbUI();
+        }
+    };
 
-                const title =
-                    String(data.title || "").trim();
 
-                if(!ids){
+    /* =====================================================
+       THUMBNAIL RADIO EVENTS
+    ===================================================== */
+
+    rYT.onchange =
+    rURL.onchange =
+    rFile.onchange =
+        updateThumbUI;
+
+
+    /* =====================================================
+       FILE THUMBNAIL
+    ===================================================== */
+
+    thumbFile.onchange = () => {
+
+        const file =
+            thumbFile.files &&
+            thumbFile.files[0];
+
+
+        if (!file) {
+
+            fileThumb = "";
+
+            return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+            alert(
+                "Please select an image file."
+            );
+
+            thumbFile.value = "";
+
+            fileThumb = "";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = () => {
+
+            fileThumb =
+                reader.result || "";
+        };
+
+
+        reader.onerror = () => {
+
+            fileThumb = "";
+
+            alert(
+                "Unable to read thumbnail."
+            );
+        };
+
+
+        reader.readAsDataURL(file);
+    };
+
+
+    /* =====================================================
+       DATA EDITOR
+    ===================================================== */
+
+    function exportDataStore() {
+
+        /*
+            Prevent multiple editors.
+        */
+
+        const oldEditor =
+            document.getElementById(
+                "dataStoreEditor"
+            );
+
+        if (oldEditor) {
+            oldEditor.remove();
+        }
+
+
+        const editor = fastTag(
+            "div",
+            document.body,
+            "array-editor",
+            "dataStoreEditor"
+        );
+
+
+        const box = fastTag(
+            "div",
+            editor,
+            "array-editor-box"
+        );
+
+
+        const titleBox = fastTag(
+            "div",
+            box,
+            "array-editor-title"
+        );
+
+
+        fastTag(
+            "span",
+            titleBox,
+            null,
+            null,
+            "LocalStore Data"
+        );
+
+
+        const textarea = fastTag(
+            "textarea",
+            box,
+            "array-editor-textarea"
+        );
+
+        textarea.spellcheck = false;
+
+
+        /*
+            Always use current in-memory data.
+        */
+
+        textarea.value =
+            JSON.stringify(
+                items,
+                null,
+                2
+            );
+
+
+        const buttons = fastTag(
+            "div",
+            box,
+            "array-editor-buttons"
+        );
+
+
+        const saveEditorBtn = fastTag(
+            "button",
+            buttons,
+            "array-editor-save",
+            null,
+            "Save Changes"
+        );
+
+        saveEditorBtn.type = "button";
+
+
+        const cancelBtn = fastTag(
+            "button",
+            buttons,
+            "array-editor-cancel",
+            null,
+            "Cancel"
+        );
+
+        cancelBtn.type = "button";
+
+
+        const copyBtn = fastTag(
+            "button",
+            buttons,
+            null,
+            null,
+            "Copy"
+        );
+
+        copyBtn.type = "button";
+
+
+        editor.classList.add("show");
+
+
+        /* =================================================
+           CANCEL
+        ================================================= */
+
+        cancelBtn.onclick = () => {
+
+            editor.remove();
+        };
+
+
+        /* =================================================
+           COPY
+        ================================================= */
+
+        copyBtn.onclick = async () => {
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    textarea.value
+                );
+
+                alert(
+                    "LocalStore data copied."
+                );
+
+            } catch (error) {
+
+                /*
+                    Clipboard fallback.
+                */
+
+                textarea.select();
+
+                document.execCommand("copy");
+
+                alert(
+                    "LocalStore data copied."
+                );
+            }
+        };
+
+
+        /* =================================================
+           SAVE EDITOR
+        ================================================= */
+
+        saveEditorBtn.onclick = () => {
+
+            try {
+
+                const newData =
+                    JSON.parse(
+                        textarea.value
+                    );
+
+
+                if (!Array.isArray(newData)) {
+
+                    throw new Error(
+                        "Data must be an array."
+                    );
+                }
+
+
+                const normalized =
+                    newData.map(
+                        (item, index) => {
+
+                            if (
+                                typeof item !== "object" ||
+                                item === null ||
+                                Array.isArray(item)
+                            ) {
+
+                                throw new Error(
+                                    `Invalid item at index ${index}.`
+                                );
+                            }
+
+
+                            const result =
+                                normalizeItem(item);
+
+
+                            if (!result.url) {
+
+                                throw new Error(
+                                    `Missing URL at index ${index}.`
+                                );
+                            }
+
+
+                            return result;
+                        }
+                    );
+
+
+                items = normalized;
+
+
+                if (!saveStore()) {
                     return;
                 }
 
-                const url =
-                    `https://www.youtube.com/watch?v=${ids}`;
 
-                newItems.push({
+                editIndex = -1;
 
-                    title: title || "Untitled",
+                render();
 
-                    url: url,
 
-                    type: "youtube",
+                editor.remove();
 
-                    date: new Date().toISOString(),
 
-                    thumb: ytThumb(ids),
+                alert(
+                    `${items.length} items saved successfully to LocalStore.`
+                );
 
-                    fav: false,
 
-                    views: 0,
+            } catch (error) {
 
-                    duration: time
+                alert(
+                    "Invalid JSON data.\n\n" +
+                    error.message
+                );
+            }
+        };
+    }
 
-                });
 
-            });
+    dataBtn.onclick =
+        exportDataStore;
 
-            /* --------------------------------
-               UPDATE LOCAL STORAGE
-            -------------------------------- */
 
-            items = newItems;
+    /* =====================================================
+       SAVE ADD / EDIT
+    ===================================================== */
 
-            localStorage.setItem(
-                "iframes",
-                JSON.stringify(items)
-            );
+    form.onsubmit = event => {
 
-            /* --------------------------------
-               CLOSE + REFRESH
-            -------------------------------- */
+        event.preventDefault();
 
-            editor.remove();
 
-            render();
+        const url =
+            Link.value.trim();
 
-            countBox.textContent = items.length;
+
+        if (!url) {
 
             alert(
-                `${items.length} items uploaded successfully.`
+                "Please enter a link."
             );
 
-        }
-        catch(error){
+            Link.focus();
 
-            console.error(error);
-
-            alert(
-                "Invalid Array Format.\n\n" +
-                "Please use:\n\n" +
-                `{ ids: "VIDEO_ID", time: "00:00", title: "TITLE" },`
-            );
-
+            return;
         }
 
+
+        const type =
+            Formate.value ||
+            detectFormat(url);
+
+
+        let thumb = "";
+
+
+        /* File thumbnail */
+
+        if (
+            rFile.checked &&
+            fileThumb
+        ) {
+
+            thumb = fileThumb;
+        }
+
+
+        /* URL thumbnail */
+
+        else if (
+            rURL.checked
+        ) {
+
+            thumb =
+                thumbURL.value.trim();
+        }
+
+
+        /* YouTube thumbnail */
+
+        else if (
+            type === "youtube" ||
+            type === "yt-short"
+        ) {
+
+            thumb =
+                getYouTubeThumbnail(url);
+        }
+
+
+        /*
+            If editing and no new thumbnail was
+            selected, preserve the old thumbnail.
+        */
+
+        if (
+            !thumb &&
+            editIndex > -1 &&
+            items[editIndex]
+        ) {
+
+            thumb =
+                items[editIndex].thumb || "";
+        }
+
+
+        const oldItem =
+            editIndex > -1
+                ? items[editIndex]
+                : null;
+
+
+        const obj = {
+
+            title:
+                Title.value.trim() ||
+                "Untitled",
+
+            url: url,
+
+            type:
+                String(type).toLowerCase(),
+
+            date:
+                dateInput.value ||
+                (
+                    oldItem
+                        ? oldItem.date
+                        : new Date().toISOString()
+                ),
+
+            thumb: thumb,
+
+            fav:
+                oldItem
+                    ? Boolean(oldItem.fav)
+                    : false,
+
+            views:
+                oldItem
+                    ? Number(oldItem.views) || 0
+                    : 0
+        };
+
+
+        /* EDIT */
+
+        if (editIndex > -1) {
+
+            items[editIndex] = obj;
+        }
+
+
+        /* ADD */
+
+        else {
+
+            items.push(obj);
+        }
+
+
+        if (!saveStore()) {
+            return;
+        }
+
+
+        previewes.classList.remove("show");
+
+
+        editIndex = -1;
+
+        fileThumb = "";
+
+        lastVideoID = "";
+
+
+        render();
     };
 
-}
 
-async function fetchYouTubeTitle(url){
-    const id = ytId(url);
-    if(!id) return "";
-    try{
+    /* =====================================================
+       DELETE
+    ===================================================== */
 
-        const res = await fetch(
-            `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`
+    deleteBtn.onclick = () => {
+
+        if (editIndex < 0) {
+            return;
+        }
+
+
+        const item =
+            items[editIndex];
+
+
+        if (!item) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                `Delete "${item.title}"?`
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        items.splice(
+            editIndex,
+            1
         );
 
-        if(!res.ok) return "";
 
-        const data = await res.json();
-
-        return data.title || "";
-
-    }catch(err){
-
-        console.log(err);
-
-        return "";
-
-    }
-
-}
-
-// TikTok
-const tkId = url => {
-
-    if (!url) return null;
-
-    const match = url.match(/video\/(\d+)/);
-
-    return match ? match[1] : null;
-
-};
-
-// Instagram Reel
-const igId = url => {
-
-    if (!url) return null;
-
-    const match = url.match(/reel\/([^/?]+)/);
-
-    return match ? match[1] : null;
-
-};
-
-// Facebook
-const fbId = url => {
-
-    if (!url) return null;
-
-    const match = url.match(/[?&]v=([0-9]+)/);
-
-    return match ? match[1] : null;
-
-};
-
-// Twitter / X
-const xId = url => {
-
-    if (!url) return null;
-
-    const match = url.match(/status\/([0-9]+)/);
-
-    return match ? match[1] : null;
-
-};
-
-
-/* ================= DETECT FORMAT ================= */
-
-function detectFormat(url){
-
-    if(!url) return "url";
-
-    url = url.toLowerCase();
-
-    if(url.includes("<iframe"))
-        return "iframe";
-
-    if(url.includes("/shorts/"))
-        return "yt-short";
-
-    if(url.includes("youtube.com") || url.includes("youtu.be"))
-        return "youtube";
-
-    if(url.includes("tiktok.com"))
-        return "tiktok";
-
-    if(url.includes("instagram.com"))
-        return "instagram";
-
-    if(url.includes("facebook.com"))
-        return "facebook";
-
-    if(url.includes("twitter.com") || url.includes("x.com"))
-        return "twitter";
-
-    if(url.includes("t.me"))
-        return "telegram";
-
-    if(url.includes("wa.me") || url.includes("whatsapp"))
-        return "whatsapp";
-
-    return "url";
-
-}
-
-
-/* ================= BUILD EMBED ================= */
-
-function buildEmbed(url){
-
-    if(!url) return "";
-
-    // YouTube
-    const yid = ytId(url);
-
-    if(yid){
-        return `https://www.youtube-nocookie.com/embed/${yid}?autoplay=1`;
-    }
-
-    // TikTok
-    const tid = tkId(url);
-
-    if(tid){
-        return `https://www.tiktok.com/embed/v2/${tid}`;
-    }
-
-    // Instagram
-    const iid = igId(url);
-
-    if(iid){
-        return `https://www.instagram.com/reel/${iid}/embed`;
-    }
-
-    // iframe code
-    if(url.includes("<iframe")){
-
-        const src = url.match(/src=["']([^"']+)["']/);
-
-        return src ? src[1] : "";
-
-    }
-
-    // All other links
-    return url;
-
-}
-
-
-/* ================= YOUTUBE THUMBNAIL ================= */
-
-function getYouTubeThumbnail(url){
-
-    const id = ytId(url);
-
-    if(!id) return "";
-
-    return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-
-}
-
-
-  /* ================= EVENTS ================= */
-  addBtn.onclick=()=>{
-
-    editIndex=-1;
-
-    form.reset();
-
-    preview.src="about:blank";
-
-    fileThumb="";
-
-    rYT.checked=true;
-
-    updateThumbUI();
-
-    previewes.classList.toggle("show");
-
-};
-
-  Link.oninput = async ()=>{
-
-    const url = Link.value.trim();
-
-    if(!url){
-        preview.src = "about:blank";
-        lastVideoID = "";
-        return;
-    }
-
-    Formate.value = detectFormat(url);
-
-    preview.src = buildEmbed(url) || "about:blank";
-
-    const id = ytId(url);
-
-    if(id && id !== lastVideoID){
-
-        lastVideoID = id;
-
-        const ytTitle = await fetchYouTubeTitle(url);
-
-        // Always update while editing the URL
-        if(ytTitle){
-            Title.value = ytTitle;
+        if (!saveStore()) {
+            return;
         }
 
-    }
 
-    updateThumbUI();
+        editIndex = -1;
 
-};
+        fileThumb = "";
 
-  rYT.onchange=rURL.onchange=rFile.onchange=updateThumbUI;
+        previewes.classList.remove(
+            "show"
+        );
 
-  thumbFile.onchange=()=>{
-    const f=thumbFile.files[0];
-    if(!f) return;
-    const r=new FileReader();
-    r.onload=()=>fileThumb=r.result;
-    r.readAsDataURL(f);
-  };
 
-  /* ================= SAVE ================= */
-  form.onsubmit = e=>{
-
-    e.preventDefault();
-
-    if(!Link.value.trim())
-        return;
-
-    const type = Formate.value || detectFormat(Link.value);
-
-    let thumb="";
-
-    if(rFile.checked && fileThumb){
-
-        thumb=fileThumb;
-
-    }
-
-    else if(rURL.checked){
-
-        thumb=thumbURL.value;
-
-    }
-
-    else if(type==="youtube" || type==="yt-short"){
-function ytThumb(id){
-    if(!id) return "";
-    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-}
-    }
-
-    const id=ytId(Link.value);
-        if(id) thumb=ytThumb(id);
-    const obj={
-        title:Title.value.trim() || "Untitled",
-        url:Link.value.trim(),
-        type:type,
-        date:dateInput.value || new Date().toISOString(),
-        thumb:thumb,
-        fav: editIndex>-1 ? items[editIndex].fav : false,
-        views: editIndex>-1 ? items[editIndex].views : 0
-    };
-    if(editIndex>-1){
-        obj.views=items[editIndex].views;
-        obj.fav=items[editIndex].fav;
-        items[editIndex]=obj;
-    }
-    else{
-        items.push(obj);
-    }
-    localStorage.setItem("iframes",JSON.stringify(items));
-    previewes.classList.remove("show");
-    render();
-
+        render();
     };
 
-  deleteBtn.onclick=()=>{
-    if(editIndex<0)
-        return;
-    if(!confirm("Delete this item?"))
-        return;
-    items.splice(editIndex,1);
-    localStorage.setItem(
-        "iframes",
-        JSON.stringify(items)
-    );
-    previewes.classList.remove("show");
-    render();
 
-    };
+    /* =====================================================
+       LOAD MAIN PLAYER
+    ===================================================== */
 
-  search.oninput=render;
-  filter.onchange=render;
+    function loadMain(item, index) {
 
-  /* ================= LOAD / EDIT ================= */
-  function loadMain(item,index){
-
-    items[index].views++;
-
-    localStorage.setItem(
-        "iframes",
-        JSON.stringify(items)
-    );
-
-    mainIframe.src = buildEmbed(item.url);
-
-    playerWrap.style.display = "block";
-
-    render();
-
-}
-
-  function editItem(item,index){
-
-    previewes.classList.add("show");
-
-    editIndex=index;
-
-    Title.value=item.title;
-
-    Link.value=item.url;
-
-    Formate.value=item.type;
-
-    dateInput.value = new Date(item.date).toLocaleString("sv-SE").replace(" ","T").slice(0,16);
-
-    preview.src=buildEmbed(item.url);
-
-    thumbURL.value=item.thumb||"";
-
-    fileThumb="";
-
-    if(item.thumb && item.thumb.startsWith("data:")){
-        rFile.checked=true;
-    }
-
-    else if(item.type==="youtube" || item.type==="yt-short"){
-
-        rYT.checked=true;
-
-    }
-
-    else{
-
-        rURL.checked=true;
-
-    }
-    updateThumbUI();
-
-}
-
-function updateThumbUI(){
-
-    thumbURL.style.display =
-        rURL.checked ? "block" : "none";
-
-    thumbFile.style.display =
-        rFile.checked ? "block" : "none";
-
-}
-  /* ================= RENDER ================= */
-function render(){
-
-    list.innerHTML="";
-
-    const searchText=search.value.trim().toLowerCase();
-    const filterValue=filter.value;
-
-    let data=items.map((item,index)=>({
-        ...item,
-        index
-    }));
-
-
-    /* ---------- FILTER ---------- */
-
-    data=data.filter(item=>{
-
-        if(searchText){
-
-            const text=(
-                item.title+" "+
-                item.type+" "+
-                item.url
-            ).toLowerCase();
-
-            if(!text.includes(searchText))
-                return false;
-
+        if (
+            !item ||
+            !items[index]
+        ) {
+            return;
         }
 
-        if(filterValue==="favorites")
-            return item.fav;
 
-        if(
-            ![
-                "all",
-                "favorites",
-                "a → z",
-                "z → a",
-                "new → old",
-                "old → new"
-            ].includes(filterValue)
-        ){
-
-            return item.type===filterValue;
-
-        }
-
-        return true;
-
-    });
+        items[index].views =
+            (Number(items[index].views) || 0) + 1;
 
 
-    /* ---------- SORT ---------- */
+        saveStore();
 
-    switch(filterValue){
 
-        case "a → z":
-            data.sort((a,b)=>
-                a.title.localeCompare(b.title)
+        const embed =
+            buildEmbed(
+                items[index].url
             );
-        break;
 
-        case "z → a":
-            data.sort((a,b)=>
-                b.title.localeCompare(a.title)
-            );
-        break;
 
-        case "new → old":
-            data.sort((a,b)=>
-                new Date(b.date)-new Date(a.date)
-            );
-        break;
+        mainIframe.src =
+            embed || "about:blank";
 
-        case "old → new":
-            data.sort((a,b)=>
-                new Date(a.date)-new Date(b.date)
-            );
-        break;
 
+        playerWrap.style.display =
+            "block";
+
+
+        render();
     }
 
 
-    countBox.textContent=data.length;
+    /* =====================================================
+       EDIT ITEM
+    ===================================================== */
+
+    function editItem(item, index) {
+
+        if (!item) {
+            return;
+        }
 
 
-    /* ---------- CARDS ---------- */
+        previewes.classList.add(
+            "show"
+        );
 
-    data.forEach(item=>{
 
-        const card=fastTag("div",list,"card");
+        editIndex = index;
 
-        const img=fastTag("img",card,"thumb");
 
-        img.src=item.thumb || "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+        Title.value =
+            item.title || "";
 
-        img.onerror=()=>{
-            img.src="https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+
+        Link.value =
+            item.url || "";
+
+
+        Formate.value =
+            item.type ||
+            detectFormat(item.url);
+
+
+        /*
+            Convert date safely to datetime-local.
+        */
+
+        try {
+
+            const d =
+                new Date(item.date);
+
+
+            if (!Number.isNaN(d.getTime())) {
+
+                dateInput.value =
+                    d.toLocaleString(
+                        "sv-SE"
+                    )
+                    .replace(" ", "T")
+                    .slice(0, 16);
+            }
+
+        } catch (error) {
+
+            dateInput.value = "";
+        }
+
+
+        preview.src =
+            buildEmbed(item.url) ||
+            "about:blank";
+
+
+        thumbURL.value =
+            item.thumb || "";
+
+
+        fileThumb = "";
+
+
+        thumbFile.value = "";
+
+
+        if (
+            item.thumb &&
+            item.thumb.startsWith("data:")
+        ) {
+
+            rFile.checked = true;
+        }
+
+        else if (
+            item.type === "youtube" ||
+            item.type === "yt-short"
+        ) {
+
+            rYT.checked = true;
+        }
+
+        else {
+
+            rURL.checked = true;
+        }
+
+
+        updateThumbUI();
+
+
+        deleteBtn.style.display =
+            "inline-block";
+    }
+
+
+    /* =====================================================
+       SEARCH + FILTER
+    ===================================================== */
+
+    search.oninput =
+        render;
+
+
+    filter.onchange =
+        render;
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function render() {
+
+        list.innerHTML = "";
+
+
+        const searchText =
+            search.value
+                .trim()
+                .toLowerCase();
+
+
+        const filterValue =
+            filter.value;
+
+
+        let data =
+            items.map(
+                (item, index) => ({
+                    ...item,
+                    index
+                })
+            );
+
+
+        /* =================================================
+           SEARCH
+        ================================================= */
+
+        if (searchText) {
+
+            data =
+                data.filter(item => {
+
+                    const text = (
+
+                        item.title +
+                        " " +
+                        item.type +
+                        " " +
+                        item.url
+
+                    ).toLowerCase();
+
+
+                    return text.includes(
+                        searchText
+                    );
+                });
+        }
+
+
+        /* =================================================
+           FILTER
+        ================================================= */
+
+        switch (filterValue) {
+
+            case "favorites":
+
+                data =
+                    data.filter(
+                        item => item.fav
+                    );
+
+                break;
+
+
+            case "url":
+
+            case "youtube":
+
+            case "tiktok":
+
+            case "instagram":
+
+            case "facebook":
+
+            case "twitter":
+
+            case "telegram":
+
+            case "whatsapp":
+
+            case "iframe":
+
+            case "other":
+
+                data =
+                    data.filter(
+                        item =>
+                            item.type ===
+                            filterValue
+                    );
+
+                break;
+        }
+
+
+        /* =================================================
+           SORT
+        ================================================= */
+
+        switch (filterValue) {
+
+            case "a → z":
+
+                data.sort(
+                    (a, b) =>
+                        a.title.localeCompare(
+                            b.title
+                        )
+                );
+
+                break;
+
+
+            case "z → a":
+
+                data.sort(
+                    (a, b) =>
+                        b.title.localeCompare(
+                            a.title
+                        )
+                );
+
+                break;
+
+
+            case "new → old":
+
+                data.sort(
+                    (a, b) =>
+                        new Date(b.date) -
+                        new Date(a.date)
+                );
+
+                break;
+
+
+            case "old → new":
+
+                data.sort(
+                    (a, b) =>
+                        new Date(a.date) -
+                        new Date(b.date)
+                );
+
+                break;
+        }
+
+
+        /* =================================================
+           COUNT
+        ================================================= */
+
+        countBox.textContent =
+            data.length;
+
+
+        /* =================================================
+           EMPTY
+        ================================================= */
+
+        if (!data.length) {
+
+            const empty =
+                fastTag(
+                    "div",
+                    list,
+                    "empty"
+                );
+
+            fastTag(
+                "h3",
+                empty,
+                null,
+                null,
+                "No Data"
+            );
+
+            fastTag(
+                "p",
+                empty,
+                null,
+                null,
+                "No matching items found."
+            );
+
+            return;
+        }
+
+
+        /* =================================================
+           CARDS
+        ================================================= */
+
+        data.forEach(item => {
+
+            const card =
+                fastTag(
+                    "div",
+                    list,
+                    "card"
+                );
+
+
+            /* Thumbnail */
+
+            const img =
+                fastTag(
+                    "img",
+                    card,
+                    "thumb"
+                );
+
+
+            img.loading = "lazy";
+
+
+            img.src =
+                item.thumb ||
+                "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
+
+
+            img.onerror = () => {
+
+                img.onerror = null;
+
+                img.src =
+                    "https://dummyimage.com/480x270/222/ffffff&text=No+Thumbnail";
             };
 
-        fastTag(
-            "h4",
-            card,
-            null,
-            null,
-            item.title
-        );
 
+            /* Title */
 
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            item.type.toUpperCase()
-        );
-
-
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            "Views : "+item.views
-        );
-
-
-        fastTag(
-            "small",
-            card,
-            null,
-            null,
-            new Date(item.date)
-            .toLocaleString()
-        );
-
-
-        /* ---------- FAVORITE ---------- */
-
-        const fav=fastTag(
-            "button",
-            card,
-            "fav",
-            null,
-            item.fav ? "❤️" : "🤍"
-        );
-
-        fav.onclick=e=>{
-
-            e.stopPropagation();
-
-            items[item.index].fav=
-                !items[item.index].fav;
-
-            localStorage.setItem(
-                "iframes",
-                JSON.stringify(items)
+            fastTag(
+                "h4",
+                card,
+                null,
+                null,
+                item.title
             );
 
-            render();
 
-        };
+            /* Type */
 
-
-        /* ---------- EDIT ---------- */
-
-        const edit=fastTag(
-            "button",
-            card,
-            "edit",
-            null,
-            "Edit"
-        );
-
-        edit.onclick=e=>{
-
-            e.stopPropagation();
-
-            editItem(
-                items[item.index],
-                item.index
+            fastTag(
+                "small",
+                card,
+                null,
+                null,
+                String(
+                    item.type || "url"
+                ).toUpperCase()
             );
 
-        };
 
+            /* Views */
 
-        /* ---------- OPEN ---------- */
-
-        card.onclick=()=>{
-
-            loadMain(
-                items[item.index],
-                item.index
+            fastTag(
+                "small",
+                card,
+                null,
+                null,
+                "Views : " +
+                (Number(item.views) || 0)
             );
 
-        };
 
-    });
+            /* Date */
 
-}
+            let dateText =
+                item.date || "";
 
-  render();
-  countBox.textContent=items.length;
+
+            const parsedDate =
+                new Date(item.date);
+
+
+            if (
+                item.date &&
+                !Number.isNaN(
+                    parsedDate.getTime()
+                )
+            ) {
+
+                dateText =
+                    parsedDate.toLocaleString();
+            }
+
+
+            fastTag(
+                "small",
+                card,
+                null,
+                null,
+                dateText
+            );
+
+
+            /* =================================================
+               FAVORITE
+            ================================================= */
+
+            const fav =
+                fastTag(
+                    "button",
+                    card,
+                    "fav",
+                    null,
+                    item.fav
+                        ? "❤️"
+                        : "🤍"
+                );
+
+
+            fav.type = "button";
+
+
+            fav.title =
+                item.fav
+                    ? "Remove Favorite"
+                    : "Add Favorite";
+
+
+            fav.onclick = event => {
+
+                event.stopPropagation();
+
+
+                if (!items[item.index]) {
+                    return;
+                }
+
+
+                items[item.index].fav =
+                    !items[item.index].fav;
+
+
+                saveStore();
+
+
+                render();
+            };
+
+
+            /* =================================================
+               EDIT
+            ================================================= */
+
+            const edit =
+                fastTag(
+                    "button",
+                    card,
+                    "edit",
+                    null,
+                    "Edit"
+                );
+
+
+            edit.type = "button";
+
+
+            edit.onclick = event => {
+
+                event.stopPropagation();
+
+
+                editItem(
+                    items[item.index],
+                    item.index
+                );
+            };
+
+
+            /* =================================================
+               OPEN
+            ================================================= */
+
+            card.onclick = () => {
+
+                loadMain(
+                    items[item.index],
+                    item.index
+                );
+            };
+
+        });
+    }
+
+
+    /* =====================================================
+       INITIAL UI STATE
+    ===================================================== */
+
+    deleteBtn.style.display = "none";
+
+    updateThumbUI();
+
+
+    /* =====================================================
+       INITIAL RENDER
+    ===================================================== */
+
+    render();
+
+
+    countBox.textContent =
+        items.length;
+
+
+    /* =====================================================
+       EXPOSE STORE FOR DEBUGGING
+    ===================================================== */
+
+    window.LocalStore = items;
+
+
+    window.saveLocalStore = () => {
+
+        saveStore();
+
+        window.LocalStore = items;
+
+        return items;
+    };
+
+
+    window.getLocalStore = () => {
+
+        return items;
+    };
+
+
+    window.clearLocalStore = () => {
+
+        const confirmed =
+            confirm(
+                "Delete all LocalStore data?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        items = [];
+
+        saveStore();
+
+        window.LocalStore = items;
+
+        render();
+    };
+
+
+    /* =====================================================
+       STORAGE EVENT
+       Sync if another tab changes LocalStore.
+    ===================================================== */
+
+    window.addEventListener(
+        "storage",
+        event => {
+
+            if (
+                event.key !== STORAGE_KEY
+            ) {
+                return;
+            }
+
+
+            try {
+
+                const newData =
+                    JSON.parse(
+                        event.newValue || "[]"
+                    );
+
+
+                if (
+                    Array.isArray(newData)
+                ) {
+
+                    items =
+                        newData
+                            .map(normalizeItem)
+                            .filter(Boolean);
+
+
+                    window.LocalStore =
+                        items;
+
+
+                    render();
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "LocalStore synchronization error:",
+                    error
+                );
+            }
+        }
+    );
+
 });
 </script>
 </html>
