@@ -8,16 +8,20 @@
 /* ================= RESET ================= */
 
 *{
+  font-family:system-ui,sans-serif;
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:system-ui,sans-serif;
 }
 
 body{
   height:100vh;
+  width: 100%;
   background:#202228;
   color:#d5d8e0;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
 body::before{
@@ -38,6 +42,8 @@ body::before{
   display:flex;
   flex-direction:column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* ================= HEADER ================= */
@@ -51,6 +57,7 @@ body::before{
   border: 1px solid #a87c29;
   border-radius:10px;
   margin: 10px;
+  gap: 10px;
   width: 98%;
   position:sticky;
   top: 0;
@@ -68,6 +75,7 @@ body::before{
 .selectList{
   display:flex;
   align-items:center;
+  justify-content: center;
   gap:10px;
 }
 
@@ -229,7 +237,7 @@ button:hover{
 .closeBtn{
   position:absolute;
   top:10px;
-  right:10px;
+  right:8px;
   z-index:10;
   padding: 8px 10px;
   border-radius:5px;
@@ -240,12 +248,14 @@ button:hover{
 
 .main{
   width:100%;
-  padding:15px;
+  padding: 5px 10px;
 }
 
 .list{
   display:grid;
-  gap:15px;
+  /* width: 100%; */
+  gap:10px;
+  /* border: #d33 solid ; */
   grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
 }
 
@@ -269,7 +279,8 @@ button:hover{
 
 .thumb{
   width:100%;
-  /* height:240px; */
+  /* height: 100%; */
+  min-height:240px;
   aspect-ratio: 16/9;
   object-fit:cover;
   background:#000;
@@ -316,7 +327,7 @@ button:hover{
     display:none;
     position:fixed;
     inset:0;
-    z-index:9999;
+    z-index:9;
     background:rgba(0,0,0,.85);
     align-items:center;
     justify-content:center;
@@ -448,6 +459,10 @@ button:hover{
 
   }
 
+  select{
+    padding: 4px 10px;
+  }
+
   .tools input{
     width:100%;
     height: 25px;
@@ -455,8 +470,8 @@ button:hover{
   
   .upload{
     width: 30%;
-    height: 30px;
-    padding: 5px 8px;
+    height: 25px;
+    padding: 5px 10px;
   }
 
   .selectList{
@@ -532,36 +547,3130 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const LocalStore = [
-        {
-            title: "Vaalu Kanuladaanaa | Premikula Roju (1999) | Rock Mix - Tribute to A.R. Rahman | Naveen Maremanda",
-            url: "https://youtu.be/qAlxr3wfKpA",
-            type: "youtube",
-            date: "2030-08-13T15:02",
-            thumb: "https://i.ytimg.com/vi/qAlxr3wfKpA/hqdefault.jpg",
-            fav: true,
-            views: 0
-        },
-
-        {
-            title: "Playlist make you feel like a gangster | Gentleman Songs (Vol.3)",
-            url: "https://youtu.be/ww6N-jyjsbw",
-            type: "youtube",
-            date: "2023-03-02T08:18",
-            thumb: "https://i.ytimg.com/vi/ww6N-jyjsbw/hqdefault.jpg",
-            fav: false,
-            views: 0
-        },
-
-        {
-            title: "Baarish | Half Girlfriend | Arjun Kapoor & Shraddha Kapoor| Ash King ,Sashaa | Tanishk| Baarish 2024",
-            url: "https://youtu.be/BNfAf4To73c",
-            type: "youtube",
-            date: "2023-09-12T19:10",
-            thumb: "https://i.ytimg.com/vi/BNfAf4To73c/hqdefault.jpg",
-            fav: false,
-            views: 0
-        }
-    ];
+  {
+    "title": "Vaalu Kanuladaanaa | Premikula Roju (1999) | Rock Mix -  Tribute to  A.R. Rahman |  Naveen Maremanda",
+    "url": "https://youtu.be/qAlxr3wfKpA",
+    "type": "youtube",
+    "date": "2030-08-13T15:02",
+    "thumb": "https://i.ytimg.com/vi/qAlxr3wfKpA/hqdefault.jpg",
+    "fav": true,
+    "views": 434
+  },
+  {
+    "title": "No Love (Official Audio) - Shubh",
+    "url": "https://youtu.be/6RrEQJNZwPQ?si=IFu-E_fQUEkb7ly0",
+    "type": "youtube",
+    "date": "2026-08-13T07:42:57.468Z",
+    "thumb": "https://i.ytimg.com/vi/6RrEQJNZwPQ/hqdefault.jpg",
+    "fav": true,
+    "views": 2
+  },
+  {
+    "title": "AURA AMMAKU CHELLA ( RELOADED ) |Aapadbhandavudu (1992) | M. M. Keeravani Sir | Naveen Maremanda",
+    "url": "https://youtu.be/WMudML3PcSQ?si=WuBTRPZBdxCjXit8",
+    "type": "youtube",
+    "date": "2026-08-13T13:50:34.421Z",
+    "thumb": "https://i.ytimg.com/vi/WMudML3PcSQ/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "I'll Be Waiting (Kabhi Jo Baadal) Arjun Feat.Arijit Singh | Full Video Song (HD)",
+    "url": "https://youtu.be/ar-3chBG4NU?si=7ApKa8S0t3hgSkmN",
+    "type": "youtube",
+    "date": "2026-08-13T07:51:58.257Z",
+    "thumb": "https://i.ytimg.com/vi/ar-3chBG4NU/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Da Da Da Да да да] Jarico Remix | VHWX Remastered",
+    "url": "https://youtu.be/3PY2j22d3Ds",
+    "type": "youtube",
+    "date": "2023-09-12T23:44",
+    "thumb": "https://i.ytimg.com/vi/3PY2j22d3Ds/hqdefault.jpg",
+    "fav": false,
+    "views": 475
+  },
+  {
+    "title": "People X Nainowale Ne (Mashup) | Neeti Mohan & Libianca | Lo-fi 2307 | Latest Instagram Viral",
+    "url": "https://youtu.be/riVOHkYvzjI",
+    "type": "youtube",
+    "date": "2022-12-04T07:24",
+    "thumb": "https://i.ytimg.com/vi/riVOHkYvzjI/hqdefault.jpg",
+    "fav": false,
+    "views": 969
+  },
+  {
+    "title": "Taylor Swift - Lover Remix Feat. Shawn Mendes (Lyric Video)",
+    "url": "https://youtu.be/b5Zay_Hd_7Q?si=h81tU3stykxM1dkX",
+    "type": "youtube",
+    "date": "2026-08-13T07:51:13.476Z",
+    "thumb": "https://i.ytimg.com/vi/b5Zay_Hd_7Q/hqdefault.jpg",
+    "fav": true,
+    "views": 4
+  },
+  {
+    "title": "Jawan Prevue Theme",
+    "url": "https://youtu.be/DYrbOje2eX8?si=b4Wz0r3zcGKsjjZU",
+    "type": "youtube",
+    "date": "2026-08-13T07:30:39.292Z",
+    "thumb": "https://i.ytimg.com/vi/DYrbOje2eX8/hqdefault.jpg",
+    "fav": true,
+    "views": 0
+  },
+  {
+    "title": "OFFICIAL: 'Mitti Di Khushboo' FULL VIDEO Song | Ayushmann Khurrana | Rochak Kohli",
+    "url": "https://youtu.be/8uJ-wOljP_s?si=3rvAzzGmHS_IfJtF",
+    "type": "youtube",
+    "date": "2026-08-13T07:43:09.306Z",
+    "thumb": "https://i.ytimg.com/vi/8uJ-wOljP_s/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Shubh - One Love (Official Audio)",
+    "url": "https://youtu.be/0pWsCiBvLOk?si=eaSlTpX6YuVH1Gmq",
+    "type": "youtube",
+    "date": "2026-08-13T07:56:52.741Z",
+    "thumb": "https://i.ytimg.com/vi/0pWsCiBvLOk/hqdefault.jpg",
+    "fav": true,
+    "views": 2
+  },
+  {
+    "title": "Jabilli Kosam (Lofi Remix) | Tribute to Ilaiyaraaja Garu  | Remix by Naveen Maremand",
+    "url": "https://youtu.be/Hlu754v8eas?si=8SNfndVBtOiyDPri",
+    "type": "youtube",
+    "date": "2026-08-13T14:00:02.215Z",
+    "thumb": "https://i.ytimg.com/vi/Hlu754v8eas/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "GOLIMAAR (ROCK REMIX) | Donga (1985) | Chiranjeevi | K. Chakravarthy | Naveen Maremanda",
+    "url": "https://youtu.be/QZL-BQIh3-Y?si=mGKJnvI9f8FAQiM6",
+    "type": "youtube",
+    "date": "2026-08-13T19:33",
+    "thumb": "https://i.ytimg.com/vi/QZL-BQIh3-Y/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Finding Her (Jana Mere Sawalon Ka Manzar Tu) : Kushagra | Vanshika | Bharath | Karan Maini |UR Debut",
+    "url": "https://youtu.be/3Cp2QTBZAFQ?si=_r7beJLW_ukS22TD",
+    "type": "youtube",
+    "date": "2026-08-13T07:44:51.737Z",
+    "thumb": "https://i.ytimg.com/vi/3Cp2QTBZAFQ/hqdefault.jpg",
+    "fav": true,
+    "views": 0
+  },
+  {
+    "title": "Nuvvosthanante Song | Varsham Movie Songs | Prabhas | Trisha | DSP | TeluguOne",
+    "url": "https://youtu.be/eUrC0jWdu-M",
+    "type": "youtube",
+    "date": "2023-02-27T03:55",
+    "thumb": "https://i.ytimg.com/vi/eUrC0jWdu-M/hqdefault.jpg",
+    "fav": false,
+    "views": 310
+  },
+  {
+    "title": "Mellaga Karagani Video Song | Varsham Movie Songs | Prabhas,Trisha | TeluguOne",
+    "url": "https://youtu.be/TBX-PJyifts",
+    "type": "youtube",
+    "date": "2021-04-05T03:32",
+    "thumb": "https://i.ytimg.com/vi/TBX-PJyifts/hqdefault.jpg",
+    "fav": false,
+    "views": 569
+  },
+  {
+    "title": "Urike Chilaka Video Song | Bombay Telugu Movie Songs | Arvind Swamy | Manisha Koirala | TeluguOne",
+    "url": "https://youtu.be/4J5aQNqRu_A",
+    "type": "youtube",
+    "date": "2023-04-14T05:50",
+    "thumb": "https://i.ytimg.com/vi/4J5aQNqRu_A/hqdefault.jpg",
+    "fav": false,
+    "views": 466
+  },
+  {
+    "title": "Jeans Movie Songs|Priya Priya Champodde Video Song|Prashanth,Aishwarya Rai,Raju Sundaram",
+    "url": "https://youtu.be/bo3li2kJ1-M",
+    "type": "youtube",
+    "date": "2023-09-19T14:01",
+    "thumb": "https://i.ytimg.com/vi/bo3li2kJ1-M/hqdefault.jpg",
+    "fav": false,
+    "views": 328
+  },
+  {
+    "title": "Dandiya Atalu Ada Video Song with Lyrics | Premikula Roju Songs | Kunal, Sonali Bendre | TeluguOne",
+    "url": "https://youtu.be/5EiZVnfA7KQ",
+    "type": "youtube",
+    "date": "2021-11-28T05:19",
+    "thumb": "https://i.ytimg.com/vi/5EiZVnfA7KQ/hqdefault.jpg",
+    "fav": false,
+    "views": 982
+  },
+  {
+    "title": "Premikula Roju Songs - Prema Ane - Kunal - Sonali Bendre",
+    "url": "https://youtu.be/TI142vBxm-A",
+    "type": "youtube",
+    "date": "2024-12-29T06:22",
+    "thumb": "https://i.ytimg.com/vi/TI142vBxm-A/hqdefault.jpg",
+    "fav": false,
+    "views": 62
+  },
+  {
+    "title": "Na Autograph Songs | Manmadhude Brahmani Pooni Song | Romantic Scene and Song | TeluguOne",
+    "url": "https://youtu.be/P-TrCQAZJO4",
+    "type": "youtube",
+    "date": "2023-05-02T14:30",
+    "thumb": "https://i.ytimg.com/vi/P-TrCQAZJO4/hqdefault.jpg",
+    "fav": false,
+    "views": 175
+  },
+  {
+    "title": "Mellaga Karagani Song 4K | Prabhas, Trisha | TeluguOne",
+    "url": "https://youtu.be/5h4RxN0xLmI",
+    "type": "youtube",
+    "date": "2020-08-15T03:53",
+    "thumb": "https://i.ytimg.com/vi/5h4RxN0xLmI/hqdefault.jpg",
+    "fav": false,
+    "views": 316
+  },
+  {
+    "title": "O Cheliya Naa Priya Sakhiya Video Song with Lyrics | Premikudu Songs  Prabhu Deva, Nagma | TeluguOne",
+    "url": "https://youtu.be/ESGVNzj8UKY",
+    "type": "youtube",
+    "date": "2024-06-16T15:45",
+    "thumb": "https://i.ytimg.com/vi/ESGVNzj8UKY/hqdefault.jpg",
+    "fav": false,
+    "views": 332
+  },
+  {
+    "title": "Valentine’s Day Special 2026 | Manasuna Unnadi (Female Version) | Priyamaina Neeku | TeluguOne",
+    "url": "https://youtu.be/YPzGBMzq4SM",
+    "type": "youtube",
+    "date": "2020-09-20T21:07",
+    "thumb": "https://i.ytimg.com/vi/YPzGBMzq4SM/hqdefault.jpg",
+    "fav": false,
+    "views": 962
+  },
+  {
+    "title": "Enduke || Official Music Video | by Naatu Naatu Singer Rahul Sipligunj | TeluguOne",
+    "url": "https://youtu.be/cQLsc6odFPE",
+    "type": "youtube",
+    "date": "2022-05-17T02:05",
+    "thumb": "https://i.ytimg.com/vi/cQLsc6odFPE/hqdefault.jpg",
+    "fav": false,
+    "views": 300
+  },
+  {
+    "title": "Nuvvu Nenu Prema Songs | New York Nagaram Video Song | Suriya, Jyothika | Sri Balaji Video",
+    "url": "https://youtu.be/uP3Rc4Tw8TE",
+    "type": "youtube",
+    "date": "2023-09-27T04:03",
+    "thumb": "https://i.ytimg.com/vi/uP3Rc4Tw8TE/hqdefault.jpg",
+    "fav": false,
+    "views": 332
+  },
+  {
+    "title": "ILLUMINATI - [ Slowed + Reverb ] | AAVESHAM",
+    "url": "https://youtu.be/8EpbcZAYW_0?si=u8P6iB7JeDd9v7Ie",
+    "type": "youtube",
+    "date": "2026-08-13T12:39",
+    "thumb": "https://i.ytimg.com/vi/8EpbcZAYW_0/hqdefault.jpg",
+    "fav": true,
+    "views": 1
+  },
+  {
+    "title": "'One Bottle Down' FULL VIDEO SONG | Yo Yo Honey Singh | T-SERIES",
+    "url": "https://youtu.be/NDJ-1FK1c_k?si=Vrv05QIa6YTCIzS4",
+    "type": "youtube",
+    "date": "2026-08-13T07:23:33.070Z",
+    "thumb": "https://i.ytimg.com/vi/NDJ-1FK1c_k/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Alcoholic Full Video | The Shaukeens | Yo Yo Honey Singh | Akshay Kumar & Lisa Haydon",
+    "url": "https://youtu.be/j2OY8I03LeA?si=nrz1tur6mtMuioNw",
+    "type": "youtube",
+    "date": "2026-08-13T07:24:10.262Z",
+    "thumb": "https://i.ytimg.com/vi/j2OY8I03LeA/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Chaar Botal Vodka Full Song Feat. Yo Yo Honey Singh, Sunny Leone | Ragini MMS 2",
+    "url": "https://youtu.be/x8F5dz8kv1w?si=nSkN_zNpdRL2TSs7",
+    "type": "youtube",
+    "date": "2026-08-13T07:24:52.556Z",
+    "thumb": "https://i.ytimg.com/vi/x8F5dz8kv1w/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "BREAK UP PARTY - Yo Yo Honey Singh Feat. Leo ( Official Video ) | Punjabi Songs",
+    "url": "https://youtu.be/EpJk_dSpjVM?si=L9gVIOfHO0TEGIW9",
+    "type": "youtube",
+    "date": "2026-08-13T07:27:49.266Z",
+    "thumb": "https://i.ytimg.com/vi/EpJk_dSpjVM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Blue Eyes Full Video Song Yo Yo Honey Singh | Blockbuster Song Of 2013",
+    "url": "https://youtu.be/NbyHNASFi6U?si=QhWqRq7ir8WYT8wK",
+    "type": "youtube",
+    "date": "2026-08-13T07:28:48.128Z",
+    "thumb": "https://i.ytimg.com/vi/NbyHNASFi6U/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "\"Kashmir Main Tu Kanyakumari\" Chennai Express Full Video Song | Shahrukh Khan, Deepika Padukone",
+    "url": "https://youtu.be/dodDteh-m3Q?si=S4_zDvxK5gTOQmIP",
+    "type": "youtube",
+    "date": "2026-08-13T07:30:58.317Z",
+    "thumb": "https://i.ytimg.com/vi/dodDteh-m3Q/hqdefault.jpg",
+    "fav": true,
+    "views": 0
+  },
+  {
+    "title": "Radhika Song Telugu Lyrics|Tillu Square |Siddu Jonnalagadda, Anupama|RamMiriyala| Maa Paata Mee Nota",
+    "url": "https://youtu.be/spqGUfQygcI?si=jHotayeDJwt1SOMM",
+    "type": "youtube",
+    "date": "2026-08-13T07:31:18.005Z",
+    "thumb": "https://i.ytimg.com/vi/spqGUfQygcI/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Badshah - SANAK (Official Video) | 3:00 AM Sessions",
+    "url": "https://youtu.be/lAUf0q711Ew?si=UwJOI0_hhEb2EP5r",
+    "type": "youtube",
+    "date": "2026-08-13T07:34:10.742Z",
+    "thumb": "https://i.ytimg.com/vi/lAUf0q711Ew/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Jumme Ki Raat Full Video Song | Salman Khan, Jacqueline Fernandez | Mika Singh | Himesh Reshammiya",
+    "url": "https://youtu.be/dv_Qjzca56k?si=zmEvfPc4v4kcUbQb",
+    "type": "youtube",
+    "date": "2026-08-13T07:34:33.864Z",
+    "thumb": "https://i.ytimg.com/vi/dv_Qjzca56k/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Full Video: Ek Do Teen Film Version | Baaghi 2 | Jacqueline F |Tiger S | Disha P| Ahmed K | Sajid N",
+    "url": "https://youtu.be/cLTXQxiQPgE?si=v42cULvPKEiUK6Up",
+    "type": "youtube",
+    "date": "2026-08-13T07:34:46.449Z",
+    "thumb": "https://i.ytimg.com/vi/cLTXQxiQPgE/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Badshah – Genda Phool | Jacqueline Fernandez | Payal Dev | Hit Anthem of the Year 2021",
+    "url": "https://youtu.be/SD4Z8dlZPd8?si=7U1kmoqZGNcF5X2j",
+    "type": "youtube",
+    "date": "2026-08-13T07:34:58.042Z",
+    "thumb": "https://i.ytimg.com/vi/SD4Z8dlZPd8/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Ramuloo Ramulaa Full Video | Allu Arjun, Pooja Hegde | Ala Vaikunthapurramuloo | Trivikram | Thaman",
+    "url": "https://youtu.be/Bg8Yb9zGYyA?si=DQtL9B8N3CShAe9z",
+    "type": "youtube",
+    "date": "2026-08-13T13:05",
+    "thumb": "https://i.ytimg.com/vi/Bg8Yb9zGYyA/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Pani Da Rang - Full Video Song | Vicky Donor | Ayushmann Khurrana & Yami Gautam | Rochak Kohli",
+    "url": "https://youtu.be/EiItLWWxgOI?si=TXFMw5Il7MSWzHy0",
+    "type": "youtube",
+    "date": "2026-08-13T07:35:29.201Z",
+    "thumb": "https://i.ytimg.com/vi/EiItLWWxgOI/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Heeriye X Chaleya X Tu Aake Dekhle Insta Mashup | revibe | Viral Insta Reels, TikTok Remix |",
+    "url": "https://youtu.be/9M_ZKSmxb_s?si=eRUgrCSEB76Pw-mc",
+    "type": "youtube",
+    "date": "2026-08-13T13:06",
+    "thumb": "https://i.ytimg.com/vi/9M_ZKSmxb_s/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Vilambara Idaiveli (Sped Up Remix) | Imaikkaa Nodigal | Music Venger |",
+    "url": "https://youtu.be/W6afgTReNo8?si=G66O37DJcJVgcwr3",
+    "type": "youtube",
+    "date": "2026-08-13T07:36:14.326Z",
+    "thumb": "https://i.ytimg.com/vi/W6afgTReNo8/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "PSY - GANGNAM STYLE(강남스타일) M/V",
+    "url": "https://youtu.be/9bZkp7q19f0?si=e9ZbPoyNnyu7kw8L",
+    "type": "youtube",
+    "date": "2026-08-13T07:36:52.938Z",
+    "thumb": "https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg",
+    "fav": true,
+    "views": 1
+  },
+  {
+    "title": "Michael Jackson - They Don't Care About Us (Lyric Video) Cover by Matty Carter + Ariel",
+    "url": "https://youtu.be/_d6NsCMnZLM?si=qIMsTwAmvVjt_S6_",
+    "type": "youtube",
+    "date": "2026-08-13T07:37:36.972Z",
+    "thumb": "https://i.ytimg.com/vi/_d6NsCMnZLM/hqdefault.jpg",
+    "fav": true,
+    "views": 0
+  },
+  {
+    "title": "David Kushner - Daylight (Official Music Video)",
+    "url": "https://youtu.be/MoN9ql6Yymw?si=44j2IQoULPga84vx",
+    "type": "youtube",
+    "date": "2026-08-13T07:38:11.242Z",
+    "thumb": "https://i.ytimg.com/vi/MoN9ql6Yymw/hqdefault.jpg",
+    "fav": true,
+    "views": 1
+  },
+  {
+    "title": "Lil Nas X - Old Town Road (Official Movie) ft. Billy Ray Cyrus",
+    "url": "https://youtu.be/w2Ov5jzm3j8?si=v4iSlv_vF7MlBhdK",
+    "type": "youtube",
+    "date": "2026-08-13T07:38:28.377Z",
+    "thumb": "https://i.ytimg.com/vi/w2Ov5jzm3j8/hqdefault.jpg",
+    "fav": true,
+    "views": 1
+  },
+  {
+    "title": "Enemy「AMV」Anime Mix",
+    "url": "https://youtu.be/8nKJCNgiVhc?si=u6XNcEBfABj1n-GK",
+    "type": "youtube",
+    "date": "2026-08-13T07:39:15.841Z",
+    "thumb": "https://i.ytimg.com/vi/8nKJCNgiVhc/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Raat Jashan Di Video Song | ZORAWAR | Yo Yo Honey Singh, Jasmine Sandlas, Baani J | T-Series",
+    "url": "https://youtu.be/D--rQj49heE?si=8JjetRK_EQofFjKA",
+    "type": "youtube",
+    "date": "2026-08-13T07:25:50.261Z",
+    "thumb": "https://i.ytimg.com/vi/D--rQj49heE/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Multifandom || Dancin",
+    "url": "https://youtu.be/-yHCeSZ-Nik?si=x2zcfppwJm4vljjx",
+    "type": "youtube",
+    "date": "2026-08-13T07:39:40.356Z",
+    "thumb": "https://i.ytimg.com/vi/-yHCeSZ-Nik/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Willy William - EGO (Don Tobol Remix) | Sucker Punch",
+    "url": "https://youtu.be/SFYgkkT93k8?si=nUguQUE33xRllfoa",
+    "type": "youtube",
+    "date": "2026-08-13T07:39:57.004Z",
+    "thumb": "https://i.ytimg.com/vi/SFYgkkT93k8/hqdefault.jpg",
+    "fav": true,
+    "views": 2
+  },
+  {
+    "title": "Arcade x Mann Mera (Mashup) Full Version | Gravero",
+    "url": "https://youtu.be/-aQMjByEeo8?si=i-VcQWuGJ3J8CGm7",
+    "type": "youtube",
+    "date": "2026-08-13T07:40:24.040Z",
+    "thumb": "https://i.ytimg.com/vi/-aQMjByEeo8/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Sahiba ( s l o w  + r e v e r b ) version | Aditya Rikhari | Tag Your SAHIBA",
+    "url": "https://youtu.be/_eTShi_wzQU?si=sgozgLp2SF2NswhI",
+    "type": "youtube",
+    "date": "2026-08-13T07:40:37.442Z",
+    "thumb": "https://i.ytimg.com/vi/_eTShi_wzQU/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Sochta hoon_🔥||[slowed+reverb]_||bast lofi song 🎶 #youtube #song #lofi",
+    "url": "https://youtu.be/_s3iubAXihM?si=BN4FgTCMBR2LBGAQ",
+    "type": "youtube",
+    "date": "2026-08-13T07:40:52.122Z",
+    "thumb": "https://i.ytimg.com/vi/_s3iubAXihM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Vellake Music Video - Alekhya Harika | Vinay Shanmukh, Bharatt-Saurabh, Anirudh Ravichander, S Vijay",
+    "url": "https://youtu.be/rFPl2XY0uv4?si=oZBJIFLWv1mGhguw",
+    "type": "youtube",
+    "date": "2026-08-13T13:11",
+    "thumb": "https://i.ytimg.com/vi/rFPl2XY0uv4/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Zara Zara Bahekta hai - jalraj [ Slowed + Reverb ]  | NIRAJ |",
+    "url": "https://youtu.be/wejaREXePtg?si=_PYpIH3YPHZ-X6ic",
+    "type": "youtube",
+    "date": "2026-08-13T07:42:17.359Z",
+    "thumb": "https://i.ytimg.com/vi/wejaREXePtg/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Let Me Down Slowly x Main Dhoondne Ko Zamaane Mein (Gravero Mashup) | Full Version",
+    "url": "https://youtu.be/s-bZD3O3P80?si=lIc4Xc_0lVxy40hJ",
+    "type": "youtube",
+    "date": "2026-08-13T07:42:30.832Z",
+    "thumb": "https://i.ytimg.com/vi/s-bZD3O3P80/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Isa - Andro (Lyrics) || andro || || sonnaya lunnaya ||",
+    "url": "https://youtu.be/25IriMsFbcM?si=xGYOu1v2_KuKJ-An",
+    "type": "youtube",
+    "date": "2026-08-13T07:42:43.372Z",
+    "thumb": "https://i.ytimg.com/vi/25IriMsFbcM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Akshath - Nadaaniyan (Official Video) Aisha Ahmed",
+    "url": "https://youtu.be/gPpQNzQP6gE?si=LvmgdEt3n1RRwB9n",
+    "type": "youtube",
+    "date": "2026-08-13T07:44:09.509Z",
+    "thumb": "https://i.ytimg.com/vi/gPpQNzQP6gE/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "ANIMAL:Pehle Bhi Main(Full Video) | Ranbir Kapoor,Tripti Dimri |Sandeep V |Vishal M,Raj S |Bhushan K",
+    "url": "https://youtu.be/iAIBF2ngbWY?si=iWOa0KGJWbT10Mt6",
+    "type": "youtube",
+    "date": "2026-08-13T07:44:27.971Z",
+    "thumb": "https://i.ytimg.com/vi/iAIBF2ngbWY/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Official Video: Humnava Mere Song | Jubin Nautiyal | Manoj Muntashir | Rocky - Shiv | Bhushan Kumar",
+    "url": "https://youtu.be/TmRgK-pXH9c?si=meTYVY_wT4nfgXqn",
+    "type": "youtube",
+    "date": "2026-08-13T07:45:08.852Z",
+    "thumb": "https://i.ytimg.com/vi/TmRgK-pXH9c/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Lana Del Rey - Summertime Sadness (Official Music Video)",
+    "url": "https://youtu.be/TdrL3QxjyVw?si=eIbrV_UN8ztGJ7v_",
+    "type": "youtube",
+    "date": "2026-08-13T07:45:25.321Z",
+    "thumb": "https://i.ytimg.com/vi/TdrL3QxjyVw/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Hua Main x Finding Her - Full Version | Shubhadip Dey | Vibevik",
+    "url": "https://youtu.be/3t2xuSYzhqY?si=qktGf4ENM7dlie4U",
+    "type": "youtube",
+    "date": "2026-08-13T07:45:36.155Z",
+    "thumb": "https://i.ytimg.com/vi/3t2xuSYzhqY/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Ed Sheeran - Perfect (Official Music Video)",
+    "url": "https://youtu.be/2Vv-BfVoq4g?si=lQj6yjLbAv9HzaOu",
+    "type": "youtube",
+    "date": "2026-08-13T07:46:17.040Z",
+    "thumb": "https://i.ytimg.com/vi/2Vv-BfVoq4g/hqdefault.jpg",
+    "fav": true,
+    "views": 3
+  },
+  {
+    "title": "DHARIA - Sugar & Brownies (by Monoir) [Official Video]",
+    "url": "https://youtu.be/y2tEPmwWEiI?si=QgrcxRwUBdu1t61Z",
+    "type": "youtube",
+    "date": "2026-08-13T07:46:33.009Z",
+    "thumb": "https://i.ytimg.com/vi/y2tEPmwWEiI/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Passenger | Let Her Go (Official Video)",
+    "url": "https://youtu.be/RBumgq5yVrA?si=YwPpeV94niU6JUzn",
+    "type": "youtube",
+    "date": "2026-08-13T07:46:55.363Z",
+    "thumb": "https://i.ytimg.com/vi/RBumgq5yVrA/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Gym Class Heroes: Stereo Hearts ft. Adam Levine [OFFICIAL VIDEO]",
+    "url": "https://youtu.be/T3E9Wjbq44E?si=-5BcjItLcdD4dVHx",
+    "type": "youtube",
+    "date": "2026-08-13T07:47:08.684Z",
+    "thumb": "https://i.ytimg.com/vi/T3E9Wjbq44E/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Eminem - Mockingbird [Official Music Video]",
+    "url": "https://youtu.be/S9bCLPwzSC0?si=OCNDUP51VM8Iegli",
+    "type": "youtube",
+    "date": "2026-08-13T07:47:25.515Z",
+    "thumb": "https://i.ytimg.com/vi/S9bCLPwzSC0/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Adele - Skyfall (Lyrics)",
+    "url": "https://youtu.be/sZrTJesvJeo?si=j1lTfUMJfeHhmh1A",
+    "type": "youtube",
+    "date": "2026-08-13T07:47:58.787Z",
+    "thumb": "https://i.ytimg.com/vi/sZrTJesvJeo/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Indila - Love Story (Slowed-Reverb)",
+    "url": "https://youtu.be/sL8-vrfTR7k?si=nD8rNQldU-oTBu5M",
+    "type": "youtube",
+    "date": "2026-08-13T07:48:14.520Z",
+    "thumb": "https://i.ytimg.com/vi/sL8-vrfTR7k/hqdefault.jpg",
+    "fav": true,
+    "views": 2
+  },
+  {
+    "title": "Soap&Skin - Me And The Devil (Lyrics)",
+    "url": "https://youtu.be/T7Oe1H87yi8?si=Aa_U6jjWNwx521R_",
+    "type": "youtube",
+    "date": "2026-08-13T07:48:31.541Z",
+    "thumb": "https://i.ytimg.com/vi/T7Oe1H87yi8/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Animals x Starboy | Full Version | Aviral Kapasia | Slowed+Reverb",
+    "url": "https://youtu.be/AZeU5_YpqsA?si=f-D4RzYr7Qgvuuqt",
+    "type": "youtube",
+    "date": "2026-08-13T07:48:50.423Z",
+    "thumb": "https://i.ytimg.com/vi/AZeU5_YpqsA/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Alec Benjamin - Let Me Down Slowly [Official Music Video]",
+    "url": "https://youtu.be/50VNCymT-Cs?si=IZ2mB52xXl-0EJGN",
+    "type": "youtube",
+    "date": "2026-08-13T07:49:35.159Z",
+    "thumb": "https://i.ytimg.com/vi/50VNCymT-Cs/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Illahi - Yeh Jawaani Hai Deewani | Ranbir Kapoor, Deepika Padukone",
+    "url": "https://youtu.be/6w67NOaRe-w?si=LXUJtQ_bPGkliZoU",
+    "type": "youtube",
+    "date": "2026-08-13T13:19",
+    "thumb": "https://i.ytimg.com/vi/6w67NOaRe-w/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "yung kai - blue (official music video)",
+    "url": "https://youtu.be/IpFX2vq8HKw?si=0aqwagTW7jAuLgqs",
+    "type": "youtube",
+    "date": "2026-08-13T07:50:15.553Z",
+    "thumb": "https://i.ytimg.com/vi/IpFX2vq8HKw/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "I'm Death, Straight Up [Neon Blade – Slowed & Reverb]",
+    "url": "https://youtu.be/nT1dt6j4R8g?si=hgXasyFoQ7xIrHzu",
+    "type": "youtube",
+    "date": "2026-08-13T07:50:35.411Z",
+    "thumb": "https://i.ytimg.com/vi/nT1dt6j4R8g/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Akon - I Wanna Love You ft. Snoop Dogg",
+    "url": "https://youtu.be/GJzF7H2e3Tw?si=GlZdrSVh3WkbhkFJ",
+    "type": "youtube",
+    "date": "2026-08-13T07:50:54.535Z",
+    "thumb": "https://i.ytimg.com/vi/GJzF7H2e3Tw/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "😂",
+    "url": "https://youtu.be/Jw5KsrhmFk0?si=cjeRPkOzFP0RtQVQ",
+    "type": "youtube",
+    "date": "2026-08-13T07:51:32.055Z",
+    "thumb": "https://i.ytimg.com/vi/Jw5KsrhmFk0/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Chahun Main Ya Naa Full Video Song Aashiqui 2 | Aditya Roy Kapur, Shraddha Kapoor",
+    "url": "https://youtu.be/VdyBtGaspss?si=wV416_oDO0hOvr16",
+    "type": "youtube",
+    "date": "2026-08-13T07:51:47.541Z",
+    "thumb": "https://i.ytimg.com/vi/VdyBtGaspss/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "\"Sheila Ki Jawani\" Full Song | Tees Maar Khan | Katrina Kaif | Vishal Dadlani, Sunidhi Chauhan",
+    "url": "https://youtu.be/ZTmF2v59CtI?si=JgUSjV3KpYmVBAG-",
+    "type": "youtube",
+    "date": "2026-08-13T07:52:21.694Z",
+    "thumb": "https://i.ytimg.com/vi/ZTmF2v59CtI/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Malhari | Full Audio Song | Bajirao Mastani | Ranveer Singh | Vishal Dadlani | Sanjay Leela Bhansali",
+    "url": "https://youtu.be/sRlA7JWTj04?si=zUgBlBbEpqGmMgjC",
+    "type": "youtube",
+    "date": "2026-08-13T07:52:34.323Z",
+    "thumb": "https://i.ytimg.com/vi/sRlA7JWTj04/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Raa Raa Naa Veera Song With Telugu Lyrics | Ganga (Muni 3) | Lawrence, Tapasee | Maa Paata Mee Nota",
+    "url": "https://youtu.be/w-nd9-lNrhE?si=mM19mNPsODTQRORB",
+    "type": "youtube",
+    "date": "2026-08-13T13:22",
+    "thumb": "https://i.ytimg.com/vi/w-nd9-lNrhE/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Full Video: Soni De Nakhre | Partner | Govinda, Salman Khan, Katrina Kaif | Sajid - Wajid",
+    "url": "https://youtu.be/GFljvZMZI0U?si=0CeHiIVLc8K2r3Gf",
+    "type": "youtube",
+    "date": "2026-08-13T07:53:04.513Z",
+    "thumb": "https://i.ytimg.com/vi/GFljvZMZI0U/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Undiporaadhey Full Video Song || Hushaaru Songs || Radhan || Sree Harsha Konuganti | Telugu Songs",
+    "url": "https://youtu.be/jlmyZ_x5vjc?si=RsIPSiriBIE2a5BM",
+    "type": "youtube",
+    "date": "2026-08-13T07:53:26.557Z",
+    "thumb": "https://i.ytimg.com/vi/jlmyZ_x5vjc/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Titli Chennai Express Full Video Song | Shahrukh Khan, Deepika Padukone",
+    "url": "https://youtu.be/V8zXLMIjlcw?si=AGr5aeuOq_Zx3Fds",
+    "type": "youtube",
+    "date": "2026-08-13T07:53:45.726Z",
+    "thumb": "https://i.ytimg.com/vi/V8zXLMIjlcw/hqdefault.jpg",
+    "fav": true,
+    "views": 2
+  },
+  {
+    "title": "Dimaak Kharaab | iSmart Shankar | Ram Pothineni, Nidhhi A & Nabha N | Mani Sharma | Telugu Hit Song",
+    "url": "https://youtu.be/V5c4BnmPTpU?si=LNGG3nTO-nawg-Ab",
+    "type": "youtube",
+    "date": "2026-08-13T07:54:06.239Z",
+    "thumb": "https://i.ytimg.com/vi/V5c4BnmPTpU/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Lungi Dance | Chennai Express | New Video Feat. Honey Singh, Shahrukh Khan, Deepika Paudkone",
+    "url": "https://youtu.be/69CEiHfS_mc?si=ksc2pWTnwb1Fc8Ee",
+    "type": "youtube",
+    "date": "2026-08-13T07:54:20.436Z",
+    "thumb": "https://i.ytimg.com/vi/69CEiHfS_mc/hqdefault.jpg",
+    "fav": false,
+    "views": 3
+  },
+  {
+    "title": "Tu Mere Agal Bagal Hai - Phata Poster Nikhla Hero | Shahid Kapoor, Ileana |Mika Singh | Pritam",
+    "url": "https://youtu.be/vcH5RCEzyD0?si=Z3QK0nvkySia6jC4",
+    "type": "youtube",
+    "date": "2026-08-13T07:54:39.740Z",
+    "thumb": "https://i.ytimg.com/vi/vcH5RCEzyD0/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Tujhe Bhula Diya (Remix) by DJ Yogii | Ranbir Kapoor, Priyanka Chopra | Mohit Chauhan,Vishal-Shekhar",
+    "url": "https://youtu.be/stWITwpUWCk?si=_Nlwb4RKftFv6Y2o",
+    "type": "youtube",
+    "date": "2026-08-13T07:55:18.913Z",
+    "thumb": "https://i.ytimg.com/vi/stWITwpUWCk/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Ed Sheeran - Shape Of You (Tik Tok) Remix Slowed. Full song [Lyrics]",
+    "url": "https://youtu.be/Qx3TnxrVl0c?si=bjviHcZ1XePsruHw",
+    "type": "youtube",
+    "date": "2026-08-13T07:55:30.786Z",
+    "thumb": "https://i.ytimg.com/vi/Qx3TnxrVl0c/hqdefault.jpg",
+    "fav": true,
+    "views": 4
+  },
+  {
+    "title": "Lyrical Video: Nachesave Pilla Nachesave | Mechanic | Mani Sai,Sid Sriram |Yajamanya | Muni Sahekara",
+    "url": "https://youtu.be/odDZGqd8jTo?si=QjqMMm7rVURUaViF",
+    "type": "youtube",
+    "date": "2026-08-13T07:55:44.732Z",
+    "thumb": "https://i.ytimg.com/vi/odDZGqd8jTo/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Rayudu - Karukkuchoopu Kurraada Telugu Song Video | Vishal, Sri Divya | D. Imman",
+    "url": "https://youtu.be/djYXkklLTjA?si=HQWEGk8ZomNFDt9f",
+    "type": "youtube",
+    "date": "2026-08-13T07:55:57.418Z",
+    "thumb": "https://i.ytimg.com/vi/djYXkklLTjA/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Ummet Ozcan   A Shaman's Mantra",
+    "url": "https://youtu.be/0Ubkx9CCT6I?si=sHAYQ_ldwInOKXqk",
+    "type": "youtube",
+    "date": "2026-08-13T07:56:07.330Z",
+    "thumb": "https://i.ytimg.com/vi/0Ubkx9CCT6I/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "DARKSIDE | OC MV",
+    "url": "https://youtu.be/O1RHKYUgD_8?si=03mXdEoRiSNBmJzb",
+    "type": "youtube",
+    "date": "2026-08-13T07:56:19.726Z",
+    "thumb": "https://i.ytimg.com/vi/O1RHKYUgD_8/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "JAWAN: Chaleya (Hindi) | Shah Rukh Khan | Nayanthara | Atlee | Anirudh | Arijit S, Shilpa R | Kumaar",
+    "url": "https://youtu.be/VAdGW7QDJiU?si=nRHF5aG4MP3L7bBy",
+    "type": "youtube",
+    "date": "2026-08-13T07:56:42.830Z",
+    "thumb": "https://i.ytimg.com/vi/VAdGW7QDJiU/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Rambai Neemeedha Naku Video Lyrics | Raju Weds Rambai | Akhil, Tejaswi Rao | Suresh Bobbili",
+    "url": "https://youtu.be/uGKhbEQmUpQ?si=Z-LmYwp1e72xjBUv",
+    "type": "youtube",
+    "date": "2026-08-13T07:57:06.745Z",
+    "thumb": "https://i.ytimg.com/vi/uGKhbEQmUpQ/hqdefault.jpg",
+    "fav": true,
+    "views": 7
+  },
+  {
+    "title": "Darshana Full Video Song | Vinaro Bhagyamu Vishnu Katha | Kiran Abbavaram | Chaitan Bharadwaj",
+    "url": "https://youtu.be/zKSvWK1vv5w?si=KA9LMP_-bjxhFphS",
+    "type": "youtube",
+    "date": "2026-08-13T07:57:18.326Z",
+    "thumb": "https://i.ytimg.com/vi/zKSvWK1vv5w/hqdefault.jpg",
+    "fav": true,
+    "views": 3
+  },
+  {
+    "title": "CHAMMAK  CHALLO AMV [ 4K ] Shuo Feng - Po Zen-Ji",
+    "url": "https://youtu.be/6i0KoQv4FUQ?si=c50Ho9ZVXWZoZhbz",
+    "type": "youtube",
+    "date": "2026-08-13T07:57:27.408Z",
+    "thumb": "https://i.ytimg.com/vi/6i0KoQv4FUQ/hqdefault.jpg",
+    "fav": true,
+    "views": 5
+  },
+  {
+    "title": "𝘾𝙝𝙪𝙩𝙩𝙖𝙢𝙖𝙡𝙡𝙚 ( 𝙎𝙡𝙤𝙬𝙚𝙙 + 𝙍𝙚𝙫𝙚𝙧𝙗 ) 𝙎𝙝𝙞𝙡𝙥𝙖 𝙍𝙖𝙤 - 𝘿𝙚𝙫𝙖𝙧𝙖 ' 𝙉𝙏𝙍 & 𝙅𝘼𝙉𝙃𝙑𝙄 𝙆𝘼𝙋𝙊𝙊𝙍",
+    "url": "https://youtu.be/ZfCc18TG-fU?si=CARzX8BTbKNxOJJ3",
+    "type": "youtube",
+    "date": "2026-08-13T07:57:40.669Z",
+    "thumb": "https://i.ytimg.com/vi/ZfCc18TG-fU/hqdefault.jpg",
+    "fav": false,
+    "views": 6
+  },
+  {
+    "title": "Bavo Bangaram Full Audio Song",
+    "url": "https://youtu.be/wKB7Hn-huO4?si=JCn2HgkNKYhCWOlL",
+    "type": "youtube",
+    "date": "2026-08-13T13:28",
+    "thumb": "https://i.ytimg.com/vi/wKB7Hn-huO4/hqdefault.jpg",
+    "fav": false,
+    "views": 3
+  },
+  {
+    "title": "Katy Perry - Roar",
+    "url": "https://youtu.be/CevxZvSJLk8?si=p55ja6tIB4Dnx8zY",
+    "type": "youtube",
+    "date": "2026-08-13T13:29",
+    "thumb": "https://i.ytimg.com/vi/CevxZvSJLk8/hqdefault.jpg",
+    "fav": false,
+    "views": 6
+  },
+  {
+    "title": "Rishtedaar BC Song with TVF Triplings DJ Chitvan",
+    "url": "https://youtu.be/mSVEyEEYXSs?si=QLng0zuwCto1EhqK",
+    "type": "youtube",
+    "date": "2026-08-13T14:09:24.494Z",
+    "thumb": "https://i.ytimg.com/vi/mSVEyEEYXSs/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Dola Re Dola (Remix) || Dance Video || Freestyle By Anoop Parmar × Arpit Negi",
+    "url": "https://youtu.be/EiTOtwiUZYU?si=kp7rrOQRx2IR9v3N",
+    "type": "youtube",
+    "date": "2026-08-13T14:10:12.513Z",
+    "thumb": "https://i.ytimg.com/vi/EiTOtwiUZYU/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Wo Raat | Heart Touching Hindi Sad Song | Emotional Love & Separation Song | Hindi Ghazal 2026",
+    "url": "https://youtu.be/ZmY4hdBGzAM?si=UX2dCsfXRedzMWf9",
+    "type": "youtube",
+    "date": "2026-08-13T14:15:32.017Z",
+    "thumb": "https://i.ytimg.com/vi/ZmY4hdBGzAM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Hip Hop Zajal | هيب هوب زجل | Sanath Kolhe Choreography",
+    "url": "https://youtu.be/8HrP95Sc0LI?si=MaFMovW02k_gMXyG",
+    "type": "youtube",
+    "date": "2026-08-13T14:15:57.264Z",
+    "thumb": "https://i.ytimg.com/vi/8HrP95Sc0LI/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Baby Stop Song  (8D Audio) (RINGTONE) music Ringtone @mohamadibrahiim #viral #trending #song",
+    "url": "https://youtu.be/S25soPuZtG4?si=rzWVYIsLQN3jDOEY",
+    "type": "youtube",
+    "date": "2026-08-13T19:50",
+    "thumb": "https://i.ytimg.com/vi/S25soPuZtG4/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Sweety - Race Gurram [Slowed+ Reverb] - #telugu #lofimusic #slowedandreverb #alluarjun #sweety #lofi",
+    "url": "https://youtu.be/BE7ZqFpGdlk?si=be7HNYE25kWqyG0m",
+    "type": "youtube",
+    "date": "2026-08-13T14:21:47.175Z",
+    "thumb": "https://i.ytimg.com/vi/BE7ZqFpGdlk/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Kaho na Kaho slowed reverb (lofi)",
+    "url": "https://youtu.be/xS7HIqlh1kc?si=1u8Oi7_gdxVWESoG",
+    "type": "youtube",
+    "date": "2026-08-13T14:22:23.749Z",
+    "thumb": "https://i.ytimg.com/vi/xS7HIqlh1kc/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Deewana Kar Raha Hai - Javed Ali [Slowed+Reverb] | Night Chills | Perfectly slowed Lo-fi Song.",
+    "url": "https://youtu.be/9iFokGHJY6Q?si=uIZ7QGc9ZM3e-x45",
+    "type": "youtube",
+    "date": "2026-08-13T14:22:38.567Z",
+    "thumb": "https://i.ytimg.com/vi/9iFokGHJY6Q/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Main rang sharbaton ka slowed reverb song lofi music 🎶🎵❤️",
+    "url": "https://youtu.be/2_aiC-U7e8U?si=ymauha6__nhClDpY",
+    "type": "youtube",
+    "date": "2026-08-13T14:22:56.562Z",
+    "thumb": "https://i.ytimg.com/vi/2_aiC-U7e8U/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Night Lofi Song | Romantic Mashup | Slowed + Reverb | Lofi",
+    "url": "https://youtu.be/4cam_YrsArI?si=TVb_f5tCvrqlL8Sr",
+    "type": "youtube",
+    "date": "2026-08-13T19:55",
+    "thumb": "https://i.ytimg.com/vi/4cam_YrsArI/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Arijit Singh Mashup 2024 (Full Version) | SICKVED",
+    "url": "https://youtu.be/Y7raF7b7Lxk?si=ERWh6tNdIgq73FDc",
+    "type": "youtube",
+    "date": "2026-08-13T14:28:26.801Z",
+    "thumb": "https://i.ytimg.com/vi/Y7raF7b7Lxk/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Main Rang Sharbaton Ka (Reprise) | Arijit Singh | Pritam | Phata Poster Nikla Hero |Love songs Hindi",
+    "url": "https://youtu.be/KFQeD1Ej9ys?si=DIqBtcF291zq7IEW",
+    "type": "youtube",
+    "date": "2026-08-13T14:29:40.940Z",
+    "thumb": "https://i.ytimg.com/vi/KFQeD1Ej9ys/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "Tere Hawale I Arijit-Shreya Duet|Lyrical Video | Laal Singh Chadda",
+    "url": "https://youtu.be/0W05w3UUkNs?si=Sw4nfAaoibJ9vJcC",
+    "type": "youtube",
+    "date": "2026-08-13T14:31:06.796Z",
+    "thumb": "https://i.ytimg.com/vi/0W05w3UUkNs/hqdefault.jpg",
+    "fav": false,
+    "views": 8
+  },
+  {
+    "title": "Catwoman Funk Jon Devine Full Dance OFFICIAL MUSIC 4K VIDEO",
+    "url": "https://youtu.be/hgVivaBpTOg?si=pUbkEZoK8Pzx5VQP",
+    "type": "youtube",
+    "date": "2026-08-13T14:32:37.147Z",
+    "thumb": "https://i.ytimg.com/vi/hgVivaBpTOg/hqdefault.jpg",
+    "fav": false,
+    "views": 5
+  },
+  {
+    "title": "Konfuz - Pratata ( Gra Ta - Ta - Ta ) ( English Traslate Lyrics )",
+    "url": "https://youtu.be/SnJ055k4SEg?si=8yiLEJBqwPh6Qz_N",
+    "type": "youtube",
+    "date": "2026-08-13T14:33:04.819Z",
+    "thumb": "https://i.ytimg.com/vi/SnJ055k4SEg/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Barney Sku- Your eyes got my heart♡ falling for you x (Teri nazron ne) #your eyes got my heart",
+    "url": "https://youtu.be/RzSIDoA1ZDw?si=-H2qjsp8bOGnkAyX",
+    "type": "youtube",
+    "date": "2026-08-13T20:39",
+    "thumb": "https://i.ytimg.com/vi/RzSIDoA1ZDw/hqdefault.jpg",
+    "fav": false,
+    "views": 4
+  },
+  {
+    "title": "DIANA ANKUDINOVA ( Диана Анкудинова ) Last Dance (Dernière danse) \"1st Audition\" (Age 14 yo) HD",
+    "url": "https://youtu.be/SL_tU1MkKHg?si=jbGwO8QMEM-sKagx",
+    "type": "youtube",
+    "date": "2026-08-17T10:41",
+    "thumb": "https://i.ytimg.com/vi/SL_tU1MkKHg/hqdefault.jpg",
+    "fav": false,
+    "views": 3
+  },
+  {
+    "title": "Best Instagram Trending Lofi Songs | Slowed+Reverb | Lofi Mashup",
+    "url": "https://youtu.be/IWmmv7T-D7U?si=UiUf109IavEHVA2A",
+    "type": "youtube",
+    "date": "2026-08-17T06:32:47.669Z",
+    "thumb": "https://i.ytimg.com/vi/IWmmv7T-D7U/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Ye Chota Nuvvunna | Saaho | Prabhas, Shraddha K| Guru Randhawa, Tulsi Kumar, Haricharan S |Krishna K",
+    "url": "https://youtu.be/kTgFw8iqkJ8?si=z3DjiPr-x_vi0jPO",
+    "type": "youtube",
+    "date": "2026-08-21T17:17",
+    "thumb": "https://i.ytimg.com/vi/kTgFw8iqkJ8/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Sye Video Songs | Chantaina Bujjaina Video Song | Nitin, Genelia | Sri Balaji Video",
+    "url": "https://youtu.be/OHfQR0Vtlf4?si=Dtlxu4pNR8_kCWhw",
+    "type": "youtube",
+    "date": "2026-08-21T17:18",
+    "thumb": "https://i.ytimg.com/vi/OHfQR0Vtlf4/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Saaho : Baby Won't You Tell Me Full Video | Prabhas, Shraddha K | Shweta M, Siddharth M, Shankar M",
+    "url": "https://youtu.be/h2JH0vqDcYc?si=vWoPauxNd-E1RNZt",
+    "type": "youtube",
+    "date": "2026-08-21T17:19",
+    "thumb": "https://i.ytimg.com/vi/h2JH0vqDcYc/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Full Video: Mehabooba (Telugu) KGF Chapter 2 | RockingStar Yash | Prashanth Neel | Ravi Basrur",
+    "url": "https://youtu.be/Zg837tKfA0U?si=6VN7W0MrcUE8_vQw",
+    "type": "youtube",
+    "date": "2026-08-21T17:19",
+    "thumb": "https://i.ytimg.com/vi/Zg837tKfA0U/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Dailamo Dailamo Video Song || Mahatma Movie || Srikanth, Bhavana || Sri Venkateswara Video Songs",
+    "url": "https://youtu.be/DrVIrGm8k3I?si=VmF0aAYXu9UfGTfD",
+    "type": "youtube",
+    "date": "2026-08-21T17:21",
+    "thumb": "https://i.ytimg.com/vi/DrVIrGm8k3I/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Akkad Bakkad Video Song || Super Movie || Nagarjuna, Ayesha Takia, Anushka",
+    "url": "https://youtu.be/6jGB0p2zQN8?si=6ohSxv5YumhLMaZN",
+    "type": "youtube",
+    "date": "2026-08-21T17:23",
+    "thumb": "https://i.ytimg.com/vi/6jGB0p2zQN8/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "A Vachi B Pai Full 4k Song Form Chatrapathi | Prabhas, Shriya | @TeluguVideoZ",
+    "url": "https://youtu.be/IuzH9vpXj9c?si=9Ax-KqxMiibIbr_k",
+    "type": "youtube",
+    "date": "2026-08-21T17:23",
+    "thumb": "https://i.ytimg.com/vi/IuzH9vpXj9c/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Gichhi Gichhi Video Song || Super Movie || Nagarjuna, Ayesha Takia, Anushka || Annapurna Studio",
+    "url": "https://youtu.be/iTcABMYUX98?si=HtCDUCMC7uafR1-_",
+    "type": "youtube",
+    "date": "2026-08-21T17:24",
+    "thumb": "https://i.ytimg.com/vi/iTcABMYUX98/hqdefault.jpg",
+    "fav": false,
+    "views": 3
+  },
+  {
+    "title": "Mallanna Telugu Movie Songs | Naa Peru Meenakumari Music Video | Vikram | Shriya | DSP",
+    "url": "https://youtu.be/_xnK77J28kI?si=hpheMpO3nJgnQOUN",
+    "type": "youtube",
+    "date": "2026-08-21T17:24",
+    "thumb": "https://i.ytimg.com/vi/_xnK77J28kI/hqdefault.jpg",
+    "fav": false,
+    "views": 1
+  },
+  {
+    "title": "Official: Desi Kalakaar Full VIDEO Song | Yo Yo Honey Singh | Honey Singh New Songs 2014",
+    "url": "https://youtu.be/KhnVcAC5bIM?si=c5BQZTuXdbGAK-BZ",
+    "type": "youtube",
+    "date": "2026-08-21T17:25",
+    "thumb": "https://i.ytimg.com/vi/KhnVcAC5bIM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Dole Dole Video Song - Pokiri Movie || Mahesh Babu || Ileana || Mani Sharma",
+    "url": "https://youtu.be/obUCNoFPG1Y?si=TcHAoK3SFgGNUHLH",
+    "type": "youtube",
+    "date": "2026-08-21T17:25",
+    "thumb": "https://i.ytimg.com/vi/obUCNoFPG1Y/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Bommali 4K Video Song | Billa [Telugu] | Prabhas, Anushka | Mani Sharma | Lahari Music |",
+    "url": "https://youtu.be/YLcCryHUNOg?si=FC9HAbC2j-WSzCXs",
+    "type": "youtube",
+    "date": "2026-08-21T17:25",
+    "thumb": "https://i.ytimg.com/vi/YLcCryHUNOg/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Junction Lo Video Song | Aagadu Video Song | Mahesh Babu, Shruti Haasan, Tamannaah Bhatia |Thaman S",
+    "url": "https://youtu.be/uCPHIMotN0I?si=GutH4cK7_BMK0HOm",
+    "type": "youtube",
+    "date": "2026-08-21T17:26",
+    "thumb": "https://i.ytimg.com/vi/uCPHIMotN0I/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Orori Yogi Video Song With English Translation | Prabhas | Yogi Movie | Mumaith Khan | Nayanthara",
+    "url": "https://youtu.be/OfHm2rWH6WI?si=DYK8e-hp2vKcpDmM",
+    "type": "youtube",
+    "date": "2026-08-21T17:26",
+    "thumb": "https://i.ytimg.com/vi/OfHm2rWH6WI/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Rakhi Rakhi Video Song | RAKHI Movie | NTR, Ileana, Charmy | Ganesh Videos",
+    "url": "https://youtu.be/bFPdQkMd1dM?si=1tymAaEc0m5gbz6k",
+    "type": "youtube",
+    "date": "2026-08-21T17:27",
+    "thumb": "https://i.ytimg.com/vi/bFPdQkMd1dM/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Kantri Video Songs | 123 Nenoka Kantri | Full HD",
+    "url": "https://youtu.be/2rD55q9HpPU?si=3KxebqrTRrpsQXN_",
+    "type": "youtube",
+    "date": "2026-08-21T17:29",
+    "thumb": "https://i.ytimg.com/vi/2rD55q9HpPU/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Subhalagnam Movie || Chinuku Chinuku Andelatho Video Song || Ali, Soundarya || Shalimarcinema",
+    "url": "https://youtu.be/4i7YaDBIHIs?si=1aJ_fed26PH83ctX",
+    "type": "youtube",
+    "date": "2026-08-21T17:31",
+    "thumb": "https://i.ytimg.com/vi/4i7YaDBIHIs/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Aata Kaavala Full Video Song | Annayya Video Songs | Chiranjeevi, Simran | Mani Sharma",
+    "url": "https://youtu.be/g_Q6iGiQej4?si=w0uHNDrGXH4nDfXd",
+    "type": "youtube",
+    "date": "2026-08-21T17:32",
+    "thumb": "https://i.ytimg.com/vi/g_Q6iGiQej4/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Thillana Thillana 4K Full Video Song | Muthu | Rajinikanth, Meena | A R Rahman | K S Ravikumar",
+    "url": "https://youtu.be/Lm7d_TTo9kQ?si=3TMhomksC0h20jZG",
+    "type": "youtube",
+    "date": "2026-08-21T17:32",
+    "thumb": "https://i.ytimg.com/vi/Lm7d_TTo9kQ/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Jeans Movie || Hayirabba Hayirabba Video Song || Prashanth, Aishwarya Rai || Shalimarcinema",
+    "url": "https://youtu.be/pbfVzIRAA-o?si=-Rq3A5aAC4lueAKQ",
+    "type": "youtube",
+    "date": "2026-08-21T17:32",
+    "thumb": "https://i.ytimg.com/vi/pbfVzIRAA-o/hqdefault.jpg",
+    "fav": false,
+    "views": 0
+  },
+  {
+    "title": "Playlist make you feel like a gangster | Gentleman Songs (Vol.3)",
+    "url": "https://youtu.be/ww6N-jyjsbw",
+    "type": "youtube",
+    "date": "2023-03-02T08:18",
+    "thumb": "https://i.ytimg.com/vi/ww6N-jyjsbw/hqdefault.jpg",
+    "fav": true,
+    "views": 529
+  },
+  {
+    "title": "Baarish | Half Girlfriend | Arjun Kapoor & Shraddha Kapoor| Ash King ,Sashaa | Tanishk| Baarish 2024",
+    "url": "https://youtu.be/BNfAf4To73c",
+    "type": "youtube",
+    "date": "2023-09-12T19:10",
+    "thumb": "https://i.ytimg.com/vi/BNfAf4To73c/hqdefault.jpg",
+    "fav": false,
+    "views": 22
+  },
+  {
+    "title": "Namo Namo - Lyrical | Kedarnath | Sushant Rajput | Sara Ali Khan | Amit Trivedi | Amitabh B",
+    "url": "https://youtu.be/dx4Teh-nv3A",
+    "type": "youtube",
+    "date": "2022-06-24T18:22",
+    "thumb": "https://i.ytimg.com/vi/dx4Teh-nv3A/hqdefault.jpg",
+    "fav": false,
+    "views": 362
+  },
+  {
+    "title": "Ve Maahi | Kesari | Akshay Kumar & Parineeti Chopra | Arijit Singh & Asees Kaur | Tanishk Bagchi",
+    "url": "https://youtu.be/j6muwUGdvXw",
+    "type": "youtube",
+    "date": "2021-12-30T06:06",
+    "thumb": "https://i.ytimg.com/vi/j6muwUGdvXw/hqdefault.jpg",
+    "fav": false,
+    "views": 939
+  },
+  {
+    "title": "Hook Up Song -  Student Of The Year 2 | Tiger Shroff & Alia Bhatt | Vishal & Shekhar | Neha Kakkar",
+    "url": "https://youtu.be/zuaLWHiRXkg",
+    "type": "youtube",
+    "date": "2020-01-26T23:53",
+    "thumb": "https://i.ytimg.com/vi/zuaLWHiRXkg/hqdefault.jpg",
+    "fav": false,
+    "views": 72
+  },
+  {
+    "title": "Teri Mitti - Kesari | Akshay Kumar & Parineeti Chopra | Arko | B Praak | Manoj Muntashir",
+    "url": "https://youtu.be/wF_B_aagLfI",
+    "type": "youtube",
+    "date": "2021-04-01T09:47",
+    "thumb": "https://i.ytimg.com/vi/wF_B_aagLfI/hqdefault.jpg",
+    "fav": false,
+    "views": 543
+  },
+  {
+    "title": "Tere Sang Yaara - Rustom | Akshay Kumar & Ileana D'cruz | Arko | Manoj Muntashir",
+    "url": "https://youtu.be/5gwy0gcjIkI",
+    "type": "youtube",
+    "date": "2022-01-17T13:36",
+    "thumb": "https://i.ytimg.com/vi/5gwy0gcjIkI/hqdefault.jpg",
+    "fav": false,
+    "views": 143
+  },
+  {
+    "title": "Thodi Der -Full Video | Half Girlfriend | Arjun Kapoor & Shraddha Kapoor | Farhan S & Shreya Ghoshal",
+    "url": "https://youtu.be/FGTv9-oQhIg",
+    "type": "youtube",
+    "date": "2023-11-16T13:50",
+    "thumb": "https://i.ytimg.com/vi/FGTv9-oQhIg/hqdefault.jpg",
+    "fav": false,
+    "views": 942
+  },
+  {
+    "title": "Manali Trance | Yo Yo Honey Singh & Neha Kakkar | The Shaukeens | Lisa Haydon | Akshay Kumar",
+    "url": "https://youtu.be/vZ_NpLWuL00",
+    "type": "youtube",
+    "date": "2022-12-14T23:32",
+    "thumb": "https://i.ytimg.com/vi/vZ_NpLWuL00/hqdefault.jpg",
+    "fav": false,
+    "views": 772
+  },
+  {
+    "title": "Burjkhalifa | Laxmii | Akshay Kumar | Kiara Advani | Nikhita Gandhi | Shashi-Dj Khushi | Gagan",
+    "url": "https://youtu.be/a0TkeUhcVrM",
+    "type": "youtube",
+    "date": "2021-10-12T19:20",
+    "thumb": "https://i.ytimg.com/vi/a0TkeUhcVrM/hqdefault.jpg",
+    "fav": false,
+    "views": 940
+  },
+  {
+    "title": "Nachde Ne Saare - Full Video | Baar Baar Dekho | Sidharth Malhotra & Katrina Kaif | Jasleen Royal",
+    "url": "https://youtu.be/HgIW7P4dsXU",
+    "type": "youtube",
+    "date": "2025-12-09T17:37",
+    "thumb": "https://i.ytimg.com/vi/HgIW7P4dsXU/hqdefault.jpg",
+    "fav": false,
+    "views": 647
+  },
+  {
+    "title": "Haanikaarak Bapu - Full Video | Dangal | Aamir Khan | Pritam | Amitabh B | Sarwar & Sartaz Khan",
+    "url": "https://youtu.be/Q7F6ZlEoIUI",
+    "type": "youtube",
+    "date": "2024-04-28T16:13",
+    "thumb": "https://i.ytimg.com/vi/Q7F6ZlEoIUI/hqdefault.jpg",
+    "fav": false,
+    "views": 787
+  },
+  {
+    "title": "Apna Time Aayega | Gully Boy | Ranveer Singh & Alia Bhatt | DIVINE | Dub Sharma | Zoya Akhtar",
+    "url": "https://youtu.be/jFGKJBPFdUA",
+    "type": "youtube",
+    "date": "2021-02-01T15:21",
+    "thumb": "https://i.ytimg.com/vi/jFGKJBPFdUA/hqdefault.jpg",
+    "fav": false,
+    "views": 476
+  },
+  {
+    "title": "Bang Bang Title Track Full Video | BANG BANG|Hrithik Roshan Katrina Kaif |Vishal Shekhar,Benny,Neeti",
+    "url": "https://youtu.be/jZyAB2KFDls",
+    "type": "youtube",
+    "date": "2023-04-16T12:01",
+    "thumb": "https://i.ytimg.com/vi/jZyAB2KFDls/hqdefault.jpg",
+    "fav": false,
+    "views": 772
+  },
+  {
+    "title": "First Class - Full Video | Kalank | Varun Dhawan, Alia Bhatt, Kiara | Arijit Singh, Neeti M, Pritam",
+    "url": "https://youtu.be/e8B0AzmXPV8",
+    "type": "youtube",
+    "date": "2020-12-23T16:37",
+    "thumb": "https://i.ytimg.com/vi/e8B0AzmXPV8/hqdefault.jpg",
+    "fav": false,
+    "views": 577
+  },
+  {
+    "title": "Tu Meri Full Video | BANG BANG! | Hrithik Roshan & Katrina Kaif | Vishal Shekhar | Dance Party Song",
+    "url": "https://youtu.be/YAOIbHBEvi0",
+    "type": "youtube",
+    "date": "2020-08-26T01:43",
+    "thumb": "https://i.ytimg.com/vi/YAOIbHBEvi0/hqdefault.jpg",
+    "fav": false,
+    "views": 92
+  },
+  {
+    "title": "Raftaar x Nora Fatehi - Baby Marvake Maanegi | Remo D'souza | Hot Dance Song",
+    "url": "https://youtu.be/AtUh3lJeac8",
+    "type": "youtube",
+    "date": "2024-07-17T11:54",
+    "thumb": "https://i.ytimg.com/vi/AtUh3lJeac8/hqdefault.jpg",
+    "fav": false,
+    "views": 525
+  },
+  {
+    "title": "Happy Bday Full Song | ABCD 2 | Varun Dhawan - Shraddha Kapoor | Sachin - Jigar | D. Soldierz",
+    "url": "https://youtu.be/i2ceSzs2y4Q",
+    "type": "youtube",
+    "date": "2021-03-07T20:34",
+    "thumb": "https://i.ytimg.com/vi/i2ceSzs2y4Q/hqdefault.jpg",
+    "fav": false,
+    "views": 585
+  },
+  {
+    "title": "Badshah - Aaj Raat Ka Scene Banale | Jazbaa | Shraddha Pandit | Diksha | Jaanu",
+    "url": "https://youtu.be/exl8JVjQt3Y",
+    "type": "youtube",
+    "date": "2021-04-18T08:34",
+    "thumb": "https://i.ytimg.com/vi/exl8JVjQt3Y/hqdefault.jpg",
+    "fav": false,
+    "views": 787
+  },
+  {
+    "title": "Tera Baap Aaya - Commando 3| Vidyut Jammwal, Adah Sharma, Angira Dhar, Gulshan D| Farhad B, Vikram M",
+    "url": "https://youtu.be/2gFcTb72OmM",
+    "type": "youtube",
+    "date": "2026-02-25T06:26",
+    "thumb": "https://i.ytimg.com/vi/2gFcTb72OmM/hqdefault.jpg",
+    "fav": false,
+    "views": 704
+  },
+  {
+    "title": "Chand Sifarish (Slowed + Reverbed)",
+    "url": "https://youtu.be/nXfLR_ty7Wk",
+    "type": "youtube",
+    "date": "2023-10-08T09:54",
+    "thumb": "https://i.ytimg.com/vi/nXfLR_ty7Wk/hqdefault.jpg",
+    "fav": true,
+    "views": 318
+  },
+  {
+    "title": "Bezubaan Phir Se Full Video | Disney's ABCD 2 | Varun Dhawan & Shraddha Kapoor | Sachin - Jigar",
+    "url": "https://youtu.be/xutBFUf3LoU",
+    "type": "youtube",
+    "date": "2021-12-22T11:58",
+    "thumb": "https://i.ytimg.com/vi/xutBFUf3LoU/hqdefault.jpg",
+    "fav": false,
+    "views": 38
+  },
+  {
+    "title": "Ae Watan - Full Video | Raazi | Alia Bhatt | Sunidhi Chauhan | Shankar Ehsaan Loy | Gulzar",
+    "url": "https://youtu.be/BKx_B1VZ2kw",
+    "type": "youtube",
+    "date": "2022-12-10T08:19",
+    "thumb": "https://i.ytimg.com/vi/BKx_B1VZ2kw/hqdefault.jpg",
+    "fav": false,
+    "views": 286
+  },
+  {
+    "title": "Dangal - Title Track | Lyrical Video | Dangal | Aamir Khan | Pritam | Amitabh B | Daler Mehndi",
+    "url": "https://youtu.be/jMfvlh0tjyo",
+    "type": "youtube",
+    "date": "2025-01-23T19:09",
+    "thumb": "https://i.ytimg.com/vi/jMfvlh0tjyo/hqdefault.jpg",
+    "fav": false,
+    "views": 279
+  },
+  {
+    "title": "Sher Aaya Sher | Gully Boy | Siddhant Chaturvedi | Ranveer Singh & Alia Bhatt | DIVINE",
+    "url": "https://youtu.be/M81wneSjQbA",
+    "type": "youtube",
+    "date": "2020-07-27T04:17",
+    "thumb": "https://i.ytimg.com/vi/M81wneSjQbA/hqdefault.jpg",
+    "fav": false,
+    "views": 574
+  },
+  {
+    "title": "Aww Tera Happy Bday|ABCD 2 |Varun Dhawan Shraddha Kapoor |Sachin - Jigar |D.Soldierz | Birthday song",
+    "url": "https://youtu.be/bV2GklFBaT8",
+    "type": "youtube",
+    "date": "2023-09-05T02:31",
+    "thumb": "https://i.ytimg.com/vi/bV2GklFBaT8/hqdefault.jpg",
+    "fav": false,
+    "views": 611
+  },
+  {
+    "title": "Beat Pe Booty - A Flying Jatt | Tiger Shroff , Jacqueline Fernandes | Sachin, Jigar, Vayu & Kanika",
+    "url": "https://youtu.be/dI_mRxrr2fk",
+    "type": "youtube",
+    "date": "2021-09-25T10:33",
+    "thumb": "https://i.ytimg.com/vi/dI_mRxrr2fk/hqdefault.jpg",
+    "fav": false,
+    "views": 27
+  },
+  {
+    "title": "O Meri Laila | Laila Majnu | Jyotica Tangri | Avinash Tiwary & Tripti Dimri | Joi, Irshad",
+    "url": "https://youtu.be/49x8GA2axfc",
+    "type": "youtube",
+    "date": "2020-11-22T11:35",
+    "thumb": "https://i.ytimg.com/vi/49x8GA2axfc/hqdefault.jpg",
+    "fav": false,
+    "views": 478
+  },
+  {
+    "title": "Ishq De Fanniyar | Fukrey Returns | Pulkit Samrat & Priya Anand | Jyotica Tangri | Shaarib & Toshi",
+    "url": "https://youtu.be/7OGSeZP0sc8",
+    "type": "youtube",
+    "date": "2022-03-29T13:01",
+    "thumb": "https://i.ytimg.com/vi/7OGSeZP0sc8/hqdefault.jpg",
+    "fav": false,
+    "views": 15
+  },
+  {
+    "title": "Aal Izz Well – 3 Idiots | Aamir Khan, Madhavan, Sharman J | Sonu N, Swanand K & Shaan | Shantanu M",
+    "url": "https://youtu.be/7PzwOiW8-n0",
+    "type": "youtube",
+    "date": "2022-12-21T13:38",
+    "thumb": "https://i.ytimg.com/vi/7PzwOiW8-n0/hqdefault.jpg",
+    "fav": false,
+    "views": 621
+  },
+  {
+    "title": "Give Me Some Sunshine - 3 Idiots | Aamir Khan, Madhavan, Sharman J | Suraj Jagan | Shantanu Moitra",
+    "url": "https://youtu.be/lbCRtrrMvSw",
+    "type": "youtube",
+    "date": "2023-07-27T05:09",
+    "thumb": "https://i.ytimg.com/vi/lbCRtrrMvSw/hqdefault.jpg",
+    "fav": false,
+    "views": 932
+  },
+  {
+    "title": "Ek Pal Ka Jeena - Kaho Naa Pyaar Hai | Hrithik Roshan & Ameesha Patel | Lucky Ali | Rajesh Roshan",
+    "url": "https://youtu.be/aGbPyM6lzBs",
+    "type": "youtube",
+    "date": "2022-01-27T03:57",
+    "thumb": "https://i.ytimg.com/vi/aGbPyM6lzBs/hqdefault.jpg",
+    "fav": false,
+    "views": 190
+  },
+  {
+    "title": "Hey Ganaraya Full Video | Disney's ABCD 2 | Varun Dhawan & Shraddha Kapoor | Divya Kumar",
+    "url": "https://youtu.be/v10jDT7SJsw",
+    "type": "youtube",
+    "date": "2023-01-18T23:44",
+    "thumb": "https://i.ytimg.com/vi/v10jDT7SJsw/hqdefault.jpg",
+    "fav": false,
+    "views": 772
+  },
+  {
+    "title": "Arijit Singh Hit Songs 2026 | Best Bollywood Mashup | Hindi Love Song Collection | Latest Mashup",
+    "url": "https://youtu.be/J4KIe4Cf1eQ",
+    "type": "youtube",
+    "date": "2025-03-16T04:30",
+    "thumb": "https://i.ytimg.com/vi/J4KIe4Cf1eQ/hqdefault.jpg",
+    "fav": true,
+    "views": 868
+  },
+  {
+    "title": "Tere Vaaste | Full Video | Zara Hatke Zara Bachke | Vicky, Sara, Varun J, Sachin-Jigar, Amitabh B",
+    "url": "https://youtu.be/g5WZLO8BAC8",
+    "type": "youtube",
+    "date": "2022-11-02T08:10",
+    "thumb": "https://i.ytimg.com/vi/g5WZLO8BAC8/hqdefault.jpg",
+    "fav": false,
+    "views": 538
+  },
+  {
+    "title": "Mann Mera - Official Video | Table No 21 | Rajeev Khandelwal & Tina Desai | Gajendra Verma",
+    "url": "https://youtu.be/HP2zqQsrsyg",
+    "type": "youtube",
+    "date": "2020-09-15T19:53",
+    "thumb": "https://i.ytimg.com/vi/HP2zqQsrsyg/hqdefault.jpg",
+    "fav": false,
+    "views": 557
+  },
+  {
+    "title": "Sun Saathiya Full Video | Disney's ABCD 2 | Varun Dhawan , Shraddha Kapoor | Sachin Jigar | Priya S",
+    "url": "https://youtu.be/TGpG56pg3UU",
+    "type": "youtube",
+    "date": "2020-01-15T12:16",
+    "thumb": "https://i.ytimg.com/vi/TGpG56pg3UU/hqdefault.jpg",
+    "fav": false,
+    "views": 454
+  },
+  {
+    "title": "Deewana Deewana Song Lyrics🎶Try With Your Own Voice#songlyrics#deewaanadeewaana#trywithyourownvoice",
+    "url": "https://youtu.be/b94n86l9Zfs",
+    "type": "youtube",
+    "date": "2020-04-18T09:55",
+    "thumb": "https://i.ytimg.com/vi/b94n86l9Zfs/hqdefault.jpg",
+    "fav": false,
+    "views": 223
+  },
+  {
+    "title": "Falak Tak Chal Sath Mere || ( Slowed + Reverb ) | Lyrics | Lofi | Lofi Song | Raj BROTHERS",
+    "url": "https://youtu.be/0pOq8ag0Z0Y",
+    "type": "youtube",
+    "date": "2024-05-05T22:14",
+    "thumb": "https://i.ytimg.com/vi/0pOq8ag0Z0Y/hqdefault.jpg",
+    "fav": true,
+    "views": 950
+  },
+  {
+    "title": "Zara Zara Bahekta Hai | JalRaj | RHTDM | Male Version | Latest Hindi Cover 2020",
+    "url": "https://youtu.be/NeXbmEnpSz0",
+    "type": "youtube",
+    "date": "2024-02-03T02:02",
+    "thumb": "https://i.ytimg.com/vi/NeXbmEnpSz0/hqdefault.jpg",
+    "fav": false,
+    "views": 927
+  },
+  {
+    "title": "Coke Studio | Season 14 | Pasoori | Ali Sethi x Shae Gill",
+    "url": "https://youtu.be/5Eqb_-j3FDA",
+    "type": "youtube",
+    "date": "2024-09-26T10:26",
+    "thumb": "https://i.ytimg.com/vi/5Eqb_-j3FDA/hqdefault.jpg",
+    "fav": true,
+    "views": 342
+  },
+  {
+    "title": "Tujh Mein Rab Dikhta Hai Song | Rab Ne Bana Di Jodi | Shah Rukh Khan, Anushka Sharma | Roop Kumar",
+    "url": "https://youtu.be/qoq8B8ThgEM",
+    "type": "youtube",
+    "date": "2026-06-04T16:49",
+    "thumb": "https://i.ytimg.com/vi/qoq8B8ThgEM/hqdefault.jpg",
+    "fav": false,
+    "views": 92
+  },
+  {
+    "title": "Podusthunna Poddumeeda Telugu Full HD Video Song || Jai Bolo Telangana || Jordaar Movies",
+    "url": "https://youtu.be/EPjGz5YxOtk",
+    "type": "youtube",
+    "date": "2023-06-18T08:30",
+    "thumb": "https://i.ytimg.com/vi/EPjGz5YxOtk/hqdefault.jpg",
+    "fav": false,
+    "views": 968
+  },
+  {
+    "title": "Kappe Varroh - Slowed & Reverb | Havoc Brothers | Lofi | Trending Song",
+    "url": "https://youtu.be/angX0Jgp9Yk",
+    "type": "youtube",
+    "date": "2030-08-13T08:38",
+    "thumb": "https://i.ytimg.com/vi/angX0Jgp9Yk/hqdefault.jpg",
+    "fav": true,
+    "views": 305
+  },
+  {
+    "title": "Falak tak chal sath mere 8D Song | Tashan | Akshay Kumar, Kareena Kapoor, Udit Narayan | 8D SURROUND",
+    "url": "https://youtu.be/G9_gyqDUR3c",
+    "type": "youtube",
+    "date": "2023-06-13T05:19",
+    "thumb": "https://i.ytimg.com/vi/G9_gyqDUR3c/hqdefault.jpg",
+    "fav": true,
+    "views": 60
+  },
+  {
+    "title": "Pal Pal Talha Anjum x Afusic 1M Views",
+    "url": "https://youtu.be/8i8J5wm6kKY",
+    "type": "youtube",
+    "date": "2020-04-15T19:09",
+    "thumb": "https://i.ytimg.com/vi/8i8J5wm6kKY/hqdefault.jpg",
+    "fav": false,
+    "views": 567
+  },
+  {
+    "title": "Meri Jaan || Slowed & Reverb || Neeti Mohan || SHAFAYAT HASAN ||",
+    "url": "https://youtu.be/Lh1w9SooZC0",
+    "type": "youtube",
+    "date": "2024-10-31T08:14",
+    "thumb": "https://i.ytimg.com/vi/Lh1w9SooZC0/hqdefault.jpg",
+    "fav": true,
+    "views": 707
+  },
+  {
+    "title": "Srivali Song Hindi Vs English | Srivalli Song Emma Heesters |  Allu Arjun, Rashmika",
+    "url": "https://youtu.be/k5CYGpWQy4k",
+    "type": "youtube",
+    "date": "2025-03-04T20:23",
+    "thumb": "https://i.ytimg.com/vi/k5CYGpWQy4k/hqdefault.jpg",
+    "fav": false,
+    "views": 855
+  },
+  {
+    "title": "sahiba x pal pal Mashup (Slowed + Reverb) | Arijit Singh | Vishal Mishra | LOFI SONG| Raanjhan 🎶",
+    "url": "https://youtu.be/_AVHOjObHLo",
+    "type": "youtube",
+    "date": "2024-10-06T15:55",
+    "thumb": "https://i.ytimg.com/vi/_AVHOjObHLo/hqdefault.jpg",
+    "fav": false,
+    "views": 421
+  },
+  {
+    "title": "Rahat Fateh Ali Khan O RE PIYA LIVE performance at a WEDDING in Nairobi, Kenya | Gavneet & Rajbir",
+    "url": "https://youtu.be/YCwghsdOyks",
+    "type": "youtube",
+    "date": "2025-09-14T05:58",
+    "thumb": "https://i.ytimg.com/vi/YCwghsdOyks/hqdefault.jpg",
+    "fav": false,
+    "views": 434
+  },
+  {
+    "title": "RADWIMPS - Suzume すずめ (ft. Toaka) 漢字, ENG, ROM [Full Version]",
+    "url": "https://youtu.be/oO5k-0QpxTk",
+    "type": "youtube",
+    "date": "2022-10-04T11:19",
+    "thumb": "https://i.ytimg.com/vi/oO5k-0QpxTk/hqdefault.jpg",
+    "fav": false,
+    "views": 640
+  },
+  {
+    "title": "Vidya Vox - Be Free (Pallivaalu Bhadravattakam) ft. Vandana Iyer",
+    "url": "https://youtu.be/eiGdsH1g20k",
+    "type": "youtube",
+    "date": "2024-04-30T16:31",
+    "thumb": "https://i.ytimg.com/vi/eiGdsH1g20k/hqdefault.jpg",
+    "fav": true,
+    "views": 360
+  },
+  {
+    "title": "Kanmani Anbodu | DJ MOE LAY | TikTok Trending Mix",
+    "url": "https://youtu.be/bAL8ZmtlDTs",
+    "type": "youtube",
+    "date": "2020-05-17T16:23",
+    "thumb": "https://i.ytimg.com/vi/bAL8ZmtlDTs/hqdefault.jpg",
+    "fav": true,
+    "views": 122
+  },
+  {
+    "title": "Aattam Kalasamithi | Violin Fusion | 3 | Anirudh | Dhanush | Uyire Uyire BGM",
+    "url": "https://youtu.be/D9p4S-KfhxI",
+    "type": "youtube",
+    "date": "2023-10-26T18:30",
+    "thumb": "https://i.ytimg.com/vi/D9p4S-KfhxI/hqdefault.jpg",
+    "fav": true,
+    "views": 406
+  },
+  {
+    "title": "Baahubali Songs Telugu | Manohari Lyrical Video Song | Prabhas,Anushka, Tamannaah | Bahubali Songs",
+    "url": "https://youtu.be/s6f1tBhX6aw",
+    "type": "youtube",
+    "date": "2024-01-28T17:15",
+    "thumb": "https://i.ytimg.com/vi/s6f1tBhX6aw/hqdefault.jpg",
+    "fav": true,
+    "views": 832
+  },
+  {
+    "title": "Dawn Jay -  Liar (Official Music Video)",
+    "url": "https://youtu.be/PyCu1MXRzHA",
+    "type": "youtube",
+    "date": "2023-03-18T16:06",
+    "thumb": "https://i.ytimg.com/vi/PyCu1MXRzHA/hqdefault.jpg",
+    "fav": false,
+    "views": 291
+  },
+  {
+    "title": "Sri Krishnarjuna Yuddham Songs - Veyi Shubhamulu - A.N.R, Saroja Devi, N.T.R. - HD",
+    "url": "https://youtu.be/gVmy3TZcBQo",
+    "type": "youtube",
+    "date": "2024-12-04T01:39",
+    "thumb": "https://i.ytimg.com/vi/gVmy3TZcBQo/hqdefault.jpg",
+    "fav": true,
+    "views": 210
+  },
+  {
+    "title": "Pournami Villan Bgm | link ⬇️ | Bgm Ringtones",
+    "url": "https://youtu.be/_t_uuztkAY4",
+    "type": "youtube",
+    "date": "2023-05-21T04:26",
+    "thumb": "https://i.ytimg.com/vi/_t_uuztkAY4/hqdefault.jpg",
+    "fav": true,
+    "views": 518
+  },
+  {
+    "title": "Awaara - Nee Yadalo Naaku 8K/4K Video Song | Yuvanshankar Raja | Karthi | Tamannaah",
+    "url": "https://youtu.be/_USekdN1k5E",
+    "type": "youtube",
+    "date": "2023-04-09T04:47",
+    "thumb": "https://i.ytimg.com/vi/_USekdN1k5E/hqdefault.jpg",
+    "fav": false,
+    "views": 233
+  },
+  {
+    "title": "Kiliye Kiliye - Afrobeat Mix | Aa Raathri | Ilaiyaraaja | S. Janaki | The Independeners",
+    "url": "https://youtu.be/7mFWb25fIHc",
+    "type": "youtube",
+    "date": "2025-12-09T01:40",
+    "thumb": "https://i.ytimg.com/vi/7mFWb25fIHc/hqdefault.jpg",
+    "fav": true,
+    "views": 326
+  },
+  {
+    "title": "Uyire Uyire BGM🎻 | Aattam Kalasamithi | Violin Fusion | Chemmeen Band | 3 | Anirudh | Dhanush | 2022",
+    "url": "https://youtu.be/8UoX0OQdPRU",
+    "type": "youtube",
+    "date": "2026-01-07T16:27",
+    "thumb": "https://i.ytimg.com/vi/8UoX0OQdPRU/hqdefault.jpg",
+    "fav": true,
+    "views": 494
+  },
+  {
+    "title": "Airtel Theme BGM | 80-Piece Live Symphony Orchestra",
+    "url": "https://youtu.be/MJ78Wj8PpoE",
+    "type": "youtube",
+    "date": "2026-06-16T15:04",
+    "thumb": "https://i.ytimg.com/vi/MJ78Wj8PpoE/hqdefault.jpg",
+    "fav": false,
+    "views": 732
+  },
+  {
+    "title": "Urvasi Urvasi 4K Song | Kadhalan Video Songs | 4K Remastered | A.R.Rahman",
+    "url": "https://youtu.be/VkoXNF01HdM",
+    "type": "youtube",
+    "date": "2025-09-09T03:51",
+    "thumb": "https://i.ytimg.com/vi/VkoXNF01HdM/hqdefault.jpg",
+    "fav": false,
+    "views": 76
+  },
+  {
+    "title": "Chustu Chustune Rojulu Gadiche | Originals | Deepthi Sunaina | Vinay Shanmukh | Sumanth | Bulganin",
+    "url": "https://youtu.be/aoo9QkKRNgI",
+    "type": "youtube",
+    "date": "2026-07-12T10:01",
+    "thumb": "https://i.ytimg.com/vi/aoo9QkKRNgI/hqdefault.jpg",
+    "fav": false,
+    "views": 726
+  },
+  {
+    "title": "200 Garam engine new song",
+    "url": "https://youtu.be/0vO-NZLX4tw",
+    "type": "youtube",
+    "date": "2023-05-19T06:39",
+    "thumb": "https://i.ytimg.com/vi/0vO-NZLX4tw/hqdefault.jpg",
+    "fav": false,
+    "views": 547
+  },
+  {
+    "title": "O Sayonara Sayonara - Lyrical song | 1 Nenokkadine | Mahesh Babu | Kriti Sanon | MRT Music",
+    "url": "https://youtu.be/ruJwrON_sBU",
+    "type": "youtube",
+    "date": "2025-04-09T15:50",
+    "thumb": "https://i.ytimg.com/vi/ruJwrON_sBU/hqdefault.jpg",
+    "fav": false,
+    "views": 101
+  },
+  {
+    "title": "Tu Hai Kahan by AUR | تو ہے کہاں (Official Music Video)",
+    "url": "https://youtu.be/AX6OrbgS8lI",
+    "type": "youtube",
+    "date": "2026-06-05T04:03",
+    "thumb": "https://i.ytimg.com/vi/AX6OrbgS8lI/hqdefault.jpg",
+    "fav": false,
+    "views": 819
+  },
+  {
+    "title": "Jag Ghoomeya Full Song ISalmanKhan,Anushka Sharma |Rahat Fateh AliKhan, Vishal-Shekhar| Music Saagar",
+    "url": "https://youtu.be/MqxjZCuEMck",
+    "type": "youtube",
+    "date": "2025-07-11T22:06",
+    "thumb": "https://i.ytimg.com/vi/MqxjZCuEMck/hqdefault.jpg",
+    "fav": false,
+    "views": 513
+  },
+  {
+    "title": "Ninne Ninne Kora Song With Lyrics || Nacchavule Movie Songs  || Tanish || Madhavi Latha",
+    "url": "https://youtu.be/NbqpMAO7SKM",
+    "type": "youtube",
+    "date": "2022-04-06T12:59",
+    "thumb": "https://i.ytimg.com/vi/NbqpMAO7SKM/hqdefault.jpg",
+    "fav": false,
+    "views": 841
+  },
+  {
+    "title": "My Heart Is Beating Full HD Video Song || Jalsa Telugu Movie || Pawan Kalyan , Ileana",
+    "url": "https://youtu.be/C5cSb4rDNfg",
+    "type": "youtube",
+    "date": "2020-04-27T22:56",
+    "thumb": "https://i.ytimg.com/vi/C5cSb4rDNfg/hqdefault.jpg",
+    "fav": false,
+    "views": 898
+  },
+  {
+    "title": "Galli lo Telinattu Full HD Video Song || Jalsa Telugu Movie || Pawan Kalyan , Ileana",
+    "url": "https://youtu.be/_CECAP6YzAU",
+    "type": "youtube",
+    "date": "2026-02-11T05:23",
+    "thumb": "https://i.ytimg.com/vi/_CECAP6YzAU/hqdefault.jpg",
+    "fav": false,
+    "views": 629
+  },
+  {
+    "title": "Yemito song telugu | andhala rakshasi movie song| telugu song | gsmixmusic",
+    "url": "https://youtu.be/7uCz2nQqBV4",
+    "type": "youtube",
+    "date": "2021-09-16T00:25",
+    "thumb": "https://i.ytimg.com/vi/7uCz2nQqBV4/hqdefault.jpg",
+    "fav": false,
+    "views": 769
+  },
+  {
+    "title": "Vandha Speedulo [4K] videosong || Ekkadiki Pothavu Chinnavada || Nikhil Siddharth, Hebah Patel",
+    "url": "https://youtu.be/DEF2WSOOedA",
+    "type": "youtube",
+    "date": "2025-08-21T03:37",
+    "thumb": "https://i.ytimg.com/vi/DEF2WSOOedA/hqdefault.jpg",
+    "fav": false,
+    "views": 263
+  },
+  {
+    "title": "Premalo - Video Song | Court | Priyadarshi, Harsh Roshan, Sridevi | Vijai Bulganin | Ram Jagadeesh",
+    "url": "https://youtu.be/IOopJ-PDpac",
+    "type": "youtube",
+    "date": "2020-08-01T22:06",
+    "thumb": "https://i.ytimg.com/vi/IOopJ-PDpac/hqdefault.jpg",
+    "fav": true,
+    "views": 379
+  },
+  {
+    "title": "Tillu Anna DJ Pedithe Video Song (Edited Version) | DJ Tillu | Siddu | Neha Shetty | Vimal Krishna",
+    "url": "https://youtu.be/iNyi1ISPyC4",
+    "type": "youtube",
+    "date": "2021-08-14T19:39",
+    "thumb": "https://i.ytimg.com/vi/iNyi1ISPyC4/hqdefault.jpg",
+    "fav": false,
+    "views": 834
+  },
+  {
+    "title": "Choopultho Guchi Telugu Full Video Song || Ravi Teja, Rakshita || Telugu Videos",
+    "url": "https://youtu.be/WoMh1xCFKV8",
+    "type": "youtube",
+    "date": "2020-11-01T08:12",
+    "thumb": "https://i.ytimg.com/vi/WoMh1xCFKV8/hqdefault.jpg",
+    "fav": false,
+    "views": 92
+  },
+  {
+    "title": "The Ultimate Boardroom Entry by Allu Arjun | Ala Vaikunthapurramloo | Telugu | Pooja Hedge | Sun NXT",
+    "url": "https://youtu.be/IwSvxY1lHf8",
+    "type": "youtube",
+    "date": "2021-10-20T15:23",
+    "thumb": "https://i.ytimg.com/vi/IwSvxY1lHf8/hqdefault.jpg",
+    "fav": false,
+    "views": 110
+  },
+  {
+    "title": "Aaya Sher - Lyrical | The Paradise | Nani | Anirudh Ravichander | Srikanth Odela",
+    "url": "https://youtu.be/iAtoZar5W58",
+    "type": "youtube",
+    "date": "2021-12-27T22:03",
+    "thumb": "https://i.ytimg.com/vi/iAtoZar5W58/hqdefault.jpg",
+    "fav": false,
+    "views": 880
+  },
+  {
+    "title": "Illuminati x Buttaboma x Kavalaa | Circuit Mashup | DJ Dalal | Aavesham | Feat. Allu Arjun, & More",
+    "url": "https://youtu.be/KoIxeq-iEPc",
+    "type": "youtube",
+    "date": "2024-12-14T10:36",
+    "thumb": "https://i.ytimg.com/vi/KoIxeq-iEPc/hqdefault.jpg",
+    "fav": false,
+    "views": 286
+  },
+  {
+    "title": "Kalyani Mashup 2026 | Majboor x Titli x Haseen x Unnakul Naane | DJ Ari Nation",
+    "url": "https://youtu.be/SnV9Ylh2LIw",
+    "type": "youtube",
+    "date": "2024-06-30T11:19",
+    "thumb": "https://i.ytimg.com/vi/SnV9Ylh2LIw/hqdefault.jpg",
+    "fav": false,
+    "views": 43
+  },
+  {
+    "title": "Manavaalan Thug - Thallumaala  | Tovino Thomas | [ Slowed - Reverb ] | Zerolofi  ⚡⚡⚡",
+    "url": "https://youtu.be/hXCu8XC96Jo",
+    "type": "youtube",
+    "date": "2025-02-15T13:24",
+    "thumb": "https://i.ytimg.com/vi/hXCu8XC96Jo/hqdefault.jpg",
+    "fav": true,
+    "views": 209
+  },
+  {
+    "title": "Just A Boy - Japanese Rap [Full Song] Gachiakuta Anime",
+    "url": "https://youtu.be/lQzdU_XEefo",
+    "type": "youtube",
+    "date": "2026-02-15T15:23",
+    "thumb": "https://i.ytimg.com/vi/lQzdU_XEefo/hqdefault.jpg",
+    "fav": false,
+    "views": 870
+  },
+  {
+    "title": "Naziya Karamatullah - Ar  Shab - Best song in 2024 NEW",
+    "url": "https://youtu.be/Yd0aikLnU-o",
+    "type": "youtube",
+    "date": "2021-07-11T15:26",
+    "thumb": "https://i.ytimg.com/vi/Yd0aikLnU-o/hqdefault.jpg",
+    "fav": false,
+    "views": 215
+  },
+  {
+    "title": "Yamuna thatilo | Dalapathy | Jaanu | Soujanya",
+    "url": "https://youtu.be/atnAPk3nP-w",
+    "type": "youtube",
+    "date": "2022-12-13T22:19",
+    "thumb": "https://i.ytimg.com/vi/atnAPk3nP-w/hqdefault.jpg",
+    "fav": false,
+    "views": 142
+  },
+  {
+    "title": "Arijit Singh Mashup 2024 | Nonstop - Jukebox  | Jay Guldekar | Satranga | Heeriye",
+    "url": "https://youtu.be/fzXV2_vm-6g",
+    "type": "youtube",
+    "date": "2022-01-06T02:27",
+    "thumb": "https://i.ytimg.com/vi/fzXV2_vm-6g/hqdefault.jpg",
+    "fav": true,
+    "views": 933
+  },
+  {
+    "title": "Marshmello - Alone (Official Music Video)",
+    "url": "https://youtu.be/CYGbA72m3so",
+    "type": "youtube",
+    "date": "2022-11-24T16:58",
+    "thumb": "https://i.ytimg.com/vi/CYGbA72m3so/hqdefault.jpg",
+    "fav": false,
+    "views": 973
+  },
+  {
+    "title": "PAISA - Seven Hundred Fifty (Official song )- kushal pokhrel",
+    "url": "https://youtu.be/J8NogGY5McA",
+    "type": "youtube",
+    "date": "2024-09-23T08:53",
+    "thumb": "https://i.ytimg.com/vi/J8NogGY5McA/hqdefault.jpg",
+    "fav": false,
+    "views": 422
+  },
+  {
+    "title": "Dhee ft. Arivu - Enjoy Enjaami (Prod. Santhosh Narayanan)",
+    "url": "https://youtu.be/eYq7WapuDLU",
+    "type": "youtube",
+    "date": "2026-03-18T14:48",
+    "thumb": "https://i.ytimg.com/vi/eYq7WapuDLU/hqdefault.jpg",
+    "fav": false,
+    "views": 111
+  },
+  {
+    "title": "East Duo - \"ჩუბინა\"",
+    "url": "https://youtu.be/ZqeCjnEI4b0",
+    "type": "youtube",
+    "date": "2024-02-22T09:10",
+    "thumb": "https://i.ytimg.com/vi/ZqeCjnEI4b0/hqdefault.jpg",
+    "fav": true,
+    "views": 234
+  },
+  {
+    "title": "AA23 : Multiverse Of Madness| 23 x 26 | CipherX Music",
+    "url": "https://youtu.be/qj58LesOmj4",
+    "type": "youtube",
+    "date": "2021-11-15T09:23",
+    "thumb": "https://i.ytimg.com/vi/qj58LesOmj4/hqdefault.jpg",
+    "fav": false,
+    "views": 411
+  },
+  {
+    "title": "Peniviti - Full Video | Aravindha Sametha | Jr. NTR, Pooja Hegde | Thaman S | Telugu Song",
+    "url": "https://youtu.be/4oMO8IYwOos",
+    "type": "youtube",
+    "date": "2020-12-30T01:26",
+    "thumb": "https://i.ytimg.com/vi/4oMO8IYwOos/hqdefault.jpg",
+    "fav": false,
+    "views": 267
+  },
+  {
+    "title": "You & I (Eh Zindhagi) Full HD Video Song || Jalsa Telugu Movie || Pawan Kalyan , Ileana",
+    "url": "https://youtu.be/UoG8EvObKPg",
+    "type": "youtube",
+    "date": "2021-10-13T14:54",
+    "thumb": "https://i.ytimg.com/vi/UoG8EvObKPg/hqdefault.jpg",
+    "fav": false,
+    "views": 294
+  },
+  {
+    "title": "Jennifer Lopez Full HD Video Song || Jalsa Telugu Movie || Pawan Kalyan , Ileana",
+    "url": "https://youtu.be/7LsPfQy0gms",
+    "type": "youtube",
+    "date": "2025-05-08T10:55",
+    "thumb": "https://i.ytimg.com/vi/7LsPfQy0gms/hqdefault.jpg",
+    "fav": false,
+    "views": 456
+  },
+  {
+    "title": "Charlie Bgm Mix",
+    "url": "https://youtu.be/nopQ6TT_pGo",
+    "type": "youtube",
+    "date": "2024-11-28T05:20",
+    "thumb": "https://i.ytimg.com/vi/nopQ6TT_pGo/hqdefault.jpg",
+    "fav": false,
+    "views": 342
+  },
+  {
+    "title": "Marvel Anthem | Telugu | A.R.Rahman",
+    "url": "https://youtu.be/C_K3EcbVmHI",
+    "type": "youtube",
+    "date": "2020-07-17T23:58",
+    "thumb": "https://i.ytimg.com/vi/C_K3EcbVmHI/hqdefault.jpg",
+    "fav": false,
+    "views": 289
+  },
+  {
+    "title": "Mangamma Official Music Video By Rahul Sipligunj",
+    "url": "https://youtu.be/_zNazr0dd8U",
+    "type": "youtube",
+    "date": "2022-02-16T00:09",
+    "thumb": "https://i.ytimg.com/vi/_zNazr0dd8U/hqdefault.jpg",
+    "fav": false,
+    "views": 395
+  },
+  {
+    "title": "Likhe jo khat tujhe X Divine ll #new l #divine",
+    "url": "https://youtu.be/_0zAlLrmiNU",
+    "type": "youtube",
+    "date": "2023-02-15T05:54",
+    "thumb": "https://i.ytimg.com/vi/_0zAlLrmiNU/hqdefault.jpg",
+    "fav": true,
+    "views": 369
+  },
+  {
+    "title": "Niluvave Vaalu Kanula Daana – (Hip-Hop Mix) | Illarikam ( 1959)  | Naveen Maremanda",
+    "url": "https://youtu.be/nwGPc2vaYKo",
+    "type": "youtube",
+    "date": "2022-12-12T19:10",
+    "thumb": "https://i.ytimg.com/vi/nwGPc2vaYKo/hqdefault.jpg",
+    "fav": true,
+    "views": 663
+  },
+  {
+    "title": "Manike Mage Hithe  මැණිකේ මගේ හිතේ  - Official Cover - Yohani & Satheeshan",
+    "url": "https://youtu.be/PgCliOxl41o",
+    "type": "youtube",
+    "date": "2021-12-28T05:36",
+    "thumb": "https://i.ytimg.com/vi/PgCliOxl41o/hqdefault.jpg",
+    "fav": false,
+    "views": 869
+  },
+  {
+    "title": "Mee Intiki Mundhu Video Song | julayi Movie | Allu Arjun | Ileana D'Cruz | @ThappakaChudandi9",
+    "url": "https://youtu.be/Q-6JpBdOxtU",
+    "type": "youtube",
+    "date": "2026-02-11T03:33",
+    "thumb": "https://i.ytimg.com/vi/Q-6JpBdOxtU/hqdefault.jpg",
+    "fav": false,
+    "views": 973
+  },
+  {
+    "title": "Maate Vinadhuga Full Video Song | Taxiwaala Video Songs | Vijay Deverakonda, Priyanka Jawalkar",
+    "url": "https://youtu.be/d0wsNOzzoN8",
+    "type": "youtube",
+    "date": "2021-05-10T13:46",
+    "thumb": "https://i.ytimg.com/vi/d0wsNOzzoN8/hqdefault.jpg",
+    "fav": false,
+    "views": 477
+  },
+  {
+    "title": "Hiphop Tamizha - Club le Mabbu le (Official Music Video)",
+    "url": "https://youtu.be/wK7shf-5soU",
+    "type": "youtube",
+    "date": "2021-06-07T02:19",
+    "thumb": "https://i.ytimg.com/vi/wK7shf-5soU/hqdefault.jpg",
+    "fav": false,
+    "views": 287
+  },
+  {
+    "title": "Shoorveer - A Tribute to Maharana Pratap Ji | Official Music Video | Trouper Records",
+    "url": "https://youtu.be/8h12ccQgnVU",
+    "type": "youtube",
+    "date": "2023-05-23T10:56",
+    "thumb": "https://i.ytimg.com/vi/8h12ccQgnVU/hqdefault.jpg",
+    "fav": false,
+    "views": 177
+  },
+  {
+    "title": "RAVANA RUDRA VEENA by Divine Music",
+    "url": "https://youtu.be/jYnubAMWWs0",
+    "type": "youtube",
+    "date": "2025-08-29T18:16",
+    "thumb": "https://i.ytimg.com/vi/jYnubAMWWs0/hqdefault.jpg",
+    "fav": false,
+    "views": 143
+  },
+  {
+    "title": "Neeye Punchiri - One Side Love",
+    "url": "https://youtu.be/2xUQO-qj3pc",
+    "type": "youtube",
+    "date": "2024-06-08T23:47",
+    "thumb": "https://i.ytimg.com/vi/2xUQO-qj3pc/hqdefault.jpg",
+    "fav": true,
+    "views": 425
+  },
+  {
+    "title": "Татьяна Куртукова   Матушка Земля, белая берёзонька",
+    "url": "https://youtu.be/ELPHf7P0ViQ",
+    "type": "youtube",
+    "date": "2021-11-07T10:03",
+    "thumb": "https://i.ytimg.com/vi/ELPHf7P0ViQ/hqdefault.jpg",
+    "fav": false,
+    "views": 821
+  },
+  {
+    "title": "Jack The Ripper vs Hercules「Record of Ragnarok AMV」- London Bridge is Falling Down",
+    "url": "https://youtu.be/DHN16ad0vKM",
+    "type": "youtube",
+    "date": "2023-07-08T03:45",
+    "thumb": "https://i.ytimg.com/vi/DHN16ad0vKM/hqdefault.jpg",
+    "fav": false,
+    "views": 385
+  },
+  {
+    "title": "Manavalan thug jujutsu kaisen / jujutsu kaisen amv / manavalan thug song the nightmare #edits #jjk",
+    "url": "https://youtu.be/SRR4NRsoxro",
+    "type": "youtube",
+    "date": "2025-03-08T04:04",
+    "thumb": "https://i.ytimg.com/vi/SRR4NRsoxro/hqdefault.jpg",
+    "fav": true,
+    "views": 814
+  },
+  {
+    "title": "iSmart Shankar Title Song |Ram Pothineni,Nidhhi Agerwal,Nabha Natesh |Mani Sharma | Telugu Mass Song",
+    "url": "https://youtu.be/Ox4ih-vJu7E",
+    "type": "youtube",
+    "date": "2020-09-13T12:50",
+    "thumb": "https://i.ytimg.com/vi/Ox4ih-vJu7E/hqdefault.jpg",
+    "fav": false,
+    "views": 844
+  },
+  {
+    "title": "DAKU [Slowed+Reverb]-  INDERPAL MOGA | CHANI NATTAN@Music_Duniya_0001",
+    "url": "https://youtu.be/04g4AD8kXS8",
+    "type": "youtube",
+    "date": "2024-02-03T13:11",
+    "thumb": "https://i.ytimg.com/vi/04g4AD8kXS8/hqdefault.jpg",
+    "fav": true,
+    "views": 812
+  },
+  {
+    "title": "Daripontothundu Dj Full Song | Madeen Sk | Naga Durga | Mamidi Mounika | Shekar Virus",
+    "url": "https://youtu.be/AvdaW5BIZQM",
+    "type": "youtube",
+    "date": "2020-09-26T02:43",
+    "thumb": "https://i.ytimg.com/vi/AvdaW5BIZQM/hqdefault.jpg",
+    "fav": false,
+    "views": 189
+  },
+  {
+    "title": "Gundellonaa - Video Song | Ori Devuda | Vishwak Sen, Asha | Ashwath Marimuthu | Leon James | Anirudh",
+    "url": "https://youtu.be/t_aO4EMP-i0",
+    "type": "youtube",
+    "date": "2026-04-16T13:18",
+    "thumb": "https://i.ytimg.com/vi/t_aO4EMP-i0/hqdefault.jpg",
+    "fav": true,
+    "views": 976
+  },
+  {
+    "title": "My Name Is Billa 4K Video Song | Billa (Telugu) | Prabhas, Anushka Shetty | Mani Sharma",
+    "url": "https://youtu.be/pfNF2Vqr3l0",
+    "type": "youtube",
+    "date": "2021-10-23T00:31",
+    "thumb": "https://i.ytimg.com/vi/pfNF2Vqr3l0/hqdefault.jpg",
+    "fav": false,
+    "views": 743
+  },
+  {
+    "title": "Aarya-2 - Mr. Perfect 8K/4K Video Song | Allu Arjun | Devi Sri Prasad | Kajal Agarwal",
+    "url": "https://youtu.be/KFVmCzasRLE",
+    "type": "youtube",
+    "date": "2023-11-09T15:01",
+    "thumb": "https://i.ytimg.com/vi/KFVmCzasRLE/hqdefault.jpg",
+    "fav": false,
+    "views": 328
+  },
+  {
+    "title": "Arabic Kuthu - Video Song | Beast | Thalapathy Vijay | Pooja Hegde | Sun Pictures | Nelson | Anirudh",
+    "url": "https://youtu.be/KUN5Uf9mObQ",
+    "type": "youtube",
+    "date": "2023-04-25T13:48",
+    "thumb": "https://i.ytimg.com/vi/KUN5Uf9mObQ/hqdefault.jpg",
+    "fav": false,
+    "views": 47
+  },
+  {
+    "title": "Maakkikirkiri | Official music video | Rahul Sipligunj feat Noelsean",
+    "url": "https://youtu.be/T2Wxkw5Xy00",
+    "type": "youtube",
+    "date": "2024-10-19T07:33",
+    "thumb": "https://i.ytimg.com/vi/T2Wxkw5Xy00/hqdefault.jpg",
+    "fav": false,
+    "views": 700
+  },
+  {
+    "title": "Piliche Pedavula – Khaleja | 4K Remastered Telugu Video Song | Mahesh Babu, Anushka Shetty|ReTune 4K",
+    "url": "https://youtu.be/Bi9yxx8UtD0",
+    "type": "youtube",
+    "date": "2025-06-13T07:58",
+    "thumb": "https://i.ytimg.com/vi/Bi9yxx8UtD0/hqdefault.jpg",
+    "fav": true,
+    "views": 486
+  },
+  {
+    "title": "Sachet Parampara OM NAMAH SHIVAY |  Shiva Ganga Dharay | Sachet Parampara Shiv Ji Song | Tune Lyrico",
+    "url": "https://youtu.be/8pRhy4HXXGI",
+    "type": "youtube",
+    "date": "2022-11-14T08:51",
+    "thumb": "https://i.ytimg.com/vi/8pRhy4HXXGI/hqdefault.jpg",
+    "fav": true,
+    "views": 491
+  },
+  {
+    "title": "Pirates of the Caribbean Bass Boosted BGM  | Captain Jack Sparrow",
+    "url": "https://youtu.be/gqyp__4BMmY",
+    "type": "youtube",
+    "date": "2022-03-21T15:33",
+    "thumb": "https://i.ytimg.com/vi/gqyp__4BMmY/hqdefault.jpg",
+    "fav": false,
+    "views": 935
+  },
+  {
+    "title": "Fairytale (Lyrics) - alexander rybak | 2009 live contest | Lyric video | tiktok | football | country",
+    "url": "https://youtu.be/Yktvs00IYS0",
+    "type": "youtube",
+    "date": "2022-06-11T07:46",
+    "thumb": "https://i.ytimg.com/vi/Yktvs00IYS0/hqdefault.jpg",
+    "fav": false,
+    "views": 153
+  },
+  {
+    "title": "Neeye Punchiri |  | Lokah | Hanan Sha | Reyan | Jakes Bejoy | Kalyani | Naslen | Dominic | Nimish",
+    "url": "https://youtu.be/Y23dN3JZrcE",
+    "type": "youtube",
+    "date": "2024-01-14T01:51",
+    "thumb": "https://i.ytimg.com/vi/Y23dN3JZrcE/hqdefault.jpg",
+    "fav": true,
+    "views": 368
+  },
+  {
+    "title": "Dimaak Kharaab | iSmart Shankar | Ram Pothineni, Nidhhi A & Nabha N | Mani Sharma | Telugu Hit Song",
+    "url": "https://youtu.be/V5c4BnmPTpU",
+    "type": "youtube",
+    "date": "2023-10-24T18:56",
+    "thumb": "https://i.ytimg.com/vi/V5c4BnmPTpU/hqdefault.jpg",
+    "fav": false,
+    "views": 579
+  },
+  {
+    "title": "Vande Mataram 8K Video | ABCD 2| Varun Dhawan, Shraddha Kapoor| Daler Mehndi, Badshah|Patriotic Song",
+    "url": "https://youtu.be/g4KiNplqoyg",
+    "type": "youtube",
+    "date": "2025-11-21T11:41",
+    "thumb": "https://i.ytimg.com/vi/g4KiNplqoyg/hqdefault.jpg",
+    "fav": false,
+    "views": 673
+  },
+  {
+    "title": "Thoda Thoda Pyaar 8K Video | Sidharth Malhotra & Neha Sharma | Stebin Ben, Nilesh Ahuja, Kumaar",
+    "url": "https://youtu.be/EWigkQkz-No",
+    "type": "youtube",
+    "date": "2025-02-12T11:33",
+    "thumb": "https://i.ytimg.com/vi/EWigkQkz-No/hqdefault.jpg",
+    "fav": false,
+    "views": 227
+  },
+  {
+    "title": "Burjkhalifa 8K Video | Laxmii | Akshay Kumar & Kiara Advani | Nikhita Gandhi | Shashi-Dj Khushi",
+    "url": "https://youtu.be/PYM1cC9OZks",
+    "type": "youtube",
+    "date": "2024-03-17T05:51",
+    "thumb": "https://i.ytimg.com/vi/PYM1cC9OZks/hqdefault.jpg",
+    "fav": false,
+    "views": 39
+  },
+  {
+    "title": "Jorsey Jorsey Telugu VIdeo Song || Magadheera Telugu Movie || Ram Charan , Kajal Agarwal",
+    "url": "https://youtu.be/sBRhUVjJGak",
+    "type": "youtube",
+    "date": "2021-03-05T05:23",
+    "thumb": "https://i.ytimg.com/vi/sBRhUVjJGak/hqdefault.jpg",
+    "fav": false,
+    "views": 822
+  },
+  {
+    "title": "Dingo Bell (BODMAS Remix) - @MCTETEU1 (FULL Audio)",
+    "url": "https://youtu.be/V1MfWlI278Q",
+    "type": "youtube",
+    "date": "2025-07-10T07:29",
+    "thumb": "https://i.ytimg.com/vi/V1MfWlI278Q/hqdefault.jpg",
+    "fav": false,
+    "views": 7
+  },
+  {
+    "title": "Shanti People - Mahishasura Mardini (Droplex Remix)",
+    "url": "https://youtu.be/Qz4LC9Pmo7Y",
+    "type": "youtube",
+    "date": "2023-01-24T18:47",
+    "thumb": "https://i.ytimg.com/vi/Qz4LC9Pmo7Y/hqdefault.jpg",
+    "fav": false,
+    "views": 115
+  },
+  {
+    "title": "Katchi Sera | DJ MOE LAY | Valentine's Day Special Release",
+    "url": "https://youtu.be/IPZu3xuOzJ4",
+    "type": "youtube",
+    "date": "2020-07-23T00:33",
+    "thumb": "https://i.ytimg.com/vi/IPZu3xuOzJ4/hqdefault.jpg",
+    "fav": true,
+    "views": 704
+  },
+  {
+    "title": "Lyrical | Baby Ko Bass Pasand Hai Song with Lyrics| Sultan | Salman, Anushka, Vishal-Shekhar, Irshad",
+    "url": "https://youtu.be/C5tZyia43DI",
+    "type": "youtube",
+    "date": "2023-01-21T16:04",
+    "thumb": "https://i.ytimg.com/vi/C5tZyia43DI/hqdefault.jpg",
+    "fav": false,
+    "views": 635
+  },
+  {
+    "title": "𝐊𝐚𝐥𝐚 𝐂𝐡𝐚𝐬𝐡𝐦𝐚 🕶️ | Baar Baar Dekho | Sidharth M & Katrina Kaif | Badshah, Neha Kakkar, Prem & Hardeep",
+    "url": "https://youtu.be/k4yXQkG2s1E",
+    "type": "youtube",
+    "date": "2021-09-15T14:03",
+    "thumb": "https://i.ytimg.com/vi/k4yXQkG2s1E/hqdefault.jpg",
+    "fav": false,
+    "views": 357
+  },
+  {
+    "title": "Na Roja Nuvve - Video Song | Kushi | Vijay Deverakonda | Samantha Ruth Prabhu | Hesham Abdul Wahab",
+    "url": "https://youtu.be/JTpDCoxZdv8",
+    "type": "youtube",
+    "date": "2024-12-10T16:50",
+    "thumb": "https://i.ytimg.com/vi/JTpDCoxZdv8/hqdefault.jpg",
+    "fav": false,
+    "views": 631
+  },
+  {
+    "title": "Na Na Na Na | J Star | Full Official Video | Latest Punjabi Song 2015",
+    "url": "https://youtu.be/lBuLUidR9r0",
+    "type": "youtube",
+    "date": "2024-11-05T22:26",
+    "thumb": "https://i.ytimg.com/vi/lBuLUidR9r0/hqdefault.jpg",
+    "fav": false,
+    "views": 336
+  },
+  {
+    "title": "Saree Ke Fall Sa - Full Song With Lyrics - R...Rajkumar | Pritam",
+    "url": "https://youtu.be/ooErGJR_knE",
+    "type": "youtube",
+    "date": "2024-11-29T08:37",
+    "thumb": "https://i.ytimg.com/vi/ooErGJR_knE/hqdefault.jpg",
+    "fav": false,
+    "views": 931
+  },
+  {
+    "title": "Malhari | Full Audio Song | Bajirao Mastani | Ranveer Singh | Vishal Dadlani | Sanjay Leela Bhansali",
+    "url": "https://youtu.be/sRlA7JWTj04",
+    "type": "youtube",
+    "date": "2026-02-10T09:29",
+    "thumb": "https://i.ytimg.com/vi/sRlA7JWTj04/hqdefault.jpg",
+    "fav": false,
+    "views": 41
+  },
+  {
+    "title": "Lindsey Stirling - Roundtable Rival (Official Music Video)",
+    "url": "https://youtu.be/jvipPYFebWc",
+    "type": "youtube",
+    "date": "2020-07-16T03:00",
+    "thumb": "https://i.ytimg.com/vi/jvipPYFebWc/hqdefault.jpg",
+    "fav": false,
+    "views": 991
+  },
+  {
+    "title": "East Nepal 3.0 and 2.0 Music Full Slowed Version 🥹💔💯 Slowed Reverb Music 2025 | Full Sad Music 2025",
+    "url": "https://youtu.be/ARLeo8udHTg",
+    "type": "youtube",
+    "date": "2023-03-21T15:34",
+    "thumb": "https://i.ytimg.com/vi/ARLeo8udHTg/hqdefault.jpg",
+    "fav": false,
+    "views": 880
+  },
+  {
+    "title": "𝐏𝐡𝐢𝐫 𝐁𝐡𝐢 𝐓𝐮𝐦𝐤𝐨 𝐂𝐡𝐚𝐚𝐡𝐮𝐧𝐠𝐚💖 – 𝐅𝐮𝐥𝐥 𝐒𝐨𝐧𝐠 | Arijit Singh | Arjun Kapoor & Shraddha K | Mithoon | Manoj M",
+    "url": "https://youtu.be/_iktURk0X-A",
+    "type": "youtube",
+    "date": "2023-02-27T14:45",
+    "thumb": "https://i.ytimg.com/vi/_iktURk0X-A/hqdefault.jpg",
+    "fav": false,
+    "views": 912
+  },
+  {
+    "title": "Manasunna Maaraju Movie Songs | Nenu Gaali Gopuram | Rajashekar | Laya",
+    "url": "https://youtu.be/KjThwhhknPs",
+    "type": "youtube",
+    "date": "2022-07-14T01:09",
+    "thumb": "https://i.ytimg.com/vi/KjThwhhknPs/hqdefault.jpg",
+    "fav": false,
+    "views": 478
+  },
+  {
+    "title": "Belle Sisoski - HOLD ON (Official Music Video)",
+    "url": "https://youtu.be/Dgl-OdHtBoY",
+    "type": "youtube",
+    "date": "2023-05-03T19:26",
+    "thumb": "https://i.ytimg.com/vi/Dgl-OdHtBoY/hqdefault.jpg",
+    "fav": false,
+    "views": 708
+  },
+  {
+    "title": "Soap&Skin - Me And The Devil (Lyrics)",
+    "url": "https://youtu.be/T7Oe1H87yi8",
+    "type": "youtube",
+    "date": "2022-12-15T10:44",
+    "thumb": "https://i.ytimg.com/vi/T7Oe1H87yi8/hqdefault.jpg",
+    "fav": false,
+    "views": 149
+  },
+  {
+    "title": "Gotye - Somebody That I Used To Know (feat. Kimbra) [Official Music Video]",
+    "url": "https://youtu.be/8UVNT4wvIGY",
+    "type": "youtube",
+    "date": "2023-09-18T06:33",
+    "thumb": "https://i.ytimg.com/vi/8UVNT4wvIGY/hqdefault.jpg",
+    "fav": false,
+    "views": 973
+  },
+  {
+    "title": "Tune O Rangeele - Brazilian Funk Mix",
+    "url": "https://youtu.be/fhiODvY7Tj0",
+    "type": "youtube",
+    "date": "2024-05-20T16:42",
+    "thumb": "https://i.ytimg.com/vi/fhiODvY7Tj0/hqdefault.jpg",
+    "fav": false,
+    "views": 967
+  },
+  {
+    "title": "Ishq (-Lost ; Found) (Slowed Reverb) by Faheem Abdullah | Mosethic",
+    "url": "https://youtu.be/LKjaudObsMo",
+    "type": "youtube",
+    "date": "2022-07-27T00:56",
+    "thumb": "https://i.ytimg.com/vi/LKjaudObsMo/hqdefault.jpg",
+    "fav": false,
+    "views": 178
+  },
+  {
+    "title": "Chellakuttiye [ Official Music Video ] AVASTHA || Srinish Aravind | Pearle Maaney | Jecin George",
+    "url": "https://youtu.be/zjI-7EiJt7M",
+    "type": "youtube",
+    "date": "2021-07-08T06:48",
+    "thumb": "https://i.ytimg.com/vi/zjI-7EiJt7M/hqdefault.jpg",
+    "fav": true,
+    "views": 111
+  },
+  {
+    "title": "Samjho Na X Wishes - Mashup | Aditya Rikhari | Hasan Raheem | DJ Sumit Rajwanshi",
+    "url": "https://youtu.be/n5CxWkohlCs",
+    "type": "youtube",
+    "date": "2025-05-29T09:35",
+    "thumb": "https://i.ytimg.com/vi/n5CxWkohlCs/hqdefault.jpg",
+    "fav": false,
+    "views": 823
+  },
+  {
+    "title": "Aaya Na Tu (Mashup) - Momina Mustehsan x Talha Anjum x Taimoor Baig ft. Talwiinder | AWAID & AWAIS",
+    "url": "https://youtu.be/FLzIpQl2alQ",
+    "type": "youtube",
+    "date": "2024-10-22T09:52",
+    "thumb": "https://i.ytimg.com/vi/FLzIpQl2alQ/hqdefault.jpg",
+    "fav": false,
+    "views": 576
+  },
+  {
+    "title": "Naresh Narayan - Aaja Ve Mahiya (Unforgettable) Lo-Fi Flip ft. Imran Khan",
+    "url": "https://youtu.be/AwHdIwBYDD0",
+    "type": "youtube",
+    "date": "2025-09-22T06:56",
+    "thumb": "https://i.ytimg.com/vi/AwHdIwBYDD0/hqdefault.jpg",
+    "fav": false,
+    "views": 591
+  },
+  {
+    "title": "Veeraa Sooraa - Lyrical | Nene Vasthunna | Dhanush | Sri Raghava | Yuvan Shankar Raja",
+    "url": "https://youtu.be/pb02Xb0Az1Y",
+    "type": "youtube",
+    "date": "2020-03-20T11:10",
+    "thumb": "https://i.ytimg.com/vi/pb02Xb0Az1Y/hqdefault.jpg",
+    "fav": false,
+    "views": 293
+  },
+  {
+    "title": "Sahiba x Samjho Na - Mashup | Aditya Rikhari | Shubhadip Dey & Vibevik",
+    "url": "https://youtu.be/FxGLvMHY29o",
+    "type": "youtube",
+    "date": "2021-04-18T03:30",
+    "thumb": "https://i.ytimg.com/vi/FxGLvMHY29o/hqdefault.jpg",
+    "fav": false,
+    "views": 633
+  },
+  {
+    "title": "U Turn - The Karma Theme (Telugu) - Samantha | Anirudh Ravichander | Pawan Kumar",
+    "url": "https://youtu.be/1himtoWeA_U",
+    "type": "youtube",
+    "date": "2022-01-11T08:40",
+    "thumb": "https://i.ytimg.com/vi/1himtoWeA_U/hqdefault.jpg",
+    "fav": false,
+    "views": 142
+  },
+  {
+    "title": "Mahesh Babu Cheppave Chirugali 4K Quality Digital Re-release Video Song | Blockbuster Movie Okkadu",
+    "url": "https://youtu.be/yBPm4oWiRIM",
+    "type": "youtube",
+    "date": "2020-12-06T10:09",
+    "thumb": "https://i.ytimg.com/vi/yBPm4oWiRIM/hqdefault.jpg",
+    "fav": false,
+    "views": 903
+  },
+  {
+    "title": "Race Gurram Video Songs 4K | Sweety Full Video Song | Allu Arjun | Shruti Haasan | Thaman S",
+    "url": "https://youtu.be/9fdJ7DSFdj0",
+    "type": "youtube",
+    "date": "2024-09-09T04:52",
+    "thumb": "https://i.ytimg.com/vi/9fdJ7DSFdj0/hqdefault.jpg",
+    "fav": false,
+    "views": 974
+  },
+  {
+    "title": "Iddarammayilatho Video Songs | Violin Song (Girl Just) Video Song | Allu Arjun, Amala Paul",
+    "url": "https://youtu.be/NPnxw00z63I",
+    "type": "youtube",
+    "date": "2020-01-20T11:57",
+    "thumb": "https://i.ytimg.com/vi/NPnxw00z63I/hqdefault.jpg",
+    "fav": false,
+    "views": 159
+  },
+  {
+    "title": "Koyila Music Video Alekhya Harika | Vinayshanmukh |Vijai Bulganin |Nitesh Krishnan| Cinegrindstudios",
+    "url": "https://youtu.be/uhY2fqU_1yA",
+    "type": "youtube",
+    "date": "2022-01-10T00:32",
+    "thumb": "https://i.ytimg.com/vi/uhY2fqU_1yA/hqdefault.jpg",
+    "fav": false,
+    "views": 881
+  },
+  {
+    "title": "Best of 2025 Mashup | Nonstop Jukebox | Sid Guldekar | Arijit Singh | Trending Mashup 2025",
+    "url": "https://youtu.be/r2WSzUc4mK0",
+    "type": "youtube",
+    "date": "2021-07-10T14:56",
+    "thumb": "https://i.ytimg.com/vi/r2WSzUc4mK0/hqdefault.jpg",
+    "fav": false,
+    "views": 634
+  },
+  {
+    "title": "Why does Telugu sound so Musical?",
+    "url": "https://youtu.be/GFoj0vG_vs4",
+    "type": "youtube",
+    "date": "2020-07-15T05:05",
+    "thumb": "https://i.ytimg.com/vi/GFoj0vG_vs4/hqdefault.jpg",
+    "fav": false,
+    "views": 254
+  },
+  {
+    "title": "Kannulato Choosedi Lyrical song | Jeans Telugu Movie | Prashanth, Aishwarya Rai | Old Telugu Songs",
+    "url": "https://youtu.be/kPcE5GLLQAg",
+    "type": "youtube",
+    "date": "2023-10-26T13:45",
+    "thumb": "https://i.ytimg.com/vi/kPcE5GLLQAg/hqdefault.jpg",
+    "fav": false,
+    "views": 893
+  },
+  {
+    "title": "Chitti Nadumune Full Video Song Hd | Pawan Kalyan, Meera Jasmine | Telugu Videos",
+    "url": "https://youtu.be/zK1BQk0L-5U",
+    "type": "youtube",
+    "date": "2026-04-11T00:44",
+    "thumb": "https://i.ytimg.com/vi/zK1BQk0L-5U/hqdefault.jpg",
+    "fav": false,
+    "views": 633
+  },
+  {
+    "title": "Telusa Telusa Full Video Song || Sarrainodu  || Allu Arjun , Rakul Preet, Catherine Tresa",
+    "url": "https://youtu.be/qaU03QRrcPs",
+    "type": "youtube",
+    "date": "2024-03-08T23:19",
+    "thumb": "https://i.ytimg.com/vi/qaU03QRrcPs/hqdefault.jpg",
+    "fav": false,
+    "views": 142
+  },
+  {
+    "title": "Vachindamma Full Video Song | Geetha Govindam | Vijay Deverakonda, Rashmika, Parasuram, Gopi Sunder",
+    "url": "https://youtu.be/aotMkXvjXtc",
+    "type": "youtube",
+    "date": "2025-09-23T05:53",
+    "thumb": "https://i.ytimg.com/vi/aotMkXvjXtc/hqdefault.jpg",
+    "fav": false,
+    "views": 159
+  },
+  {
+    "title": "Happy New Year - Video Song | Kuruvi | Vijay | Trisha | Vidyasagar | Ayngaran",
+    "url": "https://youtu.be/x4ARoBAoMIk",
+    "type": "youtube",
+    "date": "2025-02-24T23:38",
+    "thumb": "https://i.ytimg.com/vi/x4ARoBAoMIk/hqdefault.jpg",
+    "fav": false,
+    "views": 136
+  },
+  {
+    "title": "Kanchana (Muni 2) Full Video Songs | Nalupu Video Song | Raghava Lawrence, Sarathkumar, Lakshmi Rai",
+    "url": "https://youtu.be/xjSjWV7wJNk",
+    "type": "youtube",
+    "date": "2021-03-01T14:55",
+    "thumb": "https://i.ytimg.com/vi/xjSjWV7wJNk/hqdefault.jpg",
+    "fav": false,
+    "views": 379
+  },
+  {
+    "title": "The Musical Code that Created Krishna (Samveda Secrets)",
+    "url": "https://youtu.be/GuzW9wrmK-g",
+    "type": "youtube",
+    "date": "2026-02-12T06:27",
+    "thumb": "https://i.ytimg.com/vi/GuzW9wrmK-g/hqdefault.jpg",
+    "fav": false,
+    "views": 617
+  },
+  {
+    "title": "Soulful Love Mashup | Romantic Songs | Love Mashup | Arijit Singh | Mashup Songs | Ldscenes Music",
+    "url": "https://youtu.be/1KoGBWArcpc",
+    "type": "youtube",
+    "date": "2025-10-23T17:47",
+    "thumb": "https://i.ytimg.com/vi/1KoGBWArcpc/hqdefault.jpg",
+    "fav": false,
+    "views": 950
+  },
+  {
+    "title": "Thammudu Telugu Movie Songs | Vayyari Bhama Video Song | Pawan Kalyan | Preeti Jhangiani",
+    "url": "https://youtu.be/gWmc6YA4XJM",
+    "type": "youtube",
+    "date": "2021-09-03T04:08",
+    "thumb": "https://i.ytimg.com/vi/gWmc6YA4XJM/hqdefault.jpg",
+    "fav": false,
+    "views": 971
+  },
+  {
+    "title": "Badri Movie Songs - Yeh Chikitha - Pawan Kalyan Amisha Patel",
+    "url": "https://youtu.be/64z8XmdhLyw",
+    "type": "youtube",
+    "date": "2023-06-29T17:15",
+    "thumb": "https://i.ytimg.com/vi/64z8XmdhLyw/hqdefault.jpg",
+    "fav": false,
+    "views": 342
+  },
+  {
+    "title": "Kushi Telugu Movie Songs | Cheliya Cheliya Video Song | Pawan Kalyan | Bhumika Chawla | Mani Sharma",
+    "url": "https://youtu.be/-Z9jQn442Ts",
+    "type": "youtube",
+    "date": "2022-09-30T23:39",
+    "thumb": "https://i.ytimg.com/vi/-Z9jQn442Ts/hqdefault.jpg",
+    "fav": false,
+    "views": 586
+  },
+  {
+    "title": "Dole Dole Video Song - Pokiri Movie || Mahesh Babu || Ileana || Mani Sharma",
+    "url": "https://youtu.be/obUCNoFPG1Y",
+    "type": "youtube",
+    "date": "2021-01-19T19:27",
+    "thumb": "https://i.ytimg.com/vi/obUCNoFPG1Y/hqdefault.jpg",
+    "fav": false,
+    "views": 671
+  },
+  {
+    "title": "Emantaro Naku Neeku Full Hd Video Song | Pawan Kalyan , Meera Jasmine | Telugu Videos",
+    "url": "https://youtu.be/D9kKAWZG4Gg",
+    "type": "youtube",
+    "date": "2023-12-29T00:24",
+    "thumb": "https://i.ytimg.com/vi/D9kKAWZG4Gg/hqdefault.jpg",
+    "fav": false,
+    "views": 876
+  },
+  {
+    "title": "Chal Chaiya Chaiya (( Jhankar )) Shahrukh Khan, Sukhwinder Singh | Sapna Awasthi, Malaika Arora",
+    "url": "https://youtu.be/zYJp5qpn2Jo",
+    "type": "youtube",
+    "date": "2020-01-13T14:04",
+    "thumb": "https://i.ytimg.com/vi/zYJp5qpn2Jo/hqdefault.jpg",
+    "fav": false,
+    "views": 492
+  },
+  {
+    "title": "Apsara Ali remix dance choreography | Poonam and Priyanka Dance",
+    "url": "https://youtu.be/FHFw07lIcSI",
+    "type": "youtube",
+    "date": "2024-01-30T12:07",
+    "thumb": "https://i.ytimg.com/vi/FHFw07lIcSI/hqdefault.jpg",
+    "fav": false,
+    "views": 531
+  },
+  {
+    "title": "chahu mai ana Arijit Singh status🖤❤️",
+    "url": "https://youtu.be/1DOfKkHMLaw",
+    "type": "youtube",
+    "date": "2023-07-11T18:51",
+    "thumb": "https://i.ytimg.com/vi/1DOfKkHMLaw/hqdefault.jpg",
+    "fav": false,
+    "views": 627
+  },
+  {
+    "title": "I Can Watch This Forever",
+    "url": "https://youtu.be/iVaDnaw-2B8",
+    "type": "youtube",
+    "date": "2026-03-31T16:34",
+    "thumb": "https://i.ytimg.com/vi/iVaDnaw-2B8/hqdefault.jpg",
+    "fav": false,
+    "views": 979
+  },
+  {
+    "title": "Ishq x Pal Pal Endless Mashup (Slowed + Reverb)",
+    "url": "https://youtu.be/hWOqxyEyk-I",
+    "type": "youtube",
+    "date": "2023-01-18T14:13",
+    "thumb": "https://i.ytimg.com/vi/hWOqxyEyk-I/hqdefault.jpg",
+    "fav": false,
+    "views": 350
+  },
+  {
+    "title": "Safar",
+    "url": "https://youtu.be/I4CfYKKj1Y4",
+    "type": "youtube",
+    "date": "2020-03-15T06:40",
+    "thumb": "https://i.ytimg.com/vi/I4CfYKKj1Y4/hqdefault.jpg",
+    "fav": false,
+    "views": 871
+  },
+  {
+    "title": "Awarapan x Awarapan 2 Mashup | Best of Emraan Hashmi | AK Stories",
+    "url": "https://youtu.be/uMkPM0IIbg0",
+    "type": "youtube",
+    "date": "2025-12-16T08:31",
+    "thumb": "https://i.ytimg.com/vi/uMkPM0IIbg0/hqdefault.jpg",
+    "fav": false,
+    "views": 854
+  },
+  {
+    "title": "Pal Pal x Talwiinder - Afusic x Hassen | Trending Talwinnder Mashup",
+    "url": "https://youtu.be/4wBBWboC7Yw",
+    "type": "youtube",
+    "date": "2024-04-02T20:12",
+    "thumb": "https://i.ytimg.com/vi/4wBBWboC7Yw/hqdefault.jpg",
+    "fav": false,
+    "views": 534
+  },
+  {
+    "title": "NORUA. - TAKI TAKI (CAR MIX)",
+    "url": "https://youtu.be/dS5QL5D5peo",
+    "type": "youtube",
+    "date": "2022-05-30T07:27",
+    "thumb": "https://i.ytimg.com/vi/dS5QL5D5peo/hqdefault.jpg",
+    "fav": false,
+    "views": 656
+  },
+  {
+    "title": "BASINGA BALAALU FULL SONG | KALYAN KEYS | SHEKAR VIRUS | ESHWAR SAI | VAISHNAVI SONY | VEDHAS MUSIC",
+    "url": "https://youtu.be/A_RV2H2F9jw",
+    "type": "youtube",
+    "date": "2021-06-11T06:20",
+    "thumb": "https://i.ytimg.com/vi/A_RV2H2F9jw/hqdefault.jpg",
+    "fav": false,
+    "views": 175
+  },
+  {
+    "title": "GUJJARI GUJJARI MAMINDLA KINDA FULL SONG | SWAMI SINGER | PRABHA | VAISHNAVI SONY | AKSHITH MARVEL",
+    "url": "https://youtu.be/Ie1GC0ohG7E",
+    "type": "youtube",
+    "date": "2020-02-23T09:14",
+    "thumb": "https://i.ytimg.com/vi/Ie1GC0ohG7E/hqdefault.jpg",
+    "fav": false,
+    "views": 658
+  },
+  {
+    "title": "KCR SIRU | FULL SONG | DILLP DEVAGAN | MANUKOTAPRASAD | SANDEEP MADDELA | JANULYRI",
+    "url": "https://youtu.be/Se4uN8RN94M",
+    "type": "youtube",
+    "date": "2022-05-15T08:17",
+    "thumb": "https://i.ytimg.com/vi/Se4uN8RN94M/hqdefault.jpg",
+    "fav": false,
+    "views": 263
+  },
+  {
+    "title": "Tune O Rangeele (Brazilian Funk Mix By @Knockwell) | Kudrat | Lata Mangeshkar | Trap Maharaja",
+    "url": "https://youtu.be/Rs1gAgdw_bI",
+    "type": "youtube",
+    "date": "2020-08-09T23:20",
+    "thumb": "https://i.ytimg.com/vi/Rs1gAgdw_bI/hqdefault.jpg",
+    "fav": false,
+    "views": 479
+  },
+  {
+    "title": "GUTTAKINDHA GUMPUCHETTLANINDA FULL SONG 4K || NUKARAJU & ASIYA LATEST SONG || LATEST FOLK SONG 2024",
+    "url": "https://youtu.be/JMtrfsb1P78",
+    "type": "youtube",
+    "date": "2024-09-23T08:42",
+    "thumb": "https://i.ytimg.com/vi/JMtrfsb1P78/hqdefault.jpg",
+    "fav": false,
+    "views": 235
+  },
+  {
+    "title": "Nelluri Nerajana Video Song | Oke Okkadu Telugu Movie Songs | Arjun | Manisha Koirala | AR Rahman",
+    "url": "https://youtu.be/1v_qKcDa_v4",
+    "type": "youtube",
+    "date": "2020-08-04T20:00",
+    "thumb": "https://i.ytimg.com/vi/1v_qKcDa_v4/hqdefault.jpg",
+    "fav": false,
+    "views": 296
+  },
+  {
+    "title": "Aalu Mogalu Full Song | Bullet Bandi Laxman | Madeen Sk | Suman Badanakal | Srinidhi",
+    "url": "https://youtu.be/lENWUDnGnzc",
+    "type": "youtube",
+    "date": "2022-08-31T08:26",
+    "thumb": "https://i.ytimg.com/vi/lENWUDnGnzc/hqdefault.jpg",
+    "fav": false,
+    "views": 65
+  },
+  {
+    "title": "Peddi Reddy Full Song | Bullet Bandi Laxman | Madeen Sk | Naga Durga | Leading Boys",
+    "url": "https://youtu.be/NEAsHXgmqas",
+    "type": "youtube",
+    "date": "2022-01-21T23:33",
+    "thumb": "https://i.ytimg.com/vi/NEAsHXgmqas/hqdefault.jpg",
+    "fav": false,
+    "views": 31
+  },
+  {
+    "title": "SANNA SANNA BIYYAME FULL SONG | MADHURI RATHOD | ESHWAR SAI | SHIRISHA | GANGAMANI | VENKAT AJMEERA",
+    "url": "https://youtu.be/d6YJ0FBdPYU",
+    "type": "youtube",
+    "date": "2024-07-24T07:17",
+    "thumb": "https://i.ytimg.com/vi/d6YJ0FBdPYU/hqdefault.jpg",
+    "fav": false,
+    "views": 65
+  },
+  {
+    "title": "ATHAGAARINTIKI 2 FULL SONG  |  MADEENSK | BULLETBANDI LAXMAN | DOSTHI MUSIC | KITTU PAWAN",
+    "url": "https://youtu.be/LFbNCBcRSTg",
+    "type": "youtube",
+    "date": "2025-01-13T17:13",
+    "thumb": "https://i.ytimg.com/vi/LFbNCBcRSTg/hqdefault.jpg",
+    "fav": false,
+    "views": 881
+  },
+  {
+    "title": "Gurtukochinappudalla Love Video Song || #SingerRamu || Writer #Laxman || Music #Kalyan || DRC",
+    "url": "https://youtu.be/GrgUwGqgPdQ",
+    "type": "youtube",
+    "date": "2024-04-23T03:39",
+    "thumb": "https://i.ytimg.com/vi/GrgUwGqgPdQ/hqdefault.jpg",
+    "fav": false,
+    "views": 550
+  },
+  {
+    "title": "Allahe Allaha | Introducing Jahangir Pasha | Bullet Bandi Laxman | Ramu | Tony Kick | Madeen SK",
+    "url": "https://youtu.be/As01spTyyDs",
+    "type": "youtube",
+    "date": "2025-05-12T18:54",
+    "thumb": "https://i.ytimg.com/vi/As01spTyyDs/hqdefault.jpg",
+    "fav": false,
+    "views": 554
+  },
+  {
+    "title": "Blackberry Video Song | Nuvva Nena | Allari Naresh | Sharwanand | Shriya Saran | @ThappakaChudandi9",
+    "url": "https://youtu.be/2pQqsIGpn_w",
+    "type": "youtube",
+    "date": "2020-02-18T04:30",
+    "thumb": "https://i.ytimg.com/vi/2pQqsIGpn_w/hqdefault.jpg",
+    "fav": false,
+    "views": 249
+  },
+  {
+    "title": "Aata Songs | Yela Yela Video Song | Siddharth, Ileana | Sri Balaji Video",
+    "url": "https://youtu.be/IygjEqS-5Uc",
+    "type": "youtube",
+    "date": "2024-01-11T04:27",
+    "thumb": "https://i.ytimg.com/vi/IygjEqS-5Uc/hqdefault.jpg",
+    "fav": false,
+    "views": 142
+  },
+  {
+    "title": "Naa Pranama Nanu Vidipokuma Emotional Love Song | Anitha O Anitha  | Lalitha Audios And Videos",
+    "url": "https://youtu.be/c3QLGiYrnHo",
+    "type": "youtube",
+    "date": "2023-12-23T08:40",
+    "thumb": "https://i.ytimg.com/vi/c3QLGiYrnHo/hqdefault.jpg",
+    "fav": false,
+    "views": 399
+  },
+  {
+    "title": "Thinna Thiram Paduthale | Latest Folk Song | Lakshmi | Naaga Durga | Thirupathi Matla | Sytv.in",
+    "url": "https://youtu.be/fzqW33KVS68",
+    "type": "youtube",
+    "date": "2026-03-11T10:06",
+    "thumb": "https://i.ytimg.com/vi/fzqW33KVS68/hqdefault.jpg",
+    "fav": false,
+    "views": 2
+  },
+  {
+    "title": "O Pilaga Venkati Full Song | Singer Prabha | Pooja Nageshwar | Bhavya Tunes | Fock Song",
+    "url": "https://youtu.be/UbTvuzgfy7Q",
+    "type": "youtube",
+    "date": "2025-11-27T11:16",
+    "thumb": "https://i.ytimg.com/vi/UbTvuzgfy7Q/hqdefault.jpg",
+    "fav": false,
+    "views": 752
+  },
+  {
+    "title": "SENIGA CHENLA NILABADI CHETHULIYAVE DJ VERSION 2 || FULL SONG 4K || NEW DJ FOLK 2025 #JANULYRI",
+    "url": "https://youtu.be/ZmzFyH3cREw",
+    "type": "youtube",
+    "date": "2020-02-02T00:53",
+    "thumb": "https://i.ytimg.com/vi/ZmzFyH3cREw/hqdefault.jpg",
+    "fav": false,
+    "views": 355
+  },
+  {
+    "title": "Nadakallo Nadaka DJ Super HIt Song || Folk Dj Songs || Disco Recording Company",
+    "url": "https://youtu.be/LpJ-D9DYAnM",
+    "type": "youtube",
+    "date": "2026-06-07T14:49",
+    "thumb": "https://i.ytimg.com/vi/LpJ-D9DYAnM/hqdefault.jpg",
+    "fav": false,
+    "views": 948
+  },
+  {
+    "title": "Yerra Yerrani Rumalu Gatti Dj Full Song | 2025 Latest Folk Song | Naga Durga | Konda Vlogs",
+    "url": "https://youtu.be/hGOqqLjgfe4",
+    "type": "youtube",
+    "date": "2020-08-26T10:50",
+    "thumb": "https://i.ytimg.com/vi/hGOqqLjgfe4/hqdefault.jpg",
+    "fav": false,
+    "views": 883
+  },
+  {
+    "title": "DEKU DEKU DJ FULL SONG | ATTA KODALU SONG | SINGER LAVANYA | SRINIVAS MELODYS",
+    "url": "https://youtu.be/i_ov142Lnws",
+    "type": "youtube",
+    "date": "2022-08-27T16:59",
+    "thumb": "https://i.ytimg.com/vi/i_ov142Lnws/hqdefault.jpg",
+    "fav": false,
+    "views": 33
+  },
+  {
+    "title": "Mangli Bayilone Ballipalike | Full Song | Suresh | Nagavva |Kamal Eslavath |Shekar Virus |DamuReddy",
+    "url": "https://youtu.be/UfaM4nPwc8Y",
+    "type": "youtube",
+    "date": "2024-09-24T08:35",
+    "thumb": "https://i.ytimg.com/vi/UfaM4nPwc8Y/hqdefault.jpg",
+    "fav": false,
+    "views": 818
+  },
+  {
+    "title": "VANNELADI TIKKULADI FULL SONG | JANULYRI | MOUNIKA DIMPLE | PRABHA | LAVANYA | VENKAT AJMEEERA",
+    "url": "https://youtu.be/Knhx5cg9i-8",
+    "type": "youtube",
+    "date": "2023-09-11T01:14",
+    "thumb": "https://i.ytimg.com/vi/Knhx5cg9i-8/hqdefault.jpg",
+    "fav": false,
+    "views": 155
+  },
+  {
+    "title": "Arijit Singh Soul of Love Mashup 2025 | Arijit Singh Love Songs | Best of Love Song | MS Mashup",
+    "url": "https://youtu.be/-YaekBUpeYc",
+    "type": "youtube",
+    "date": "2022-09-09T08:42",
+    "thumb": "https://i.ytimg.com/vi/-YaekBUpeYc/hqdefault.jpg",
+    "fav": false,
+    "views": 198
+  },
+  {
+    "title": "TELLA CHEERA TELLA RAIKA FULL SONG | KALYAN KEYS | AKKI CHERRY | MALLAMMA | KONGARI KRISHNA",
+    "url": "https://youtu.be/2PTHiYvwG8M",
+    "type": "youtube",
+    "date": "2020-04-17T13:01",
+    "thumb": "https://i.ytimg.com/vi/2PTHiYvwG8M/hqdefault.jpg",
+    "fav": false,
+    "views": 405
+  },
+  {
+    "title": "Nagin Rupali song dj",
+    "url": "https://youtu.be/KpHp_Kg-MZQ",
+    "type": "youtube",
+    "date": "2024-08-17T05:43",
+    "thumb": "https://i.ytimg.com/vi/KpHp_Kg-MZQ/hqdefault.jpg",
+    "fav": false,
+    "views": 468
+  },
+  {
+    "title": "Rikshawala_DJ_song_Remix_Dy_DJ Aravind_smiley_Office",
+    "url": "https://youtu.be/81aVeAL3cgE",
+    "type": "youtube",
+    "date": "2024-05-02T20:19",
+    "thumb": "https://i.ytimg.com/vi/81aVeAL3cgE/hqdefault.jpg",
+    "fav": false,
+    "views": 547
+  },
+  {
+    "title": "Ranu Bombai ki ranu | Dance cover | Nainika & Thanaya",
+    "url": "https://youtu.be/VkUrXXrHICM",
+    "type": "youtube",
+    "date": "2021-01-22T12:17",
+    "thumb": "https://i.ytimg.com/vi/VkUrXXrHICM/hqdefault.jpg",
+    "fav": false,
+    "views": 808
+  },
+  {
+    "title": "Ranu Ranu Antune Chinnado Full Movie Videos Song | Nithiin, Sadha | Telugu Videos",
+    "url": "https://youtu.be/fzsF5rj0nHg",
+    "type": "youtube",
+    "date": "2021-01-19T03:31",
+    "thumb": "https://i.ytimg.com/vi/fzsF5rj0nHg/hqdefault.jpg",
+    "fav": false,
+    "views": 35
+  },
+  {
+    "title": "Zum Zumare Ali, Ravi Teja, Aasin Telugu Evergreen Movie Song | @TeluguVideoZ",
+    "url": "https://youtu.be/eJ0EMr--wBw",
+    "type": "youtube",
+    "date": "2022-10-21T03:42",
+    "thumb": "https://i.ytimg.com/vi/eJ0EMr--wBw/hqdefault.jpg",
+    "fav": false,
+    "views": 968
+  },
+  {
+    "title": "Kushi Movie Video Songs | Ammaye Sannaga Video Song | Pawan Kalyan | Bhumika | Mango Music",
+    "url": "https://youtu.be/yEBee5d_S8U",
+    "type": "youtube",
+    "date": "2026-03-01T06:01",
+    "thumb": "https://i.ytimg.com/vi/yEBee5d_S8U/hqdefault.jpg",
+    "fav": false,
+    "views": 680
+  }
+]
 
 
     /* =====================================================
@@ -923,52 +4032,13 @@ document.addEventListener("DOMContentLoaded", () => {
        PREVIEW + FORM
     ===================================================== */
 
-    const previewes = fastTag(
-        "div",
-        page,
-        "previewes"
-    );
-
-
-    const preview = fastTag(
-        "iframe",
-        previewes,
-        "preview"
-    );
-
-    preview.src = "about:blank";
-
-
-    const asider = fastTag(
-        "aside",
-        previewes,
-        "asider"
-    );
-
-
-    const form = fastTag(
-        "form",
-        asider,
-        "form"
-    );
-
-
-    const fieldset = fastTag(
-        "fieldset",
-        form,
-        "fieldset"
-    );
-
-
-    fastTag(
-        "legend",
-        fieldset,
-        "legend",
-        null,
-        "Add / Edit"
-    );
-
-
+    const previewes = fastTag( "div", page, "previewes")
+    const preview = fastTag( "iframe", previewes, "preview")
+          preview.src = "about:blank";
+    const asider = fastTag( "aside", previewes, "asider")
+    const form = fastTag( "form", asider, "form")
+    const fieldset = fastTag( "fieldset", form, "fieldset")
+    fastTag( "legend", fieldset, "legend", null, "Add / Edit"  );
     /* =====================================================
        LINK
     ===================================================== */
@@ -1105,49 +4175,90 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dateInput.type = "datetime-local";
 
+/* =====================================================
+   BUTTONS
+===================================================== */
 
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    const Btns = fastTag(
-        "div",
-        fieldset,
-        "saveBtns"
-    );
-
-
-    const dataBtn = fastTag(
-        "button",
-        Btns,
-        "DataBtn",
-        null,
-        "Data"
-    );
-
-    dataBtn.type = "button";
+const Btns = fastTag(
+    "div",
+    fieldset,
+    "saveBtns"
+);
 
 
-    const deleteBtn = fastTag(
-        "button",
-        Btns,
-        "deleteBtn",
-        null,
-        "Delete"
-    );
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
 
-    deleteBtn.type = "button";
+const closeFormBtn = fastTag(
+    "button",
+    Btns,
+    "closeBtns",
+    null,
+    "Close"
+);
+
+closeFormBtn.type = "button";
+
+closeFormBtn.onclick = () => {
+
+    previewes.classList.remove("show");
+
+    preview.src = "about:blank";
+
+    editIndex = -1;
+    fileThumb = "";
+    lastVideoID = "";
+
+    form.reset();
+
+    deleteBtn.style.display = "none";
+};
 
 
-    const saveBtn = fastTag(
-        "button",
-        Btns,
-        null,
-        null,
-        "Save"
-    );
+/* =====================================================
+   DATA BUTTON
+===================================================== */
 
-    saveBtn.type = "submit";
+const dataBtn = fastTag(
+    "button",
+    Btns,
+    "DataBtn",
+    null,
+    "Data"
+);
+
+dataBtn.type = "button";
+
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+const deleteBtn = fastTag(
+    "button",
+    Btns,
+    "deleteBtn",
+    null,
+    "Delete"
+);
+
+deleteBtn.type = "button";
+
+
+/* =====================================================
+   SAVE BUTTON
+===================================================== */
+
+const saveBtn = fastTag(
+    "button",
+    Btns,
+    null,
+    null,
+    "Save"
+);
+
+saveBtn.type = "submit";
 
 
     /* =====================================================
